@@ -16,7 +16,7 @@ export default function WelcomeBranded() {
         backgroundPosition: 'center',
       }}
     >
-      <AppHeader />
+      <AppHeader roundedBottom />
       <main className="flex-1 flex flex-col items-center justify-center px-6 -mt-8">
         <img
           src={logoUgingo}

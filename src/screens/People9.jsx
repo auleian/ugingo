@@ -41,7 +41,7 @@ export default function People9() {
         />
       </div>
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <div
         className="absolute overflow-hidden pointer-events-none"

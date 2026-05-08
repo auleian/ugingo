@@ -21,7 +21,7 @@ function ShopIcon() {
   )
 }
 
-export default function AppHeader({ level = 'A' }) {
+export default function AppHeader({ level = 'A', roundedBottom = false }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -42,12 +42,19 @@ export default function AppHeader({ level = 'A' }) {
   }, [open])
 
   return (
-    <header className="relative w-full h-14 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] z-30">
+    <header
+      className="relative w-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] z-30"
+      style={{
+        height: 87,
+        borderBottomLeftRadius: roundedBottom ? 15 : 0,
+        borderBottomRightRadius: roundedBottom ? 15 : 0,
+      }}
+    >
       <Link
         to="/lessons"
         aria-label="Go to lessons"
         className="absolute block select-none transition-transform duration-150 hover:scale-110 active:scale-95"
-        style={{ left: 13, top: 10 }}
+        style={{ left: 12, top: 47 }}
       >
         <Mascot variant="default" size={27} withCircle={false} />
       </Link>
@@ -60,7 +67,7 @@ export default function AppHeader({ level = 'A' }) {
           aria-expanded={open}
           aria-haspopup="menu"
           className="absolute rounded-full border-2 border-[#f16522] flex items-center justify-center font-poppins font-black text-[#f16522] text-[13px] leading-none bg-white transition-transform duration-150 hover:scale-110 active:scale-95"
-          style={{ left: 327, top: 10, width: 34.909, height: 35.265 }}
+          style={{ left: 326, top: 47, width: 34.909, height: 35.265 }}
         >
           {level}
         </button>
@@ -69,7 +76,7 @@ export default function AppHeader({ level = 'A' }) {
           <div
             role="menu"
             className="absolute bg-white rounded-[16px] shadow-[0_8px_24px_rgba(0,0,0,0.18)] flex flex-col items-center gap-1 z-40 ring-1 ring-black/5"
-            style={{ top: 60, right: 8, width: 56, paddingTop: 8, paddingBottom: 8 }}
+            style={{ top: 90, right: 8, width: 56, paddingTop: 8, paddingBottom: 8 }}
           >
             <Link
               to="/profile"

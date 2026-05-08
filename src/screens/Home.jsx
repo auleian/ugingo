@@ -35,7 +35,7 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <PlanPill
         to="/language-plan"

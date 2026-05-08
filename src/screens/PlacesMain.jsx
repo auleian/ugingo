@@ -15,7 +15,7 @@ export default function PlacesMain() {
         style={{ top: 42, left: -352, width: 1127, height: 770 }}
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       {/* "Ebifo" pill */}
       <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">

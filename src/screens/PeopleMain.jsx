@@ -5,7 +5,7 @@ import heroCloud from '../assets/people-hero-cloud.png'
 
 export default function PeopleMain() {
   return (
-    <PeopleFrame showHandsBg={false}>
+    <PeopleFrame showHandsBg={false} roundedHeader>
       <img
         src={heroBg}
         alt=""

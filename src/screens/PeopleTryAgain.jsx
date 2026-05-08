@@ -18,7 +18,7 @@ export default function PeopleTryAgain() {
         className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <Mascot
         variant="antelopeCry"

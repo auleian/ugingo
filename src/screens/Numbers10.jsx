@@ -19,7 +19,7 @@ export default function Numbers10() {
         style={{ top: 0, left: -32, width: 459, height: 815 }}
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <Mascot
         variant="antelopeCry"

@@ -15,7 +15,7 @@ export default function Profile() {
         style={{ top: 0, left: -43, width: 457, height: 812 }}
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <div
         className="absolute z-10 rounded-full border-[3px] border-[#f16522] flex items-center justify-center bg-[#0a2745]/40"

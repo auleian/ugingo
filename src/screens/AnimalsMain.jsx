@@ -17,7 +17,7 @@ export default function AnimalsMain() {
         style={{ top: 74, left: -74, width: 545, height: 738 }}
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-30">
         <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">

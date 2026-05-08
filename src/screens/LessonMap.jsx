@@ -88,7 +88,7 @@ export default function LessonMap() {
         style={{ top: -2, left: -80, width: 516, height: 814 }}
       />
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <div
         className="absolute z-20 bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"

@@ -39,7 +39,7 @@ export default function Animals8() {
         />
       </div>
 
-      <AppHeader />
+      <AppHeader roundedBottom />
 
       <p
         className="absolute font-poppins font-black text-white text-[24px] leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

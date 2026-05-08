@@ -22,7 +22,7 @@ export default function Ready() {
 
       <Link
         to="/home"
-        className="absolute top-[492px] left-[107px] w-[161] h-[28] text-[#2e4858] font-opensans font-bold text-[16px] tracking-wide"
+        className="absolute top-[492px] left-[107px] text-[#2e4858] font-opensans font-bold text-[16px] tracking-wide"
       >
         Tap to continue
       </Link>
