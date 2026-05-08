@@ -7,7 +7,7 @@ export default function Places7() {
       questionStyle={{ top: 382, left: 67, width: 242 }}
       options={['Awaka', 'Ekyalo', 'Banka']}
       correctIndex={0}
-      nextPath="/lessons"
+      nextPath="/profile"
     />
   )
 }

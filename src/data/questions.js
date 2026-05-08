@@ -25,10 +25,10 @@ export const QUESTIONS = [
     id: 3,
     question: 'What is your daily goal for practicing?',
     options: [
-      { id: '5', label: '5 min', leading: '📶', trailing: 'Casual' },
-      { id: '10', label: '10 min', leading: '📶', trailing: 'Regular' },
-      { id: '15', label: '15 min', leading: '📶', trailing: 'Accelerated' },
-      { id: '20', label: '20 min', leading: '📶', trailing: 'Intense' },
+      { id: '5', label: '5 min', icon: { type: 'bars', level: 1 }, trailing: 'Casual' },
+      { id: '10', label: '10 min', icon: { type: 'bars', level: 2 }, trailing: 'Regular' },
+      { id: '15', label: '15 min', icon: { type: 'bars', level: 3 }, trailing: 'Accelerated' },
+      { id: '20', label: '20 min', icon: { type: 'bars', level: 4 }, trailing: 'Intense' },
     ],
   },
   {

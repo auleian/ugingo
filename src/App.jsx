@@ -70,6 +70,8 @@ import Places6 from './screens/Places6'
 import Places7 from './screens/Places7'
 import PlacesTryAgain from './screens/PlacesTryAgain'
 import Profile from './screens/Profile'
+import Shop from './screens/Shop'
+import Cart from './screens/Cart'
 
 export default function App() {
   return (
@@ -143,6 +145,8 @@ export default function App() {
         <Route path="/places/7" element={<Places7 />} />
         <Route path="/places/try-again" element={<PlacesTryAgain />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/culture-plan" element={<CulturePlan />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

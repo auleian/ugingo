@@ -6,7 +6,8 @@ import island15 from '../assets/lesson-map-island-15.png'
 import smallIsland from '../assets/lesson-map-island-16.png'
 import animalsMarker from '../assets/mascot-antelope-side.png'
 import island12 from '../assets/lesson-map-island-12.png'
-import starIcon from '../assets/lesson-map-star.svg'
+import starActive from '../assets/lesson-map-star.svg'
+import starLocked from '../assets/star-locked.svg'
 import starBurst from '../assets/lesson-map-star-burst.svg'
 
 const STAR_W = 94.314
@@ -20,22 +21,22 @@ const STARS = [
   { left: 20, top: 187 },
   { left: 77, top: 244 },
   { left: 133, top: 300 },
-  { left: 264, top: 441, flipped: true, to: '/numbers/1' },
+  { left: 264, top: 441, flipped: true, to: '/numbers' },
   { left: 217, top: 505, flipped: true },
   { left: 143, top: 531, flipped: true },
   { left: 70, top: 560, flipped: true },
   { left: 23, top: 621, flipped: true },
-  { left: 134, top: 865, to: '/people/1' },
+  { left: 134, top: 865, to: '/people' },
   { left: 93, top: 932 },
   { left: 111, top: 1022 },
   { left: 205, top: 1051 },
   { left: 289, top: 1068 },
-  { left: 478, top: 1177, flipped: true, to: '/animals/1' },
+  { left: 478, top: 1177, flipped: true, to: '/animals' },
   { left: 431, top: 1241, flipped: true },
   { left: 384, top: 1303, flipped: true },
   { left: 311, top: 1332, flipped: true },
   { left: 264, top: 1393, flipped: true },
-  { left: 39, top: 1589, flipped: true, to: '/places/1' },
+  { left: 39, top: 1589, flipped: true, to: '/places' },
   { left: -8, top: 1653, flipped: true },
   { left: -55, top: 1715, flipped: true },
   { left: -1, top: 1778, flipped: true },
@@ -44,9 +45,10 @@ const STARS = [
 
 function StarMarker({ left, top, flipped, to }) {
   const transform = flipped ? 'scaleY(-1) rotate(180deg)' : undefined
+  const src = to ? starActive : starLocked
   const node = (
     <img
-      src={starIcon}
+      src={src}
       alt=""
       aria-hidden
       draggable={false}
@@ -57,7 +59,12 @@ function StarMarker({ left, top, flipped, to }) {
   const style = { left, top, width: STAR_W, height: STAR_H }
   if (to) {
     return (
-      <Link to={to} className="absolute" style={style} aria-label={`Lesson at ${to}`}>
+      <Link
+        to={to}
+        className="absolute star-glow cursor-pointer transition-transform duration-150 hover:scale-110 active:scale-95"
+        style={style}
+        aria-label={`Start lesson at ${to}`}
+      >
         {node}
       </Link>
     )
@@ -97,22 +104,32 @@ export default function LessonMap() {
         style={{ top: 143, left: 0, width: 375, height: 621 }}
       >
         <div className="relative" style={{ width: 650, height: 2135 }}>
-          <img
-            src={abcIsland}
-            alt="Alphabet"
-            draggable={false}
-            className="absolute max-w-none select-none pointer-events-none"
-            style={{ left: 181, top: 0, width: 188, height: 177, transform: 'rotate(6deg)' }}
-          />
+          <div
+            className="absolute flex items-center justify-center pointer-events-none"
+            style={{ left: 181, top: 0, width: 187.967, height: 176.754 }}
+          >
+            <img
+              src={abcIsland}
+              alt="Alphabet"
+              draggable={false}
+              className="block max-w-none select-none object-cover"
+              style={{ width: 172.225, height: 159.626, transform: 'rotate(6deg)' }}
+            />
+          </div>
 
-          <img
-            src={island15}
-            alt=""
-            aria-hidden
-            draggable={false}
-            className="absolute max-w-none select-none pointer-events-none"
-            style={{ left: 205, top: 272, width: 191, height: 200, transform: 'rotate(10deg)' }}
-          />
+          <div
+            className="absolute flex items-center justify-center pointer-events-none"
+            style={{ left: 205, top: 272, width: 190.738, height: 199.661 }}
+          >
+            <img
+              src={island15}
+              alt=""
+              aria-hidden
+              draggable={false}
+              className="block max-w-none select-none object-cover"
+              style={{ width: 163, height: 174, transform: 'rotate(10deg)' }}
+            />
+          </div>
 
           <img
             src={smallIsland}

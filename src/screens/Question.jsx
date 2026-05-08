@@ -2,12 +2,14 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import Mascot from '../components/Mascot'
 import SelectableOption from '../components/SelectableOption'
 import StatIcon from '../components/StatIcon'
+import StatBarsIcon from '../components/StatBarsIcon'
 import { QUESTIONS } from '../data/questions'
 
 function renderIcon(icon) {
   if (!icon) return null
   if (typeof icon === 'string') return icon
   if (icon.type === 'stat') return <StatIcon level={icon.level} size={34} />
+  if (icon.type === 'bars') return <StatBarsIcon level={icon.level} size={34} />
   return null
 }
 
