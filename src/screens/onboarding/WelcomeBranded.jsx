@@ -19,6 +19,9 @@ export default function WelcomeBranded() {
         alt=""
         aria-hidden
         draggable={false}
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute max-w-none object-cover pointer-events-none select-none"
         style={{ top: 0, left: -84, width: 542, height: 813, opacity: 0.37 }}
       />
@@ -27,6 +30,9 @@ export default function WelcomeBranded() {
         alt=""
         aria-hidden
         draggable={false}
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute max-w-none object-cover pointer-events-none select-none"
         style={{ top: 0, left: -84, width: 542, height: 813, opacity: 0.37 }}
       />
@@ -43,6 +49,9 @@ export default function WelcomeBranded() {
           alt=""
           aria-hidden
           draggable={false}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="absolute max-w-none select-none"
           style={{
             width: '388.88%',
@@ -68,6 +77,9 @@ export default function WelcomeBranded() {
           src={wordmark}
           alt="UGINGO"
           draggable={false}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="absolute max-w-none select-none"
           style={{
             width: '98.74%',

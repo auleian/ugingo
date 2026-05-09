@@ -114,6 +114,9 @@ export default function Shop() {
                 src={shopAdventures}
                 alt="Adventures of Ugingo"
                 draggable={false}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="absolute inset-0 max-w-none w-full h-full object-cover pointer-events-none select-none"
               />
               <div

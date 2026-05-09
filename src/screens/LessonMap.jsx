@@ -84,6 +84,9 @@ export default function LessonMap() {
         alt=""
         aria-hidden
         draggable={false}
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute max-w-none pointer-events-none select-none object-cover"
         style={{ top: -2, left: -80, width: 516, height: 814 }}
       />
@@ -136,6 +139,8 @@ export default function LessonMap() {
             alt=""
             aria-hidden
             draggable={false}
+            loading="lazy"
+            decoding="async"
             className="absolute max-w-none select-none pointer-events-none"
             style={{ left: 61, top: 711, width: 158, height: 154 }}
           />
@@ -144,6 +149,8 @@ export default function LessonMap() {
             src={animalsMarker}
             alt="Animals"
             draggable={false}
+            loading="lazy"
+            decoding="async"
             className="absolute max-w-none select-none pointer-events-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
             style={{ left: 380, top: 1010, width: 180, height: 224 }}
           />
@@ -153,6 +160,8 @@ export default function LessonMap() {
             alt=""
             aria-hidden
             draggable={false}
+            loading="lazy"
+            decoding="async"
             className="absolute max-w-none select-none pointer-events-none"
             style={{ left: 73, top: 1389, width: 234, height: 252 }}
           />

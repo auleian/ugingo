@@ -11,6 +11,9 @@ export default function Profile() {
         alt=""
         aria-hidden
         draggable={false}
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute max-w-none pointer-events-none select-none object-cover"
         style={{ top: 0, left: -43, width: 457, height: 812 }}
       />
