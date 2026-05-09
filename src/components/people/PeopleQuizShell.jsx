@@ -1,7 +1,8 @@
+import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PeopleFrame from './PeopleFrame'
 import PeopleHero from './PeopleHero'
-import { playCorrect, playWrong } from '../../lib/sound'
+import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [481, 548, 615]
 
@@ -10,10 +11,13 @@ const TEST_ANTELOPE_CROP = { top: -82.56, left: -353.39, width: 781.69, height: 
 export default function PeopleQuizShell({ question, options, correctIndex, nextPath }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const busy = useRef(false)
 
-  function handlePick(i) {
+  async function handlePick(i) {
+    if (busy.current) return
+    busy.current = true
     if (i === correctIndex) {
-      playCorrect()
+      await playCorrectClip()
       navigate(nextPath)
     } else {
       playWrong()
@@ -22,7 +26,7 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
   }
 
   return (
-    <PeopleFrame>
+    <PeopleFrame playMusic={false}>
       <PeopleHero antelopeCrop={TEST_ANTELOPE_CROP}>
         <div
           className="absolute text-center font-poppins font-black text-white"

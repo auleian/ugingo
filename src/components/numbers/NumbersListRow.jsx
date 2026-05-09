@@ -1,3 +1,6 @@
+import { useRef } from 'react'
+import usePulse from '../../lib/usePulse'
+
 function countGraphemes(s) {
   try {
     return [...new Intl.Segmenter().segment(s)].length
@@ -15,22 +18,33 @@ function pickFontSize(count) {
   return 4
 }
 
-export default function NumbersListRow({ index, word, pronounce, icon, top }) {
+const ROW_HEIGHT = 58.63
+
+export default function NumbersListRow({ index, word, pronounce, icon, top, isPulsing = false }) {
   const count = countGraphemes(icon)
   const isMulti = count > 1
   const fontSize = pickFontSize(count)
   const iconWidth = isMulti ? 30 : 'auto'
+  const ref = useRef(null)
+  usePulse(ref, isPulsing)
 
+  // Wrap the four absolute children in a single positioned wrapper so the row
+  // can be transformed as a unit (heartbeat pulse). Children's tops shift from
+  // `top + N` to plain `N` since they're now relative to this wrapper.
   return (
-    <>
+    <div
+      ref={ref}
+      className="absolute z-10"
+      style={{ top, left: 0, width: 374, height: ROW_HEIGHT, transformOrigin: 'center center' }}
+    >
       <div
-        className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top, left: 19, width: 335, height: 58.63 }}
+        className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        style={{ top: 0, left: 19, width: 335, height: ROW_HEIGHT }}
       />
 
       <div
         className="absolute rounded-full bg-[#69cad3] border-[3px] border-white shadow-[0_4px_4px_rgba(0,0,0,0.18)] flex items-center justify-center z-20"
-        style={{ top: top + 7, left: 30, width: 45, height: 43 }}
+        style={{ top: 7, left: 30, width: 45, height: 43 }}
       >
         <span className="font-opensans font-extrabold text-[#2e4858] text-[24px] leading-none">
           {index}
@@ -39,7 +53,7 @@ export default function NumbersListRow({ index, word, pronounce, icon, top }) {
 
       <div
         className="absolute z-20 leading-none"
-        style={{ top: top + 7, left: 103, width: 180 }}
+        style={{ top: 7, left: 103, width: 180 }}
       >
         <p className="font-poppins font-black text-[#2e4858] text-[20px] leading-tight">
           {word}
@@ -51,7 +65,7 @@ export default function NumbersListRow({ index, word, pronounce, icon, top }) {
 
       <div
         className="absolute rounded-full bg-[#2e4858] flex items-center justify-center overflow-hidden z-20"
-        style={{ top: top + 9, left: 286, width: 45, height: 43 }}
+        style={{ top: 9, left: 286, width: 45, height: 43 }}
       >
         <span
           className="text-white text-center break-all"
@@ -61,6 +75,6 @@ export default function NumbersListRow({ index, word, pronounce, icon, top }) {
           {icon}
         </span>
       </div>
-    </>
+    </div>
   )
 }

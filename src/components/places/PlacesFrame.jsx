@@ -1,7 +1,12 @@
 import AppHeader from '../AppHeader'
+import LessonsMusicGate from '../LessonsMusicGate'
 import cityBg from '../../assets/places-city-bg.png'
+import { useLessonsMusic } from '../../lib/lessonsMusic'
 
-export default function PlacesFrame({ children, showCityBg = true, showPill = true }) {
+export default function PlacesFrame({ children, showCityBg = true, showPill = true, playMusic = true }) {
+  const ready = useLessonsMusic(playMusic)
+  const showGate = playMusic && !ready
+
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
       {showCityBg && (
@@ -30,6 +35,8 @@ export default function PlacesFrame({ children, showCityBg = true, showPill = tr
       )}
 
       {children}
+
+      {showGate && <LessonsMusicGate />}
     </div>
   )
 }

@@ -1,5 +1,7 @@
 import AppHeader from '../AppHeader'
+import LessonsMusicGate from '../LessonsMusicGate'
 import jungleBg from '../../assets/animals-jungle-bg.png'
+import { useLessonsMusic } from '../../lib/lessonsMusic'
 
 // Shared shell for Animals 1–7 lesson screens. Renders the jungle background
 // (image 61 in Figma — sized 448×722 at offset (-10, 90) per gotcha rule #3),
@@ -9,7 +11,11 @@ export default function AnimalsFrame({
   bgColor = '#ffffff',
   showPill = true,
   showJungle = true,
+  playMusic = true,
 }) {
+  const ready = useLessonsMusic(playMusic)
+  const showGate = playMusic && !ready
+
   return (
     <div className="flex-1 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
       {showJungle && (
@@ -34,6 +40,8 @@ export default function AnimalsFrame({
       )}
 
       {children}
+
+      {showGate && <LessonsMusicGate />}
     </div>
   )
 }

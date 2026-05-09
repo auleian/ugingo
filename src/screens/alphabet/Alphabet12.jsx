@@ -8,7 +8,7 @@ import bgConfetti from '../../assets/bg-success-mountains.png'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import trophy from '../../assets/trophy.png'
 import starEarned from '../../assets/star-earned.svg'
-import { playSuccess } from '../../lib/sound'
+import { playMilestone } from '../../lib/sound'
 
 const CONFETTI = [
   { left: 312, top: 303, size: 40, rotate: 178, w: 88, h: 52 },
@@ -19,7 +19,7 @@ const CONFETTI = [
 
 export default function Alphabet12() {
   useEffect(() => {
-    playSuccess()
+    playMilestone()
   }, [])
 
   return (

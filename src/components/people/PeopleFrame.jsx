@@ -1,5 +1,7 @@
 import AppHeader from '../AppHeader'
+import LessonsMusicGate from '../LessonsMusicGate'
 import handsBg from '../../assets/people-hands-bg.png'
+import { useLessonsMusic } from '../../lib/lessonsMusic'
 
 export default function PeopleFrame({
   children,
@@ -9,7 +11,11 @@ export default function PeopleFrame({
   pillLabel = 'Abantu',
   pillTextColor = '#f16522',
   roundedHeader = false,
+  playMusic = true,
 }) {
+  const ready = useLessonsMusic(playMusic)
+  const showGate = playMusic && !ready
+
   return (
     <div className="flex-1 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
       <AppHeader roundedBottom={roundedHeader} />
@@ -47,6 +53,8 @@ export default function PeopleFrame({
       )}
 
       {children}
+
+      {showGate && <LessonsMusicGate />}
     </div>
   )
 }

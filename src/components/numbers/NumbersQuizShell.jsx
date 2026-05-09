@@ -1,7 +1,8 @@
+import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import NumbersFrame from './NumbersFrame'
 import NumbersQuizCard from './NumbersQuizCard'
-import { playCorrect, playWrong } from '../../lib/sound'
+import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [405, 479, 553]
 const OPTION_LEFTS = [40, 41, 42]
@@ -9,10 +10,13 @@ const OPTION_LEFTS = [40, 41, 42]
 export default function NumbersQuizShell({ question, options, correctIndex, nextPath, failPath = '/numbers/10' }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const busy = useRef(false)
 
-  function handlePick(i) {
+  async function handlePick(i) {
+    if (busy.current) return
+    busy.current = true
     if (i === correctIndex) {
-      playCorrect()
+      await playCorrectClip()
       navigate(nextPath)
     } else {
       playWrong()
@@ -21,7 +25,7 @@ export default function NumbersQuizShell({ question, options, correctIndex, next
   }
 
   return (
-    <NumbersFrame>
+    <NumbersFrame playMusic={false}>
       <NumbersQuizCard />
 
       <p

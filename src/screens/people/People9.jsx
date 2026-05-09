@@ -8,7 +8,7 @@ import cloudCard from '../../assets/bg-success-cloud.png'
 import antelopeHead from '../../assets/people-antelope-head.png'
 import trophy from '../../assets/trophy.png'
 import starEarned from '../../assets/star-earned.svg'
-import { playSuccess } from '../../lib/sound'
+import { playMilestone } from '../../lib/sound'
 
 const CONFETTI = [
   { top: 211, left: 50, size: 15, rotate: 96 },
@@ -20,7 +20,7 @@ const CONFETTI = [
 
 export default function People9() {
   useEffect(() => {
-    playSuccess()
+    playMilestone()
   }, [])
 
   return (

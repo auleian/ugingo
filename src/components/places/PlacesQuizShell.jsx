@@ -1,18 +1,22 @@
+import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PlacesFrame from './PlacesFrame'
 import PlacesAntelope from './PlacesAntelope'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import { playCorrect, playWrong } from '../../lib/sound'
+import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [446, 515.66, 585.32]
 
 export default function PlacesQuizShell({ question, questionStyle, options, correctIndex, nextPath }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const busy = useRef(false)
 
-  function handlePick(i) {
+  async function handlePick(i) {
+    if (busy.current) return
+    busy.current = true
     if (i === correctIndex) {
-      playCorrect()
+      await playCorrectClip()
       navigate(nextPath)
     } else {
       playWrong()
@@ -21,7 +25,7 @@ export default function PlacesQuizShell({ question, questionStyle, options, corr
   }
 
   return (
-    <PlacesFrame>
+    <PlacesFrame playMusic={false}>
       {/* Cyan banner block (top) */}
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

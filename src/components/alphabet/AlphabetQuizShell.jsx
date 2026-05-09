@@ -1,18 +1,22 @@
+import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AlphabetFrame from './AlphabetFrame'
 import Mascot from '../Mascot'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import { playCorrect, playWrong } from '../../lib/sound'
+import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [542.37, 597.87, 653.36]
 
 export default function AlphabetQuizShell({ question, options, correctIndex, nextPath }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const busy = useRef(false)
 
-  function handlePick(i) {
+  async function handlePick(i) {
+    if (busy.current) return
+    busy.current = true
     if (i === correctIndex) {
-      playCorrect()
+      await playCorrectClip()
       navigate(nextPath)
     } else {
       playWrong()
@@ -21,7 +25,7 @@ export default function AlphabetQuizShell({ question, options, correctIndex, nex
   }
 
   return (
-    <AlphabetFrame>
+    <AlphabetFrame playMusic={false}>
       <Mascot
         variant="antelopeSide"
         size={163}

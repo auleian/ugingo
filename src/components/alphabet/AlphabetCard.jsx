@@ -1,5 +1,35 @@
+import { useEffect, useRef } from 'react'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import creamPill from '../../assets/cream-pill.svg'
+
+// Tremble — dense, high-frequency micro-jitter meant to read as a real
+// shiver (think baby or chicken), not a slow theatrical wiggle. Generated
+// once at module load so every card uses the same motion.
+const SHIVER_KEYFRAMES = (() => {
+  const FRAMES = 33
+  const AMP_X = 3.0
+  const AMP_Y = 1.7
+  const AMP_ROT = 1.45
+  // Pseudo-random with a fixed seed so the trembling is deterministic.
+  let s = 1
+  const rand = () => {
+    s = (s * 9301 + 49297) % 233280
+    return s / 233280 - 0.5
+  }
+  const out = [{ transform: 'translate(0,0) rotate(0deg)' }]
+  for (let i = 1; i < FRAMES - 1; i++) {
+    // Envelope: ramp in over first 10%, hold, taper to 0 in last 25%.
+    const t = i / (FRAMES - 1)
+    const env = t < 0.1 ? t / 0.1 : t > 0.75 ? (1 - t) / 0.25 : 1
+    const x = (rand() * 2 * AMP_X * env).toFixed(2)
+    const y = (rand() * 2 * AMP_Y * env).toFixed(2)
+    const r = (rand() * 2 * AMP_ROT * env).toFixed(2)
+    out.push({ transform: `translate(${x}px, ${y}px) rotate(${r}deg)` })
+  }
+  out.push({ transform: 'translate(0,0) rotate(0deg)' })
+  return out
+})()
+const SHIVER_OPTIONS = { duration: 1200, easing: 'linear', fill: 'none' }
 
 export default function AlphabetCard({
   letter,
@@ -11,11 +41,23 @@ export default function AlphabetCard({
   left,
   width = 199,
   height = 124,
+  isShivering = false,
 }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!isShivering || !ref.current) return
+    if (typeof ref.current.animate !== 'function') return
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const anim = ref.current.animate(SHIVER_KEYFRAMES, SHIVER_OPTIONS)
+    return () => anim.cancel()
+  }, [isShivering])
+
   return (
     <div
+      ref={ref}
       className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)]"
-      style={{ top, left, width, height }}
+      style={{ top, left, width, height, transformOrigin: 'center center' }}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

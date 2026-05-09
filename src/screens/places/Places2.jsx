@@ -4,6 +4,7 @@ import PlacesListRow from '../../components/places/PlacesListRow'
 import PlacesPillButton from '../../components/places/PlacesPillButton'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import akataleImg from '../../assets/places-akatale.png'
+import useShiverCycle from '../../lib/useShiverCycle'
 
 const akataleIcon = (
   <img
@@ -23,6 +24,7 @@ const ROWS = [
 ]
 
 export default function Places2() {
+  const pulseIdx = useShiverCycle(ROWS.length, 1200)
   return (
     <PlacesFrame>
       <div
@@ -55,8 +57,8 @@ export default function Places2() {
 
       <PlacesAntelope mode="list" />
 
-      {ROWS.map((r) => (
-        <PlacesListRow key={r.luganda} {...r} />
+      {ROWS.map((r, i) => (
+        <PlacesListRow key={r.luganda} {...r} isPulsing={i === pulseIdx} />
       ))}
 
       <PlacesPillButton to="/places/3" className="absolute" style={{ top: 750, left: 244 }}>

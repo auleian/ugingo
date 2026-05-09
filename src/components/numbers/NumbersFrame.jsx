@@ -1,7 +1,12 @@
 import AppHeader from '../AppHeader'
+import LessonsMusicGate from '../LessonsMusicGate'
 import lessonBg from '../../assets/numbers-lesson-bg.png'
+import { useLessonsMusic } from '../../lib/lessonsMusic'
 
-export default function NumbersFrame({ children, showBg = true, bgColor = '#f9efde' }) {
+export default function NumbersFrame({ children, showBg = true, bgColor = '#f9efde', playMusic = true }) {
+  const ready = useLessonsMusic(playMusic)
+  const showGate = playMusic && !ready
+
   return (
     <div className="flex-1 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
       {showBg && (
@@ -31,6 +36,8 @@ export default function NumbersFrame({ children, showBg = true, bgColor = '#f9ef
       </div>
 
       {children}
+
+      {showGate && <LessonsMusicGate />}
     </div>
   )
 }

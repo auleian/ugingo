@@ -4,6 +4,8 @@
 // success). Replace with sample-based playback later if desired.
 
 import { useEffect, useState } from 'react'
+import correctClipSrc from '../assets/correct.mp3'
+import milestoneClipSrc from '../assets/milestone.mp3'
 
 const STORAGE_KEY = 'ugingo.muted'
 
@@ -114,6 +116,63 @@ export function playWrong() {
   // Descending muted dyad
   tone(c, { freq: 392, start: t, dur: 0.18, peak: 0.16, type: 'triangle' })
   tone(c, { freq: 311.13, start: t + 0.12, dur: 0.28, peak: 0.16, type: 'triangle' })
+}
+
+// Recorded "correct" clip — plays the .mp3 and resolves the returned promise
+// when playback completes (or immediately if muted/blocked) so callers can
+// gate navigation on the clip finishing.
+let _correctClip = null
+function getCorrectClip() {
+  if (_correctClip || typeof window === 'undefined') return _correctClip
+  _correctClip = new Audio(correctClipSrc)
+  _correctClip.preload = 'auto'
+  return _correctClip
+}
+
+export function playCorrectClip() {
+  if (muted) return Promise.resolve()
+  const a = getCorrectClip()
+  if (!a) return Promise.resolve()
+  try {
+    a.pause()
+    a.currentTime = 0
+  } catch {}
+  return new Promise((resolve) => {
+    let done = false
+    const finish = () => {
+      if (done) return
+      done = true
+      a.removeEventListener('ended', finish)
+      a.removeEventListener('error', finish)
+      resolve()
+    }
+    a.addEventListener('ended', finish, { once: true })
+    a.addEventListener('error', finish, { once: true })
+    const p = a.play()
+    if (p && typeof p.catch === 'function') p.catch(finish)
+  })
+}
+
+// Recorded "milestone" clip for challenge-completed celebration screens.
+// Fire-and-forget — restarts cleanly if a screen remounts.
+let _milestoneClip = null
+function getMilestoneClip() {
+  if (_milestoneClip || typeof window === 'undefined') return _milestoneClip
+  _milestoneClip = new Audio(milestoneClipSrc)
+  _milestoneClip.preload = 'auto'
+  return _milestoneClip
+}
+
+export function playMilestone() {
+  if (muted) return
+  const a = getMilestoneClip()
+  if (!a) return
+  try {
+    a.pause()
+    a.currentTime = 0
+  } catch {}
+  const p = a.play()
+  if (p && typeof p.catch === 'function') p.catch(() => {})
 }
 
 export function playSuccess() {

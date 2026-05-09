@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import NumbersFrame from '../../components/numbers/NumbersFrame'
 import NumbersListRow from '../../components/numbers/NumbersListRow'
 import Mascot from '../../components/Mascot'
+import useShiverCycle from '../../lib/useShiverCycle'
 
 const ROWS = [
   { index: 6, word: 'Mukaaga', pronounce: 'Moo-kah-gah', icon: '⚽'.repeat(6) },
@@ -14,6 +15,7 @@ const ROWS = [
 const TOPS = [270, 344.15, 418.3, 492, 566.15]
 
 export default function Numbers2() {
+  const pulseIdx = useShiverCycle(ROWS.length, 1200)
   return (
     <NumbersFrame>
       <Mascot
@@ -33,7 +35,7 @@ export default function Numbers2() {
       </div>
 
       {ROWS.map((row, i) => (
-        <NumbersListRow key={row.index} {...row} top={TOPS[i]} />
+        <NumbersListRow key={row.index} {...row} top={TOPS[i]} isPulsing={i === pulseIdx} />
       ))}
 
       <Link

@@ -1,13 +1,19 @@
-export default function PlacesListRow({ top, luganda, english, icon, iconSize = 50 }) {
+import { useRef } from 'react'
+import usePulse from '../../lib/usePulse'
+
+export default function PlacesListRow({ top, luganda, english, icon, iconSize = 50, isPulsing = false }) {
   // Wrapper anchors to frame x = -19. Inner children use frame-coordinates
   // shifted by +19 so they line up with Figma's absolute values.
   const ROW_H = 61.474
   const FRAME_X_ICON = 80
   const FRAME_X_TEXT = 175
+  const ref = useRef(null)
+  usePulse(ref, isPulsing)
   return (
     <div
+      ref={ref}
       className="absolute"
-      style={{ top, left: -19, width: 426, height: ROW_H }}
+      style={{ top, left: -19, width: 426, height: ROW_H, transformOrigin: 'center center' }}
     >
       <div className="absolute inset-0 bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]" />
 

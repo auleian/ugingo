@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import MobileFrame from './layouts/MobileFrame'
 import { preloadAllImages } from './lib/preloadImages'
+import { startPreload as startMusicPreload } from './lib/lessonsMusic'
 import Welcome from './screens/onboarding/Welcome'
 import WelcomeBranded from './screens/onboarding/WelcomeBranded'
 import Gingo from './screens/onboarding/Gingo'
@@ -78,6 +79,9 @@ import Cart from './screens/Cart'
 export default function App() {
   useEffect(() => {
     preloadAllImages()
+    // Kick off lessons-music download right after first paint so by the time
+    // the user reaches a lesson screen, the 5s-buffer gate resolves instantly.
+    startMusicPreload()
   }, [])
 
   return (

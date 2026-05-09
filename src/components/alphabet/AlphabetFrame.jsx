@@ -1,12 +1,18 @@
 import AppHeader from '../AppHeader'
+import LessonsMusicGate from '../LessonsMusicGate'
 import patternBg from '../../assets/alphabet-pattern-bg.png'
+import { useLessonsMusic } from '../../lib/lessonsMusic'
 
 export default function AlphabetFrame({
   children,
   background = 'pattern',
   showPill = true,
   customBg,
+  playMusic = true,
 }) {
+  const ready = useLessonsMusic(playMusic)
+  const showGate = playMusic && !ready
+
   const bgStyle =
     background === 'pattern'
       ? {
@@ -33,6 +39,8 @@ export default function AlphabetFrame({
       )}
 
       {children}
+
+      {showGate && <LessonsMusicGate />}
     </div>
   )
 }

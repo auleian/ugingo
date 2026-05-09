@@ -1,7 +1,8 @@
+import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AnimalsFrame from './AnimalsFrame'
 import AnimalsHero, { QUIZ_ANTELOPE_CROP } from './AnimalsHero'
-import { playCorrect, playWrong } from '../../lib/sound'
+import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [448, 547, 646]
 const OPTION_LEFTS = [45, 42, 39]
@@ -22,19 +23,23 @@ export default function AnimalsQuizShell({
 }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const busy = useRef(false)
 
-  function handlePick(i) {
+  async function handlePick(i) {
+    if (busy.current) return
     if (i === correctIndex) {
-      playCorrect()
+      busy.current = true
+      await playCorrectClip()
       navigate(nextPath)
     } else if (failPath) {
+      busy.current = true
       playWrong()
       navigate(failPath, { state: { back: location.pathname } })
     }
   }
 
   return (
-    <AnimalsFrame>
+    <AnimalsFrame playMusic={false}>
       <AnimalsHero antelopeCrop={QUIZ_ANTELOPE_CROP}>
         <div
           className="absolute z-30 text-center"

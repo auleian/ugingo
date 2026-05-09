@@ -8,9 +8,12 @@ import { useEffect, useRef } from 'react'
 
 const COLORS = ['#F16522', '#F7AE2B', '#F8C83C', '#69CAD3', '#2E4858', '#FF66C4']
 
+// Defaults sized to outlast the milestone clip (4.52s) by ~1s — particles keep
+// spawning until `spawnUntil` ms and then fade until `duration` ms.
 export default function Confetti({
-  count = 80,
-  duration = 2400,
+  count = 160,
+  duration = 3500,
+  spawnUntil = 2800,
   originX = 0.5, // 0–1 of frame width
   originY = 0.35, // 0–1 of frame height (upper-third looks best behind a mascot)
   spreadDeg = 80,
@@ -40,14 +43,15 @@ export default function Confetti({
     const w = parent.getBoundingClientRect().width
     const h = parent.getBoundingClientRect().height
 
-    // Spawn particles from the origin point with a vertical-ish spread.
-    const particles = []
+    // Particles are pre-built but each has a spawnAt time so they "pour" over
+    // the spawnUntil window rather than all firing in a single burst.
     const baseAngle = -Math.PI / 2 // straight up
     const half = (spreadDeg * Math.PI) / 180 / 2
-    for (let i = 0; i < count; i++) {
+    const makeParticle = (spawnAt) => {
       const angle = baseAngle + (Math.random() * 2 - 1) * half
       const speed = 280 + Math.random() * 320
-      particles.push({
+      return {
+        spawnAt,
         x: originX * w,
         y: originY * h,
         vx: Math.cos(angle) * speed,
@@ -56,8 +60,14 @@ export default function Confetti({
         vrot: (Math.random() - 0.5) * 12,
         size: 5 + Math.random() * 5,
         color: COLORS[(Math.random() * COLORS.length) | 0],
-        life: 0,
-      })
+        active: false,
+      }
+    }
+    const particles = []
+    for (let i = 0; i < count; i++) {
+      // Even-ish stagger across spawnUntil with a touch of jitter.
+      const t = (i / Math.max(1, count - 1)) * spawnUntil + (Math.random() - 0.5) * 80
+      particles.push(makeParticle(Math.max(0, Math.min(spawnUntil, t))))
     }
 
     let raf = 0
@@ -68,20 +78,25 @@ export default function Confetti({
       const dt = Math.min(0.05, (now - last) / 1000)
       last = now
       const elapsed = now - start
-      const fade = Math.max(0, 1 - elapsed / duration)
+      // Fade only over the last ~700ms so falling stars stay vivid.
+      const fadeStart = Math.max(0, duration - 700)
+      const fade = elapsed <= fadeStart
+        ? 1
+        : Math.max(0, 1 - (elapsed - fadeStart) / (duration - fadeStart))
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       for (const p of particles) {
-        // physics
+        if (!p.active) {
+          if (elapsed < p.spawnAt) continue
+          p.active = true
+        }
         p.vy += 900 * dt // gravity
         p.vx *= Math.pow(0.99, dt * 60) // mild drag
         p.x += p.vx * dt
         p.y += p.vy * dt
         p.rot += p.vrot * dt
-        p.life += dt
 
-        // draw — small rounded rect, rotated
         ctx.save()
         ctx.translate(p.x, p.y)
         ctx.rotate(p.rot)
@@ -100,7 +115,7 @@ export default function Confetti({
     raf = requestAnimationFrame(tick)
 
     return () => cancelAnimationFrame(raf)
-  }, [count, duration, originX, originY, spreadDeg])
+  }, [count, duration, spawnUntil, originX, originY, spreadDeg])
 
   return (
     <canvas

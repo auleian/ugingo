@@ -2,6 +2,7 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
+import useShiverCycle from '../../lib/useShiverCycle'
 
 const ROWS = [
   { top: 363, left: 9, emoji: '🦁', word: 'Empologoma', translation: 'Lion', wordSize: 14, textTop: 17 },
@@ -12,6 +13,7 @@ const ROWS = [
 ]
 
 export default function Animals2() {
+  const pulseIdx = useShiverCycle(ROWS.length, 1200)
   return (
     <AnimalsFrame>
       <AnimalsHero>
@@ -35,7 +37,7 @@ export default function Animals2() {
       />
 
       {ROWS.map((row, i) => (
-        <AnimalsListRow key={i} {...row} />
+        <AnimalsListRow key={i} {...row} isPulsing={i === pulseIdx} />
       ))}
 
       <AnimalsPillButton

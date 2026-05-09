@@ -71,9 +71,24 @@ body {
   animation-duration: 0.9s;
 }
 
+/* Gentle float — every star bobs up and down ~5px over 3.4s. Per-star
+   animation-delay (set inline) desyncs them so the cluster looks organic
+   rather than marching in lockstep. transform-origin centered keeps the
+   star pivoting around its own midpoint. */
+@keyframes star-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.star-float {
+  animation: star-float 3.4s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
 /* Respect users who request reduced motion — kill decorative animations. */
 @media (prefers-reduced-motion: reduce) {
-  .star-glow {
+  .star-glow,
+  .star-float {
     animation: none !important;
   }
 }

@@ -43,34 +43,49 @@ const STARS = [
   { left: 61, top: 1833, flipped: true },
 ]
 
-function StarMarker({ left, top, flipped, to }) {
+function StarMarker({ left, top, flipped, to, index = 0 }) {
   const transform = flipped ? 'scaleY(-1) rotate(180deg)' : undefined
   const src = to ? starActive : starLocked
+  // Float animation lives on the absolute wrapper. Glow pulse lives on the
+  // inner <img> so transforms don't fight (translateY × scale × filter compose
+  // cleanly when on different DOM elements). Hover/active scale lives on its
+  // own inner wrapper for active stars.
+  const imgCls = to
+    ? 'star-glow block w-full h-full select-none'
+    : 'block w-full h-full select-none'
   const node = (
     <img
       src={src}
       alt=""
       aria-hidden
       draggable={false}
-      className="block w-full h-full select-none"
+      className={imgCls}
       style={{ transform }}
     />
   )
-  const style = { left, top, width: STAR_W, height: STAR_H }
+  const wrapperStyle = {
+    left,
+    top,
+    width: STAR_W,
+    height: STAR_H,
+    animationDelay: `${((index * 0.27) % 3.4).toFixed(2)}s`,
+  }
   if (to) {
     return (
       <Link
         to={to}
-        className="absolute star-glow cursor-pointer transition-transform duration-150 hover:scale-110 active:scale-95"
-        style={style}
+        className="absolute star-float"
+        style={wrapperStyle}
         aria-label={`Start lesson at ${to}`}
       >
-        {node}
+        <div className="w-full h-full cursor-pointer transition-transform duration-150 hover:scale-110 active:scale-95">
+          {node}
+        </div>
       </Link>
     )
   }
   return (
-    <div className="absolute" style={style} aria-hidden>
+    <div className="absolute star-float" style={wrapperStyle} aria-hidden>
       {node}
     </div>
   )
@@ -167,7 +182,7 @@ export default function LessonMap() {
           />
 
           {STARS.map((s, i) => (
-            <StarMarker key={i} {...s} />
+            <StarMarker key={i} {...s} index={i} />
           ))}
 
           <Link
