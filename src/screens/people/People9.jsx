@@ -136,7 +136,7 @@ export default function People9() {
       ))}
 
       <PeoplePillButton
-        to="/lessons"
+        to="/animals"
         size="sm"
         className="absolute z-30"
         style={{ top: 701, left: 150 }}

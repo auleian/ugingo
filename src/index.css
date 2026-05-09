@@ -96,11 +96,24 @@ body {
   transform-origin: center;
 }
 
+/* Subtle breath used by all lesson-navigation pill buttons. Smaller scale
+   than the home pill so it reads as "clickable hint" rather than a hero
+   pulse. Reuses the same keyframe family for consistency. */
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+.cta-pulse {
+  animation: cta-pulse 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
 /* Respect users who request reduced motion — kill decorative animations. */
 @media (prefers-reduced-motion: reduce) {
   .star-glow,
   .star-float,
-  .home-pill-glow {
+  .home-pill-glow,
+  .cta-pulse {
     animation: none !important;
   }
 }
