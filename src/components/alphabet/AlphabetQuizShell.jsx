@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import AlphabetFrame from './AlphabetFrame'
 import Mascot from '../Mascot'
 import cloudCard from '../../assets/bg-success-cloud.png'
+import { playCorrect, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [542.37, 597.87, 653.36]
 
@@ -11,8 +12,10 @@ export default function AlphabetQuizShell({ question, options, correctIndex, nex
 
   function handlePick(i) {
     if (i === correctIndex) {
+      playCorrect()
       navigate(nextPath)
     } else {
+      playWrong()
       navigate('/alphabet/try-again', { state: { back: location.pathname } })
     }
   }

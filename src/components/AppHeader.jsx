@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Mascot from './Mascot'
+import { playTap, toggleMute, useMute } from '../lib/sound'
 
 function ProfileIcon() {
   return (
@@ -21,9 +22,30 @@ function ShopIcon() {
   )
 }
 
+function SoundOnIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+    </svg>
+  )
+}
+
+function SoundOffIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <line x1="23" y1="9" x2="17" y2="15" />
+      <line x1="17" y1="9" x2="23" y2="15" />
+    </svg>
+  )
+}
+
 export default function AppHeader({ level = 'A', roundedBottom = false }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
+  const muted = useMute()
 
   useEffect(() => {
     if (!open) return
@@ -62,7 +84,10 @@ export default function AppHeader({ level = 'A', roundedBottom = false }) {
       <div ref={ref}>
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            playTap()
+            setOpen((v) => !v)
+          }}
           aria-label="Open menu"
           aria-expanded={open}
           aria-haspopup="menu"
@@ -81,7 +106,10 @@ export default function AppHeader({ level = 'A', roundedBottom = false }) {
             <Link
               to="/profile"
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                playTap()
+                setOpen(false)
+              }}
               aria-label="Profile"
               className="w-10 h-10 rounded-full flex items-center justify-center text-[#f16522] hover:bg-[#f16522]/10 active:scale-95 transition"
             >
@@ -90,12 +118,28 @@ export default function AppHeader({ level = 'A', roundedBottom = false }) {
             <Link
               to="/shop"
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                playTap()
+                setOpen(false)
+              }}
               aria-label="Shop"
               className="w-10 h-10 rounded-full flex items-center justify-center text-[#f16522] hover:bg-[#f16522]/10 active:scale-95 transition"
             >
               <ShopIcon />
             </Link>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                toggleMute()
+                if (muted) playTap()
+              }}
+              aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
+              aria-pressed={muted}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-[#f16522] hover:bg-[#f16522]/10 active:scale-95 transition"
+            >
+              {muted ? <SoundOffIcon /> : <SoundOnIcon />}
+            </button>
           </div>
         )}
       </div>

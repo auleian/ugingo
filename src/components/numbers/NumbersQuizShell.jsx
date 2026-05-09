@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import NumbersFrame from './NumbersFrame'
 import NumbersQuizCard from './NumbersQuizCard'
+import { playCorrect, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [405, 479, 553]
 const OPTION_LEFTS = [40, 41, 42]
@@ -11,8 +12,10 @@ export default function NumbersQuizShell({ question, options, correctIndex, next
 
   function handlePick(i) {
     if (i === correctIndex) {
+      playCorrect()
       navigate(nextPath)
     } else {
+      playWrong()
       navigate(failPath, { state: { back: location.pathname } })
     }
   }

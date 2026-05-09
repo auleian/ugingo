@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import AnimalsFrame from './AnimalsFrame'
 import AnimalsHero, { QUIZ_ANTELOPE_CROP } from './AnimalsHero'
+import { playCorrect, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [448, 547, 646]
 const OPTION_LEFTS = [45, 42, 39]
@@ -24,8 +25,10 @@ export default function AnimalsQuizShell({
 
   function handlePick(i) {
     if (i === correctIndex) {
+      playCorrect()
       navigate(nextPath)
     } else if (failPath) {
+      playWrong()
       navigate(failPath, { state: { back: location.pathname } })
     }
   }

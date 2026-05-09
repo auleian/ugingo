@@ -9,8 +9,8 @@ export default function PlacesAntelope({ mode = 'list', top = 115, left = 218, w
   const m = MODES[mode] ?? MODES.list
   return (
     <div
-      className="absolute shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-      style={{ top, left, width, height: m.height }}
+      className="absolute"
+      style={{ top, left, width, height: m.height, filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.25))' }}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

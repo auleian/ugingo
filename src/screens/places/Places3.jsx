@@ -25,11 +25,15 @@ const ROWS = [
 export default function Places3() {
   return (
     <PlacesFrame>
-      <PlacesAntelope mode="list" />
-
       <div
-        className="absolute overflow-hidden pointer-events-none shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        style={{ top: 177, left: 43, width: 242, height: 155 }}
+        className="absolute overflow-hidden pointer-events-none"
+        style={{
+          top: 177,
+          left: 43,
+          width: 242,
+          height: 155,
+          filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.25))',
+        }}
       >
         <img
           src={cloudCard}
@@ -48,6 +52,8 @@ export default function Places3() {
         <p className="text-[#ff5300] text-[20px] leading-tight m-0">Ebifo byo butonde</p>
         <p className="text-[#2e4858] text-[14px] leading-tight mt-1">Places of nature</p>
       </div>
+
+      <PlacesAntelope mode="list" />
 
       {ROWS.map((r) => (
         <PlacesListRow key={r.luganda} {...r} />

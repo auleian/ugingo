@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import PlacesFrame from './PlacesFrame'
 import PlacesAntelope from './PlacesAntelope'
 import cloudCard from '../../assets/bg-success-cloud.png'
+import { playCorrect, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [446, 515.66, 585.32]
 
@@ -11,8 +12,10 @@ export default function PlacesQuizShell({ question, questionStyle, options, corr
 
   function handlePick(i) {
     if (i === correctIndex) {
+      playCorrect()
       navigate(nextPath)
     } else {
+      playWrong()
       navigate('/places/try-again', { state: { back: location.pathname } })
     }
   }

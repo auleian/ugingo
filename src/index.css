@@ -70,3 +70,10 @@ body {
 .star-glow:hover {
   animation-duration: 0.9s;
 }
+
+/* Respect users who request reduced motion — kill decorative animations. */
+@media (prefers-reduced-motion: reduce) {
+  .star-glow {
+    animation: none !important;
+  }
+}

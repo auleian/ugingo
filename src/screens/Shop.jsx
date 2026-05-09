@@ -5,6 +5,7 @@ import kingoHead from '../assets/shop-kingo-head.png'
 import cartIconUrl from '../assets/shop-cart-icon.svg'
 import starIconUrl from '../assets/shop-star.svg'
 import { addOne, totalCount, useCart } from '../lib/cart'
+import { playSuccess } from '../lib/sound'
 
 const APP_GRADIENT =
   'linear-gradient(117.127deg, rgb(243, 232, 255) 0%, rgb(252, 231, 243) 50%, rgb(254, 249, 194) 100%)'
@@ -176,7 +177,7 @@ export default function Shop() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => addOne(ADVENTURES_ID)}
+                  onClick={() => { playSuccess(); addOne(ADVENTURES_ID) }}
                   className="bg-[#f6339a] rounded-full text-white font-inter font-medium active:scale-95 transition-transform"
                   style={{ width: 132.525, height: 48, fontSize: 16, lineHeight: '24px' }}
                 >

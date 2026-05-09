@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import PeopleFrame from './PeopleFrame'
 import PeopleHero from './PeopleHero'
+import { playCorrect, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [481, 548, 615]
 
@@ -12,8 +13,10 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
 
   function handlePick(i) {
     if (i === correctIndex) {
+      playCorrect()
       navigate(nextPath)
     } else {
+      playWrong()
       navigate('/people/try-again', { state: { back: location.pathname } })
     }
   }

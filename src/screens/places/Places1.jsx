@@ -14,13 +14,16 @@ const ROWS = [
 export default function Places1() {
   return (
     <PlacesFrame>
-      {/* Antelope (list crop) */}
-      <PlacesAntelope mode="list" />
-
-      {/* Subtitle cloud-card */}
+      {/* Subtitle cloud-card (behind antelope) */}
       <div
-        className="absolute overflow-hidden pointer-events-none shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        style={{ top: 177, left: 43, width: 242, height: 155 }}
+        className="absolute overflow-hidden pointer-events-none"
+        style={{
+          top: 177,
+          left: 43,
+          width: 242,
+          height: 155,
+          filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.25))',
+        }}
       >
         <img
           src={cloudCard}
@@ -32,7 +35,7 @@ export default function Places1() {
         />
       </div>
 
-      {/* Subtitle text */}
+      {/* Subtitle text (behind antelope) */}
       <div
         className="absolute text-center font-poppins font-black"
         style={{ top: 233, left: 65, width: 188 }}
@@ -40,6 +43,9 @@ export default function Places1() {
         <p className="text-[#ff5300] text-[20px] leading-tight m-0">Ebifo ebikulu</p>
         <p className="text-[#2e4858] text-[14px] leading-tight mt-1">Essential places</p>
       </div>
+
+      {/* Antelope (list crop) — render LAST so it sits on top of the cloud-card */}
+      <PlacesAntelope mode="list" />
 
       {ROWS.map((r) => (
         <PlacesListRow key={r.luganda} {...r} />

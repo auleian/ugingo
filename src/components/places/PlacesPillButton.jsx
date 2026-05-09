@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { playTap } from '../../lib/sound'
 
 export default function PlacesPillButton({
   to,
@@ -15,13 +16,13 @@ export default function PlacesPillButton({
 
   if (to) {
     return (
-      <Link to={to} className={cls} style={allStyle}>
+      <Link to={to} onClick={() => playTap()} className={cls} style={allStyle}>
         {children}
       </Link>
     )
   }
   return (
-    <button type="button" onClick={onClick} className={cls} style={allStyle}>
+    <button type="button" onClick={(e) => { playTap(); onClick?.(e) }} className={cls} style={allStyle}>
       {children}
     </button>
   )
