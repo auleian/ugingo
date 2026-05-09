@@ -22,7 +22,8 @@ export default function Ready() {
 
       <Link
         to="/home"
-        className="absolute top-[492px] left-[107px] text-[#2e4858] font-opensans font-bold text-[16px] tracking-wide"
+        className="absolute flex items-center justify-center text-center text-[#2e4858] font-opensans font-bold text-[16px] tracking-wide"
+        style={{ top: 492, left: 107, width: 161, height: 28 }}
       >
         Tap to continue
       </Link>
