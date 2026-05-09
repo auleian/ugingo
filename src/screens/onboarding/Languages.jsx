@@ -144,7 +144,7 @@ export default function Languages() {
       />
       {/* Question text at (133, 98) 188×52 */}
       <p
-        className="absolute font-baloo font-normal text-[#1e1c1c]"
+        className="absolute font-baloo font-bold text-[#1e1c1c]"
         style={{ left: 133, top: 98, width: 188, height: 52, fontSize: 18, lineHeight: 'normal' }}
       >
         What language would you like to learn?
@@ -176,7 +176,7 @@ export default function Languages() {
           >
             <Flag lang={lang} />
             <span
-              className="font-baloo font-normal whitespace-nowrap"
+              className="font-baloo font-bold whitespace-nowrap"
               style={{
                 fontSize: 16,
                 color: lang.available ? '#1e1c1c' : 'rgba(30,28,28,0.56)',
