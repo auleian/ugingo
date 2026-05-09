@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import MobileFrame from './layouts/MobileFrame'
 import { preloadAllImages } from './lib/preloadImages'
 import { startPreload as startMusicPreload } from './lib/lessonsMusic'
+import { playCorrect } from './lib/sound'
 import Welcome from './screens/onboarding/Welcome'
 import WelcomeBranded from './screens/onboarding/WelcomeBranded'
 import Gingo from './screens/onboarding/Gingo'
@@ -76,6 +77,43 @@ import Profile from './screens/Profile'
 import Shop from './screens/Shop'
 import Cart from './screens/Cart'
 
+// Routes that aren't lesson content — onboarding flow up to (but not
+// including) the lessons map. The chime fires on any button/link clicked on
+// these screens, except inside the AppHeader.
+const POST_LESSONS_PREFIXES = [
+  '/lessons',
+  '/numbers',
+  '/alphabet',
+  '/people',
+  '/animals',
+  '/places',
+  '/profile',
+  '/shop',
+  '/cart',
+]
+function isPreLessons(pathname) {
+  return !POST_LESSONS_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'))
+}
+
+function PreLessonsChime() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    if (!isPreLessons(pathname)) return
+    const handler = (e) => {
+      const t = e.target
+      if (!t || !t.closest) return
+      // Skip clicks inside an AppHeader (its outer element is <header>).
+      if (t.closest('header')) return
+      // Only chime on interactive elements.
+      if (!t.closest('button, a, [role="button"]')) return
+      playCorrect()
+    }
+    document.addEventListener('click', handler, true)
+    return () => document.removeEventListener('click', handler, true)
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   useEffect(() => {
     preloadAllImages()
@@ -86,6 +124,7 @@ export default function App() {
 
   return (
     <MobileFrame>
+      <PreLessonsChime />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<WelcomeBranded />} />

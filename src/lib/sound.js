@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'react'
 import correctClipSrc from '../assets/correct.mp3'
 import milestoneClipSrc from '../assets/milestone.mp3'
+import completedClipSrc from '../assets/completed.mp3'
 
 const STORAGE_KEY = 'ugingo.muted'
 
@@ -163,16 +164,92 @@ function getMilestoneClip() {
   return _milestoneClip
 }
 
-export function playMilestone() {
+let _milestoneStopTimer = null
+export function stopMilestone() {
+  if (_milestoneStopTimer) {
+    clearTimeout(_milestoneStopTimer)
+    _milestoneStopTimer = null
+  }
+  if (_milestoneClip) {
+    try {
+      _milestoneClip.pause()
+      _milestoneClip.currentTime = 0
+    } catch {}
+  }
+}
+
+export function playMilestone(durationMs) {
   if (muted) return
   const a = getMilestoneClip()
   if (!a) return
+  if (_milestoneStopTimer) {
+    clearTimeout(_milestoneStopTimer)
+    _milestoneStopTimer = null
+  }
   try {
     a.pause()
     a.currentTime = 0
   } catch {}
   const p = a.play()
   if (p && typeof p.catch === 'function') p.catch(() => {})
+  if (typeof durationMs === 'number' && durationMs > 0) {
+    _milestoneStopTimer = setTimeout(() => {
+      _milestoneStopTimer = null
+      try {
+        a.pause()
+        a.currentTime = 0
+      } catch {}
+    }, durationMs)
+  }
+}
+
+// Recorded "completed" clip for the profile celebration. Fire-and-forget,
+// stoppable so a screen unmount can cut it short.
+let _completedClip = null
+let _completedStopTimer = null
+function getCompletedClip() {
+  if (_completedClip || typeof window === 'undefined') return _completedClip
+  _completedClip = new Audio(completedClipSrc)
+  _completedClip.preload = 'auto'
+  return _completedClip
+}
+
+export function stopCompleted() {
+  if (_completedStopTimer) {
+    clearTimeout(_completedStopTimer)
+    _completedStopTimer = null
+  }
+  if (_completedClip) {
+    try {
+      _completedClip.pause()
+      _completedClip.currentTime = 0
+    } catch {}
+  }
+}
+
+export function playCompleted(durationMs) {
+  if (muted) return
+  const a = getCompletedClip()
+  if (!a) return
+  if (_completedStopTimer) {
+    clearTimeout(_completedStopTimer)
+    _completedStopTimer = null
+  }
+  try {
+    a.pause()
+    a.currentTime = 0
+  } catch {}
+  const p = a.play()
+  if (p && typeof p.catch === 'function') p.catch(() => {})
+  if (typeof durationMs === 'number' && durationMs > 0) {
+    _completedStopTimer = setTimeout(() => {
+      _completedStopTimer = null
+      try {
+        a.pause()
+        a.currentTime = 0
+      } catch {}
+    }, durationMs)
+  }
 }
 
 export function playSuccess() {

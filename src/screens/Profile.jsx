@@ -1,9 +1,19 @@
+import { useEffect } from 'react'
 import AppHeader from '../components/AppHeader'
+import Confetti from '../components/Confetti'
 import bgSpace from '../assets/profile-bg.png'
 import trophy from '../assets/trophy.png'
 import starEarned from '../assets/star-earned.svg'
+import { playCompleted, stopCompleted } from '../lib/sound'
+
+const CELEBRATION_MS = 6500
 
 export default function Profile() {
+  useEffect(() => {
+    playCompleted()
+    return () => stopCompleted()
+  }, [])
+
   return (
     <div className="flex-1 relative overflow-hidden bg-[#0a2745]">
       <img
@@ -17,6 +27,8 @@ export default function Profile() {
         className="absolute max-w-none pointer-events-none select-none object-cover"
         style={{ top: 0, left: -43, width: 457, height: 812 }}
       />
+
+      <Confetti mode="rain" count={140} duration={CELEBRATION_MS} spawnUntil={CELEBRATION_MS - 1000} />
 
       <AppHeader roundedBottom />
 

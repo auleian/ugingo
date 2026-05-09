@@ -1,4 +1,4 @@
-import AppHeader from '../../components/AppHeader'
+import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import Mascot from '../../components/Mascot'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import blocksStrip from '../../assets/alphabet-blocks-strip.png'
@@ -26,17 +26,9 @@ function StripBand({ top, left, width = 553, height = 133, rotate = false }) {
 
 export default function Alphabet2() {
   return (
-    <div className="flex-1 relative overflow-hidden bg-white">
+    <AlphabetFrame background="plain">
       <StripBand top={82} left={-178} rotate />
       <StripBand top={666} left={-65} width={669} height={161} />
-
-      <AppHeader />
-
-      <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">
-        <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">
-          Warifu
-        </span>
-      </div>
 
       <Mascot
         variant="antelopeSide"
@@ -83,6 +75,6 @@ export default function Alphabet2() {
       <AlphabetPillButton to="/alphabet/3" className="absolute" style={{ top: 638, left: 230 }}>
         Next
       </AlphabetPillButton>
-    </div>
+    </AlphabetFrame>
   )
 }

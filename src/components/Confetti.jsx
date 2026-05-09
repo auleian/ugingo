@@ -8,15 +8,20 @@ import { useEffect, useRef } from 'react'
 
 const COLORS = ['#F16522', '#F7AE2B', '#F8C83C', '#69CAD3', '#2E4858', '#FF66C4']
 
+// Two modes:
+//  - 'burst' (default): particles erupt from (originX, originY) and fall.
+//  - 'rain': particles enter from above the top edge at random x and fall
+//    straight down — for ambient celebrations like the profile screen.
 // Defaults sized to outlast the milestone clip (4.52s) by ~1s — particles keep
 // spawning until `spawnUntil` ms and then fade until `duration` ms.
 export default function Confetti({
+  mode = 'burst',
   count = 160,
   duration = 3500,
   spawnUntil = 2800,
-  originX = 0.5, // 0–1 of frame width
-  originY = 0.35, // 0–1 of frame height (upper-third looks best behind a mascot)
-  spreadDeg = 80,
+  originX = 0.5, // burst-only: 0–1 of frame width
+  originY = 0.35, // burst-only: 0–1 of frame height
+  spreadDeg = 80, // burst-only
   className = '',
 }) {
   const canvasRef = useRef(null)
@@ -45,9 +50,9 @@ export default function Confetti({
 
     // Particles are pre-built but each has a spawnAt time so they "pour" over
     // the spawnUntil window rather than all firing in a single burst.
-    const baseAngle = -Math.PI / 2 // straight up
+    const baseAngle = -Math.PI / 2 // burst: straight up
     const half = (spreadDeg * Math.PI) / 180 / 2
-    const makeParticle = (spawnAt) => {
+    const makeBurst = (spawnAt) => {
       const angle = baseAngle + (Math.random() * 2 - 1) * half
       const speed = 280 + Math.random() * 320
       return {
@@ -63,6 +68,19 @@ export default function Confetti({
         active: false,
       }
     }
+    const makeRain = (spawnAt) => ({
+      spawnAt,
+      x: Math.random() * w,
+      y: -20 - Math.random() * 60, // start above the top edge
+      vx: (Math.random() - 0.5) * 60, // slight horizontal drift
+      vy: 80 + Math.random() * 80, // gentle downward push, gravity does the rest
+      rot: Math.random() * Math.PI * 2,
+      vrot: (Math.random() - 0.5) * 8,
+      size: 5 + Math.random() * 5,
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      active: false,
+    })
+    const makeParticle = mode === 'rain' ? makeRain : makeBurst
     const particles = []
     for (let i = 0; i < count; i++) {
       // Even-ish stagger across spawnUntil with a touch of jitter.
@@ -115,7 +133,7 @@ export default function Confetti({
     raf = requestAnimationFrame(tick)
 
     return () => cancelAnimationFrame(raf)
-  }, [count, duration, spawnUntil, originX, originY, spreadDeg])
+  }, [mode, count, duration, spawnUntil, originX, originY, spreadDeg])
 
   return (
     <canvas

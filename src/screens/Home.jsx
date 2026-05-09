@@ -3,11 +3,11 @@ import AppHeader from '../components/AppHeader'
 import Mascot from '../components/Mascot'
 import bgHome from '../assets/bg-home.png'
 
-function PlanPill({ to, title, subtitle, titleColor, x, y, w, h }) {
+function PlanPill({ to, title, subtitle, titleColor, x, y, w, h, glowDelay = '0s' }) {
   return (
     <Link
       to={to}
-      className="absolute bg-[#2E4858] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex flex-col items-center justify-center text-center active:scale-[0.98] transition"
+      className="home-pill-glow absolute bg-[#2E4858] flex flex-col items-center justify-center text-center active:scale-[0.98] transition"
       style={{
         top: y,
         left: x,
@@ -15,6 +15,7 @@ function PlanPill({ to, title, subtitle, titleColor, x, y, w, h }) {
         height: h,
         borderRadius: 52.5,
         color: titleColor,
+        animationDelay: glowDelay,
       }}
     >
       <div className="font-poppins font-black text-[26px] leading-none">{title}</div>

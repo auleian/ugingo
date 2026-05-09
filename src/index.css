@@ -85,10 +85,22 @@ body {
   will-change: transform;
 }
 
+/* Pill breathes — expands a little and returns to its size to signal
+   "tap me". Two pills can stagger by setting a different `animation-delay`. */
+@keyframes home-pill-glow {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+.home-pill-glow {
+  animation: home-pill-glow 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
 /* Respect users who request reduced motion — kill decorative animations. */
 @media (prefers-reduced-motion: reduce) {
   .star-glow,
-  .star-float {
+  .star-float,
+  .home-pill-glow {
     animation: none !important;
   }
 }

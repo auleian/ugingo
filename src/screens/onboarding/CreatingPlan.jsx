@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AppHeader from '../../components/AppHeader'
 import Mascot from '../../components/Mascot'
+import { playMilestone, stopMilestone } from '../../lib/sound'
 
 const ANIMATION_MS = 2500
 
@@ -10,6 +11,7 @@ export default function CreatingPlan() {
   const done = progress >= 1
 
   useEffect(() => {
+    playMilestone()
     const start = performance.now()
     let raf
     const tick = (now) => {
@@ -18,7 +20,10 @@ export default function CreatingPlan() {
       if (t < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      stopMilestone()
+    }
   }, [])
 
   return (
