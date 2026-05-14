@@ -1,11 +1,7 @@
-import { useRef } from 'react'
-import usePulse from '../../lib/usePulse'
-
 // One vocabulary card on Animals 1–3: a yellow square (51×67) holding an
 // emoji, butted against a cyan rounded rectangle (109.798×67) holding the
-// Luganda word + English translation. Per Figma 529:165–189 etc. The two
-// halves overlap by ~4.32px (`leftOffset`) so the rounded corners meet
-// cleanly.
+// Luganda word + English translation. Hover-raise prepares the card for
+// per-card pronunciation audio (planned).
 export default function AnimalsListRow({
   top,
   left,
@@ -15,12 +11,12 @@ export default function AnimalsListRow({
   wordSize = 20,
   textTop = 13,
   textLeftOffset = 14,
-  isPulsing = false,
 }) {
-  const ref = useRef(null)
-  usePulse(ref, isPulsing)
   return (
-    <div ref={ref} className="absolute z-20" style={{ top, left, width: 174.798, height: 67, transformOrigin: 'center center' }}>
+    <div
+      className="absolute z-20 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      style={{ top, left, width: 174.798, height: 67 }}
+    >
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
         style={{ top: 0, left: 55.68, width: 109.798, height: 67 }}

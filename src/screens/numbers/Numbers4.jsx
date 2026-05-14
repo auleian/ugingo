@@ -17,7 +17,7 @@ const TENS = [
 function TensCard({ num, word }) {
   const balls = '⚽'.repeat(num)
   return (
-    <div className="relative w-[161px] h-[108px] bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] overflow-hidden">
+    <div className="relative w-[161px] h-[108px] bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] overflow-hidden cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5">
       <div className="absolute top-[12px] left-[11px] w-[45px] h-[43px] rounded-full bg-[#69cad3] border-[3px] border-white shadow-[0_4px_4px_rgba(0,0,0,0.18)] flex items-center justify-center">
         <span className="font-opensans font-extrabold text-[#2e4858] text-[20px] leading-none">
           {num}

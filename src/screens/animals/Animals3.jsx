@@ -2,7 +2,6 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
-import useShiverCycle from '../../lib/useShiverCycle'
 
 // Animals 3 lays out a 2×2 grid of birds-and-others. The hero text is
 // centered (no antelope mascot in Figma 529:258), so we render the ribbon
@@ -15,7 +14,6 @@ const ROWS = [
 ]
 
 export default function Animals3() {
-  const pulseIdx = useShiverCycle(ROWS.length, 1200)
   return (
     <AnimalsFrame>
       <div
@@ -41,7 +39,7 @@ export default function Animals3() {
       />
 
       {ROWS.map((row, i) => (
-        <AnimalsListRow key={i} {...row} isPulsing={i === pulseIdx} />
+        <AnimalsListRow key={i} {...row} />
       ))}
 
       <AnimalsPillButton

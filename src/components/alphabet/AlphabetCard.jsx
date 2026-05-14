@@ -1,7 +1,5 @@
-import { useRef } from 'react'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import creamPill from '../../assets/cream-pill.svg'
-import useCloudShiver from '../../lib/useCloudShiver'
 
 export default function AlphabetCard({
   letter,
@@ -13,16 +11,11 @@ export default function AlphabetCard({
   left,
   width = 199,
   height = 124,
-  isShivering = false,
 }) {
-  const ref = useRef(null)
-  useCloudShiver(ref, isShivering)
-
   return (
     <div
-      ref={ref}
-      className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)]"
-      style={{ top, left, width, height, transformOrigin: 'center center' }}
+      className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      style={{ top, left, width, height }}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

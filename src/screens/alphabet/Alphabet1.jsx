@@ -1,16 +1,10 @@
-import { useRef } from 'react'
 import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import blocksFull from '../../assets/alphabet-blocks-full.png'
 import blocksStrip from '../../assets/alphabet-blocks-strip.png'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import useCloudShiver from '../../lib/useCloudShiver'
 
 export default function Alphabet1() {
-  const cloudRef = useRef(null)
-  // Single cloud on this page — shiver continuously while mounted.
-  useCloudShiver(cloudRef, true, { loop: true })
-
   return (
     <AlphabetFrame background="plain">
       <img
@@ -39,9 +33,8 @@ export default function Alphabet1() {
       </div>
 
       <div
-        ref={cloudRef}
         className="absolute drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        style={{ top: 249, left: 3, width: 366, height: 229, transformOrigin: 'center center' }}
+        style={{ top: 249, left: 3, width: 366, height: 229 }}
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img

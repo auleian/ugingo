@@ -22,7 +22,7 @@ export default function PeopleCard({
 }) {
   return (
     <div
-      className="absolute drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+      className="absolute drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left, width: 202, height: 127 }}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

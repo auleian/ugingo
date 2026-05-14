@@ -3,7 +3,6 @@ import PlacesAntelope from '../../components/places/PlacesAntelope'
 import PlacesListRow from '../../components/places/PlacesListRow'
 import PlacesPillButton from '../../components/places/PlacesPillButton'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import useShiverCycle from '../../lib/useShiverCycle'
 
 const ROWS = [
   { top: 389, luganda: 'Awaka',     english: 'Home',     icon: '🏠' },
@@ -13,7 +12,6 @@ const ROWS = [
 ]
 
 export default function Places1() {
-  const pulseIdx = useShiverCycle(ROWS.length, 1200)
   return (
     <PlacesFrame>
       {/* Subtitle cloud-card (behind antelope) */}
@@ -49,8 +47,8 @@ export default function Places1() {
       {/* Antelope (list crop) — render LAST so it sits on top of the cloud-card */}
       <PlacesAntelope mode="list" />
 
-      {ROWS.map((r, i) => (
-        <PlacesListRow key={r.luganda} {...r} isPulsing={i === pulseIdx} />
+      {ROWS.map((r) => (
+        <PlacesListRow key={r.luganda} {...r} />
       ))}
 
       <PlacesPillButton to="/places/2" className="absolute" style={{ top: 750, left: 244 }}>

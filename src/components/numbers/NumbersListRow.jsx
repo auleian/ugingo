@@ -1,6 +1,3 @@
-import { useRef } from 'react'
-import usePulse from '../../lib/usePulse'
-
 function countGraphemes(s) {
   try {
     return [...new Intl.Segmenter().segment(s)].length
@@ -20,22 +17,18 @@ function pickFontSize(count) {
 
 const ROW_HEIGHT = 58.63
 
-export default function NumbersListRow({ index, word, pronounce, icon, top, isPulsing = false }) {
+export default function NumbersListRow({ index, word, pronounce, icon, top }) {
   const count = countGraphemes(icon)
   const isMulti = count > 1
   const fontSize = pickFontSize(count)
   const iconWidth = isMulti ? 30 : 'auto'
-  const ref = useRef(null)
-  usePulse(ref, isPulsing)
 
-  // Wrap the four absolute children in a single positioned wrapper so the row
-  // can be transformed as a unit (heartbeat pulse). Children's tops shift from
-  // `top + N` to plain `N` since they're now relative to this wrapper.
+  // Children are positioned absolutely within this wrapper so the whole row
+  // moves as a unit when hovered (raise effect).
   return (
     <div
-      ref={ref}
-      className="absolute z-10"
-      style={{ top, left: 0, width: 374, height: ROW_HEIGHT, transformOrigin: 'center center' }}
+      className="absolute z-10 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      style={{ top, left: 0, width: 374, height: ROW_HEIGHT }}
     >
       <div
         className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

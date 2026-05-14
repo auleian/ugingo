@@ -9,15 +9,18 @@ const EXAMPLES = [
 ]
 
 function ExampleRow({ index, word, icon, top }) {
+  // Wrap the row pieces in one positioned div so the hover-raise applies to
+  // the entire card as a unit. Child positions are now relative to this
+  // wrapper (left=19, width=335).
   return (
-    <>
-      <div
-        className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top, left: 19, width: 335, height: 58.63 }}
-      />
+    <div
+      className="absolute z-10 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      style={{ top, left: 19, width: 335, height: 58.63 }}
+    >
+      <div className="absolute inset-0 bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]" />
       <div
         className="absolute rounded-full bg-[#69cad3] border-[3px] border-white shadow-[0_4px_4px_rgba(0,0,0,0.18)] flex items-center justify-center z-20"
-        style={{ top: top + 7, left: 30, width: 45, height: 43 }}
+        style={{ top: 7, left: 11, width: 45, height: 43 }}
       >
         <span className="font-opensans font-extrabold text-[#2e4858] text-[20px] leading-none">
           {index}
@@ -25,13 +28,13 @@ function ExampleRow({ index, word, icon, top }) {
       </div>
       <p
         className="absolute z-20 font-poppins font-black text-[#2e4858] text-[18px] leading-tight"
-        style={{ top: top + 18, left: 84, right: 70 }}
+        style={{ top: 18, left: 65, right: 51 }}
       >
         {word}
       </p>
       <div
         className="absolute rounded-full bg-[#2e4858] flex items-center justify-center z-20 overflow-hidden"
-        style={{ top: top + 9, left: 286, width: 45, height: 43 }}
+        style={{ top: 9, left: 267, width: 45, height: 43 }}
       >
         <span
           className="text-white text-center break-all"
@@ -41,7 +44,7 @@ function ExampleRow({ index, word, icon, top }) {
           {icon}
         </span>
       </div>
-    </>
+    </div>
   )
 }
 

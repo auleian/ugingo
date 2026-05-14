@@ -1,20 +1,14 @@
-import { useRef } from 'react'
 import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import creamPillLg from '../../assets/cream-pill-lg.svg'
-import useCloudShiver from '../../lib/useCloudShiver'
-import useShiverCycle from '../../lib/useShiverCycle'
 
-function SpecialCard({ top, letter, say, hint, emoji, word, translation, isShivering = false }) {
-  const ref = useRef(null)
-  useCloudShiver(ref, isShivering)
+function SpecialCard({ top, letter, say, hint, emoji, word, translation }) {
   return (
     <div
-      ref={ref}
-      className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)] pointer-events-none"
-      style={{ top, left: 22, width: 324, height: 203, transformOrigin: 'center center' }}
+      className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
+      style={{ top, left: 22, width: 324, height: 203 }}
     >
       <div className="absolute inset-0 overflow-hidden">
         <img
@@ -65,7 +59,6 @@ function SpecialCard({ top, letter, say, hint, emoji, word, translation, isShive
 }
 
 export default function Alphabet7() {
-  const shiverIdx = useShiverCycle(2)
   return (
     <AlphabetFrame>
       <Mascot
@@ -101,7 +94,6 @@ export default function Alphabet7() {
         emoji="🆘️"
         word="Nyamba"
         translation="Help me"
-        isShivering={shiverIdx === 0}
       />
 
       <SpecialCard
@@ -112,7 +104,6 @@ export default function Alphabet7() {
         emoji="🦤"
         word="Ŋŋaali"
         translation="Crane"
-        isShivering={shiverIdx === 1}
       />
 
       <AlphabetPillButton size="sm" to="/alphabet/6" className="absolute" style={{ top: 750, left: 30 }}>
