@@ -17,10 +17,12 @@
 
 import { useEffect, useState } from 'react'
 import musicSrc from '../assets/lessons-music.mp3'
-import { isMuted, useMute } from './sound'
+import { isMuted, useMute, isMusicEnabled, useMusicEnabled, getVolume, subscribeVolume } from './sound'
 
 const LOAD_TIMEOUT_MS = 12000 // graceful degrade — never block forever
-const VOLUME = 0.35
+// Base gain — multiplied by the user's master volume (0..1) so the slider
+// scales music loudness alongside sound effects.
+const BASE_VOLUME = 0.35
 const SEAMLESS_PAUSE_DELAY_MS = 200
 // Skip the trailing fade-out by looping back this many seconds before the end.
 const LOOP_TAIL_TRIM_SECONDS = 5
@@ -34,13 +36,21 @@ let pausedAtCtxTime = 0 // ctx.currentTime when we last paused
 let bufferOffset = 0 // where in the buffer to resume from on next play()
 let pendingPauseTimer = null
 
+function applyGain() {
+  if (gain) gain.gain.value = BASE_VOLUME * getVolume()
+}
+
+// Keep the music gain in sync with the slider permanently so changing volume
+// from any screen reflects on the currently-looping music immediately.
+subscribeVolume(applyGain)
+
 function getCtx() {
   if (ctx || typeof window === 'undefined') return ctx
   const Ctor = window.AudioContext || window.webkitAudioContext
   if (!Ctor) return null
   ctx = new Ctor()
   gain = ctx.createGain()
-  gain.gain.value = VOLUME
+  applyGain()
   gain.connect(ctx.destination)
   return ctx
 }
@@ -80,10 +90,11 @@ function loopEndSeconds() {
 }
 
 function play() {
-  if (source || !buffer || isMuted()) return
+  if (source || !buffer || isMuted() || !isMusicEnabled()) return
   const c = getCtx()
   if (!c) return
   if (c.state === 'suspended') c.resume().catch(() => {})
+  applyGain() // pick up any volume change that happened while paused
   const s = c.createBufferSource()
   s.buffer = buffer
   s.loop = true
@@ -134,6 +145,7 @@ function schedulePause() {
 export function useLessonsMusic(active = true) {
   const [ready, setReady] = useState(false)
   const muted = useMute()
+  const musicEnabled = useMusicEnabled()
 
   useEffect(() => {
     if (!active) {
@@ -153,12 +165,12 @@ export function useLessonsMusic(active = true) {
     }
   }, [active])
 
-  // React to mute toggle while a lesson is active.
+  // React to master mute or music-category toggle while a lesson is active.
   useEffect(() => {
     if (!active || !ready) return
-    if (muted) pauseNow()
+    if (muted || !musicEnabled) pauseNow()
     else play()
-  }, [muted, active, ready])
+  }, [muted, musicEnabled, active, ready])
 
   return ready
 }

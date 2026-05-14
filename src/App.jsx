@@ -12,6 +12,9 @@ import Languages from './screens/onboarding/Languages'
 import Question from './screens/onboarding/Question'
 import CreatingPlan from './screens/onboarding/CreatingPlan'
 import Ready from './screens/onboarding/Ready'
+import CreateAccount from './screens/onboarding/CreateAccount'
+import Login from './screens/onboarding/Login'
+import WelcomeUser from './screens/onboarding/WelcomeUser'
 import Home from './screens/Home'
 import CulturePlan from './screens/onboarding/CulturePlan'
 import LanguagePlanIntro from './screens/onboarding/LanguagePlanIntro'
@@ -74,6 +77,7 @@ import Places6 from './screens/places/Places6'
 import Places7 from './screens/places/Places7'
 import PlacesTryAgain from './screens/places/PlacesTryAgain'
 import Profile from './screens/Profile'
+import Settings from './screens/Settings'
 import Shop from './screens/Shop'
 import Cart from './screens/Cart'
 
@@ -134,6 +138,9 @@ export default function App() {
         <Route path="/question/:num" element={<Question />} />
         <Route path="/creating-plan" element={<CreatingPlan />} />
         <Route path="/ready" element={<Ready />} />
+        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/welcome-user" element={<WelcomeUser />} />
         <Route path="/home" element={<Home />} />
         <Route path="/language-plan" element={<LanguagePlanIntro />} />
         <Route path="/language-plan/start" element={<LanguagePlanStart />} />
@@ -194,6 +201,7 @@ export default function App() {
         <Route path="/places/7" element={<Places7 />} />
         <Route path="/places/try-again" element={<PlacesTryAgain />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/culture-plan" element={<CulturePlan />} />

@@ -8,6 +8,8 @@ export default {
         inter: ['"Inter"', 'system-ui', 'sans-serif'],
         opensans: ['"Open Sans"', 'system-ui', 'sans-serif'],
         poppins: ['"Poppins"', 'system-ui', 'sans-serif'],
+        raleway: ['"Raleway"', 'system-ui', 'sans-serif'],
+        nunito: ['"Nunito Sans"', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
         mobile: '374px',

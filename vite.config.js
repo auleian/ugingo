@@ -7,6 +7,9 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 // are the biggest first-paint cost on Vercel — pngquant + oxipng typically cuts
 // them 5-10× without visible quality loss. JPEGs go through mozjpeg.
 export default defineConfig({
+  // host: true binds the dev server to 0.0.0.0 so other devices on the LAN
+  // (e.g. a phone on the same Wi-Fi) can hit it via the machine's IP address.
+  server: { host: true },
   plugins: [
     react(),
     ViteImageOptimizer({

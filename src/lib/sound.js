@@ -9,6 +9,10 @@ import milestoneClipSrc from '../assets/milestone.mp3'
 import completedClipSrc from '../assets/completed.mp3'
 
 const STORAGE_KEY = 'ugingo.muted'
+const MUSIC_KEY = 'ugingo.musicEnabled'
+const SOUNDS_KEY = 'ugingo.soundsEnabled'
+const VOLUME_KEY = 'ugingo.volume'
+const DEFAULT_VOLUME = 0.7
 
 let _ctx = null
 function ctx() {
@@ -62,6 +66,147 @@ export function useMute() {
   return m
 }
 
+// --- category toggles ----------------------------------------------------
+// `muted` is the master override. `musicEnabled` and `soundsEnabled` are
+// per-category gates flipped from the Settings screen. Anything audible must
+// pass BOTH the master mute and its category gate to play.
+// Default for new categories is ON.
+
+function loadFlag(key, defaultOn) {
+  try {
+    const v = localStorage.getItem(key)
+    if (v === null) return defaultOn
+    return v === '1'
+  } catch {
+    return defaultOn
+  }
+}
+
+let musicEnabled = loadFlag(MUSIC_KEY, true)
+let soundsEnabled = loadFlag(SOUNDS_KEY, true)
+const musicListeners = new Set()
+const soundsListeners = new Set()
+
+export function isMusicEnabled() {
+  return musicEnabled
+}
+
+export function setMusicEnabled(next) {
+  musicEnabled = !!next
+  try {
+    localStorage.setItem(MUSIC_KEY, musicEnabled ? '1' : '0')
+  } catch {}
+  for (const l of musicListeners) l(musicEnabled)
+}
+
+export function useMusicEnabled() {
+  const [v, setV] = useState(musicEnabled)
+  useEffect(() => {
+    const l = (next) => setV(next)
+    musicListeners.add(l)
+    return () => {
+      musicListeners.delete(l)
+    }
+  }, [])
+  return v
+}
+
+export function isSoundsEnabled() {
+  return soundsEnabled
+}
+
+export function setSoundsEnabled(next) {
+  soundsEnabled = !!next
+  try {
+    localStorage.setItem(SOUNDS_KEY, soundsEnabled ? '1' : '0')
+  } catch {}
+  for (const l of soundsListeners) l(soundsEnabled)
+}
+
+export function useSoundsEnabled() {
+  const [v, setV] = useState(soundsEnabled)
+  useEffect(() => {
+    const l = (next) => setV(next)
+    soundsListeners.add(l)
+    return () => {
+      soundsListeners.delete(l)
+    }
+  }, [])
+  return v
+}
+
+// True if a sound effect would actually be heard. Both gates must allow it.
+function soundsBlocked() {
+  return muted || !soundsEnabled
+}
+
+// --- master volume (0..1) ------------------------------------------------
+// Attenuates everything that goes through synth tones, lesson music, and
+// MP3 clips. Persisted so the user's setting survives reload.
+
+function loadVolume() {
+  try {
+    const raw = localStorage.getItem(VOLUME_KEY)
+    if (raw === null) return DEFAULT_VOLUME
+    const n = parseFloat(raw)
+    if (Number.isNaN(n)) return DEFAULT_VOLUME
+    return Math.max(0, Math.min(1, n))
+  } catch {
+    return DEFAULT_VOLUME
+  }
+}
+
+let volume = loadVolume()
+const volumeListeners = new Set()
+
+export function getVolume() {
+  return volume
+}
+
+export function setVolume(v) {
+  const clamped = Math.max(0, Math.min(1, v))
+  if (clamped === volume) return
+  volume = clamped
+  try {
+    localStorage.setItem(VOLUME_KEY, String(volume))
+  } catch {}
+  for (const l of volumeListeners) l(volume)
+}
+
+export function useVolume() {
+  const [v, setV] = useState(volume)
+  useEffect(() => {
+    const l = (next) => setV(next)
+    volumeListeners.add(l)
+    return () => {
+      volumeListeners.delete(l)
+    }
+  }, [])
+  return v
+}
+
+// Permanent (non-React) subscription so non-component code (e.g. the music
+// loop that may be playing while the user is on a different screen) can react
+// to volume changes. Returns an unsubscribe function.
+export function subscribeVolume(listener) {
+  volumeListeners.add(listener)
+  return () => volumeListeners.delete(listener)
+}
+
+// Audio-clip helper — applied to <audio> elements right before play.
+function withVolume(audio) {
+  if (audio) audio.volume = volume
+  return audio
+}
+
+// Keep already-cached clips' .volume in sync with the slider in real time so
+// dragging the Settings slider during a clip changes its loudness live.
+volumeListeners.add(() => {
+  if (_correctClip) _correctClip.volume = volume
+  if (_milestoneClip) _milestoneClip.volume = volume
+  if (_completedClip) _completedClip.volume = volume
+})
+
 // --- synth primitives ----------------------------------------------------
 
 // Browsers require a user gesture before AudioContext can resume. We try to
@@ -73,15 +218,19 @@ function ensureRunning() {
   return c
 }
 
-// One short tone with an ADSR envelope.
+// One short tone with an ADSR envelope. `peak` is the configured tone
+// loudness; we then attenuate by the user's master volume (0..1) so a single
+// volume control affects every synthesised sound consistently.
 function tone(c, { freq, start, dur, peak = 0.18, attack = 0.005, type = 'sine' }) {
   const osc = c.createOscillator()
   const gain = c.createGain()
   osc.type = type
   osc.frequency.setValueAtTime(freq, start)
+  const target = peak * volume
   gain.gain.setValueAtTime(0, start)
-  gain.gain.linearRampToValueAtTime(peak, start + attack)
-  gain.gain.exponentialRampToValueAtTime(0.0001, start + dur)
+  gain.gain.linearRampToValueAtTime(target, start + attack)
+  // exponentialRampTo can't ramp to 0; floor near-silence
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, target * 0.001), start + dur)
   osc.connect(gain)
   gain.connect(c.destination)
   osc.start(start)
@@ -91,7 +240,7 @@ function tone(c, { freq, start, dur, peak = 0.18, attack = 0.005, type = 'sine' 
 // --- public sounds -------------------------------------------------------
 
 export function playTap() {
-  if (muted) return
+  if (soundsBlocked()) return
   const c = ensureRunning()
   if (!c) return
   const t = c.currentTime
@@ -99,7 +248,7 @@ export function playTap() {
 }
 
 export function playCorrect() {
-  if (muted) return
+  if (soundsBlocked()) return
   const c = ensureRunning()
   if (!c) return
   const t = c.currentTime
@@ -110,7 +259,7 @@ export function playCorrect() {
 }
 
 export function playWrong() {
-  if (muted) return
+  if (soundsBlocked()) return
   const c = ensureRunning()
   if (!c) return
   const t = c.currentTime
@@ -131,8 +280,8 @@ function getCorrectClip() {
 }
 
 export function playCorrectClip() {
-  if (muted) return Promise.resolve()
-  const a = getCorrectClip()
+  if (soundsBlocked()) return Promise.resolve()
+  const a = withVolume(getCorrectClip())
   if (!a) return Promise.resolve()
   try {
     a.pause()
@@ -179,8 +328,8 @@ export function stopMilestone() {
 }
 
 export function playMilestone(durationMs) {
-  if (muted) return
-  const a = getMilestoneClip()
+  if (soundsBlocked()) return
+  const a = withVolume(getMilestoneClip())
   if (!a) return
   if (_milestoneStopTimer) {
     clearTimeout(_milestoneStopTimer)
@@ -228,8 +377,8 @@ export function stopCompleted() {
 }
 
 export function playCompleted(durationMs) {
-  if (muted) return
-  const a = getCompletedClip()
+  if (soundsBlocked()) return
+  const a = withVolume(getCompletedClip())
   if (!a) return
   if (_completedStopTimer) {
     clearTimeout(_completedStopTimer)
@@ -253,7 +402,7 @@ export function playCompleted(durationMs) {
 }
 
 export function playSuccess() {
-  if (muted) return
+  if (soundsBlocked()) return
   const c = ensureRunning()
   if (!c) return
   const t = c.currentTime
