@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import arrowIcon from '../assets/account-arrow.svg'
 import pencilIcon from '../assets/account-pencil.svg'
 import { useAvatar } from '../lib/avatar'
+import { useUserDisplay, updateDisplayName } from '../lib/firebase'
 
-// Design placeholders — overridden by props (and later, by user context fed
-// from email-derived name / Google profile). Avatar comes from the picker
-// store (lib/avatar.js) so changing it on /account/avatar updates here.
-const DEFAULT_NAME = 'Ameritah Nakabuye'
-const DEFAULT_EMAIL = 'ameritahnakabuye@gmail.com'
-const DEFAULT_PHONE = '+256 751 848 019'
+// Phone has no Firebase Auth field for email-password users — it'd need
+// Firestore. For now it lives only in this screen's local state; gets reset
+// on each visit. Deferred until the Firestore scope.
+const DEFAULT_PHONE = ''
 
 // Labelled text input — Figma 869:418/423/428
-function Field({ label, value, onChange, type = 'text' }) {
+function Field({ label, value, onChange, type = 'text', readOnly = false }) {
   return (
     <div className="flex flex-col w-full" style={{ gap: 8, height: 77.6 }}>
       <label
@@ -24,14 +23,16 @@ function Field({ label, value, onChange, type = 'text' }) {
       <input
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={readOnly ? undefined : (e) => onChange(e.target.value)}
+        readOnly={readOnly}
         className="w-full rounded-[14px] outline-none font-inter focus:border-[#69CAD3] transition-colors"
         style={{
           height: 49.6,
           padding: '12px 16px',
           fontSize: 16,
           lineHeight: '24px',
-          color: '#0A0A0A',
+          color: readOnly ? '#6B7280' : '#0A0A0A',
+          backgroundColor: readOnly ? '#F9FAFB' : '#FFFFFF',
           border: '0.8px solid #E5E7EB',
         }}
       />
@@ -39,23 +40,37 @@ function Field({ label, value, onChange, type = 'text' }) {
   )
 }
 
-export default function EditProfile({
-  name: initialName = DEFAULT_NAME,
-  email: initialEmail = DEFAULT_EMAIL,
-  phone: initialPhone = DEFAULT_PHONE,
-  avatarSrc,
-}) {
+export default function EditProfile({ avatarSrc }) {
   const navigate = useNavigate()
   const avatar = useAvatar()
   const finalAvatar = avatarSrc ?? avatar.src
-  const [name, setName] = useState(initialName)
-  const [email, setEmail] = useState(initialEmail)
-  const [phone, setPhone] = useState(initialPhone)
+  const { name: authName, email: authEmail } = useUserDisplay()
 
-  const handleSave = () => {
-    // TODO: when user context lands, persist {name, email, phone} to it here.
-    // For now, just return to the account menu.
-    navigate('/my-account')
+  // Initialise from auth on first mount; user can then edit. The full email
+  // is read-only display — changing the Firebase auth email needs
+  // re-authentication and verification, which is out of scope tonight.
+  const [name, setName] = useState(authName || '')
+  const [email] = useState(authEmail || '')
+  const [phone, setPhone] = useState(DEFAULT_PHONE)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSave = async () => {
+    if (busy) return
+    setError('')
+    const trimmed = name.trim()
+    if (!trimmed) {
+      setError('Please enter your name.')
+      return
+    }
+    setBusy(true)
+    try {
+      await updateDisplayName(trimmed)
+      navigate('/my-account')
+    } catch (err) {
+      setError(err?.message || 'Could not save. Try again.')
+      setBusy(false)
+    }
   }
 
   return (
@@ -146,15 +161,26 @@ export default function EditProfile({
         style={{ top: 374, left: 32, width: 311, height: 264.8, gap: 16 }}
       >
         <Field label="Full Name" value={name} onChange={setName} />
-        <Field label="Email" value={email} onChange={setEmail} type="email" />
+        <Field label="Email" value={email} type="email" readOnly />
         <Field label="Phone Number" value={phone} onChange={setPhone} type="tel" />
       </div>
+
+      {/* Inline status — auth error if save fails. */}
+      {error && (
+        <p
+          className="absolute text-center font-poppins"
+          style={{ top: 654, left: 29, width: 311, fontSize: 12, lineHeight: '14px', color: '#DC2626' }}
+        >
+          {error}
+        </p>
+      )}
 
       {/* Save Changes button — Figma 869:433 (311×56 cyan at left=29 top=690, rounded-full) */}
       <button
         type="button"
         onClick={handleSave}
-        className="absolute flex items-center justify-center rounded-full transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+        disabled={busy}
+        className="absolute flex items-center justify-center rounded-full transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-60"
         style={{
           top: 690,
           left: 29,
@@ -169,7 +195,7 @@ export default function EditProfile({
           className="font-inter font-bold text-white text-center whitespace-nowrap"
           style={{ fontSize: 16, lineHeight: '24px' }}
         >
-          Save Changes
+          {busy ? 'Saving…' : 'Save Changes'}
         </span>
       </button>
     </div>

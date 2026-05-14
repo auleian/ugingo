@@ -13,6 +13,7 @@
     "@fontsource/baloo-chettan-2": "^5.2.7",
     "@fontsource/open-sans": "^5.2.7",
     "@fontsource/poppins": "^5.2.7",
+    "firebase": "^12.13.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.0"

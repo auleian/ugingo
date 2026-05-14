@@ -5,12 +5,7 @@ import paletteIcon from '../assets/account-palette.svg'
 import badgeIcon from '../assets/account-badge.svg'
 import boltIcon from '../assets/account-bolt.svg'
 import { useAvatar } from '../lib/avatar'
-
-// Design placeholders — overridden by props (and later, by user context fed
-// from email-derived name / Google profile). Avatar comes from the picker
-// store (lib/avatar.js) so changing it on /account/avatar updates here.
-const DEFAULT_NAME = 'Ameritah'
-const DEFAULT_EMAIL = 'ameritahnakabuye@gmail.com'
+import { useUserDisplay } from '../lib/firebase'
 
 // One gradient card in the 2×2 grid — Figma 878:262/272/294/304
 function MenuCard({ left, top, gradient, iconSrc, title, subtitle, to }) {
@@ -74,9 +69,12 @@ function MenuCard({ left, top, gradient, iconSrc, title, subtitle, to }) {
   )
 }
 
-export default function MyAccount({ name = DEFAULT_NAME, email = DEFAULT_EMAIL, avatarSrc }) {
+export default function MyAccount({ name: nameOverride, email: emailOverride, avatarSrc }) {
   const navigate = useNavigate()
   const avatar = useAvatar()
+  const { name: authName, email: authEmail } = useUserDisplay()
+  const name = nameOverride ?? authName ?? 'Friend'
+  const email = emailOverride ?? authEmail ?? ''
   const finalAvatar = avatarSrc ?? avatar.src
 
   return (

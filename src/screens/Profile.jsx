@@ -5,11 +5,7 @@ import gearStarIcon from '../assets/profile-gear.svg'
 import cardGearIcon from '../assets/profile-card-gear.svg'
 import cardUserIcon from '../assets/profile-card-user.svg'
 import { useAvatar } from '../lib/avatar'
-
-// Design placeholders — overridden by props (and later, by user context fed
-// from email-derived name / Google profile). Avatar comes from the picker
-// store (lib/avatar.js) so changing it on /account/avatar updates here.
-const DEFAULT_NAME = 'Ameritah'
+import { useUserDisplay } from '../lib/firebase'
 
 function HeaderShape() {
   // Figma 659:279 — rounded pill 412×124 at (-19, -29), bleeds off top/sides
@@ -56,8 +52,10 @@ function TrophyIcon() {
   )
 }
 
-export default function Profile({ name = DEFAULT_NAME, avatarSrc }) {
+export default function Profile({ name: nameOverride, avatarSrc }) {
   const avatar = useAvatar()
+  const { name: authName } = useUserDisplay()
+  const name = nameOverride ?? authName ?? 'Friend'
   const finalAvatar = avatarSrc ?? avatar.src
   return (
     <div className="flex-1 relative overflow-hidden bg-[#0a2745]">

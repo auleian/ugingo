@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { signUpWithEmail, signInWithGoogle, friendlyAuthError } from '../../lib/firebase'
 
 // Google "G" logo
 function GoogleIcon() {
@@ -186,6 +187,41 @@ export default function CreateAccount() {
   const [pickerOpen, setPickerOpen] = useState(false)
   const pickerRef = useRef(null)
   const navigate = useNavigate()
+  // Auth state — controlled inputs, inline error, submission lock.
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  async function handleSignUp() {
+    if (busy) return
+    setError('')
+    if (!email.trim() || !password) {
+      setError('Please enter your email and a password.')
+      return
+    }
+    setBusy(true)
+    try {
+      await signUpWithEmail({ email: email.trim(), password })
+      navigate('/welcome-user')
+    } catch (err) {
+      setError(friendlyAuthError(err))
+      setBusy(false)
+    }
+  }
+
+  async function handleGoogle() {
+    if (busy) return
+    setError('')
+    setBusy(true)
+    try {
+      await signInWithGoogle()
+      navigate('/welcome-user')
+    } catch (err) {
+      setError(friendlyAuthError(err))
+      setBusy(false)
+    }
+  }
 
   // Close on outside click or Escape
   useEffect(() => {
@@ -240,6 +276,9 @@ export default function CreateAccount() {
         <input
           type="email"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
           className="flex-1 min-w-0 bg-transparent font-poppins font-medium outline-none placeholder:text-[#D2D2D2] placeholder:font-poppins placeholder:font-medium"
           style={{ fontSize: 13.83, lineHeight: 1.4, color: '#1F1F1F' }}
         />
@@ -261,6 +300,10 @@ export default function CreateAccount() {
         <input
           type={showPassword ? 'text' : 'password'}
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete="new-password"
+          onKeyDown={(e) => { if (e.key === 'Enter') handleSignUp() }}
           className="flex-1 min-w-0 bg-transparent font-poppins font-medium outline-none placeholder:text-[#D2D2D2] placeholder:font-poppins placeholder:font-medium"
           style={{ fontSize: 13.83, lineHeight: 1.4, color: '#1F1F1F' }}
         />
@@ -357,17 +400,29 @@ export default function CreateAccount() {
       {/* Sign Up button — Figma 829:429 (this is a create-account form, so CTA = Sign Up) */}
       <button
         type="button"
-        onClick={() => navigate('/welcome-user')}
-        className="absolute flex items-center justify-center rounded-[16px] overflow-hidden"
+        onClick={handleSignUp}
+        disabled={busy}
+        className="absolute flex items-center justify-center rounded-[16px] overflow-hidden disabled:opacity-60"
         style={{ top: 499, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
       >
         <span
           className="font-nunito font-light text-center whitespace-nowrap"
           style={{ color: '#F3F3F3', fontSize: 22, lineHeight: '31px' }}
         >
-          Sign Up
+          {busy ? 'Signing up…' : 'Sign Up'}
         </span>
       </button>
+
+      {/* Inline auth error — sits just under the Sign Up button so it doesn't
+          shift any of the pixel-positioned layout below. */}
+      {error && (
+        <p
+          className="absolute text-center font-poppins"
+          style={{ top: 562, left: 20, width: 335, fontSize: 12, lineHeight: '14px', color: '#DC2626' }}
+        >
+          {error}
+        </p>
+      )}
 
       {/* OR divider — Figma 829:446 */}
       <div className="absolute" style={{ top: 576, left: 24, width: 325, height: 26 }}>
@@ -402,7 +457,13 @@ export default function CreateAccount() {
       </div>
 
       {/* Continue with Google — Figma 829:438 */}
-      <div className="absolute" style={{ top: 616, left: 33, width: 318, height: 39 }}>
+      <button
+        type="button"
+        onClick={handleGoogle}
+        disabled={busy}
+        className="absolute disabled:opacity-60"
+        style={{ top: 616, left: 33, width: 318, height: 39 }}
+      >
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
         <div className="absolute" style={{ left: 40, top: 9, width: 21, height: 20 }}>
           <GoogleIcon />
@@ -413,7 +474,7 @@ export default function CreateAccount() {
         >
           CONTINUE WITH GOOGLE
         </p>
-      </div>
+      </button>
 
       {/* Continue with Apple — Figma 829:442 */}
       <div className="absolute" style={{ top: 667, left: 33, width: 318, height: 39 }}>

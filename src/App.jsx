@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import MobileFrame from './layouts/MobileFrame'
 import { preloadAllImages } from './lib/preloadImages'
 import { startPreload as startMusicPreload } from './lib/lessonsMusic'
+import { useUser } from './lib/firebase'
 import { playCorrect } from './lib/sound'
 import Welcome from './screens/onboarding/Welcome'
 import WelcomeBranded from './screens/onboarding/WelcomeBranded'
@@ -104,6 +105,31 @@ function isPreLessons(pathname) {
   return !POST_LESSONS_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'))
 }
 
+// Routes any anonymous user is allowed to visit. Everything else gets
+// redirected to /sign-in until auth completes. `/` is the splash; the splash
+// itself decides whether to send the user to /sign-in (anon) or /home (authed).
+const PUBLIC_PATHS = new Set(['/', '/sign-in', '/create-account'])
+
+function AuthGate({ children }) {
+  const { user, loading } = useUser()
+  const { pathname } = useLocation()
+
+  // Wait for Firebase's initial auth check so we don't flash a redirect
+  // when the user is in fact already signed in.
+  if (loading) return null
+
+  // Anonymous user on a protected route → bounce to /sign-in.
+  if (!user && !PUBLIC_PATHS.has(pathname)) {
+    return <Navigate to="/sign-in" replace />
+  }
+
+  // Authed users CAN still visit /sign-in or /create-account (e.g., bookmark
+  // or back button). We intentionally don't auto-redirect them, because the
+  // sign-up flow's own `navigate('/welcome-user')` would race this redirect
+  // and lose. Screens handle their own post-auth navigation.
+  return children
+}
+
 function PreLessonsChime() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -134,6 +160,7 @@ export default function App() {
   return (
     <MobileFrame>
       <PreLessonsChime />
+      <AuthGate>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<WelcomeBranded />} />
@@ -217,6 +244,7 @@ export default function App() {
         <Route path="/culture-plan" element={<CulturePlan />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </AuthGate>
     </MobileFrame>
   )
 }

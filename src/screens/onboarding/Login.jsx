@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { signInWithEmail, signInWithGoogle, sendResetEmail, friendlyAuthError } from '../../lib/firebase'
 
 function GoogleIcon() {
   return (
@@ -40,8 +41,59 @@ function HeartIcon() {
 
 export default function Login() {
   const navigate = useNavigate()
-  const [, setEmail] = useState('')
-  const [, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [info, setInfo] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  async function handleLogin() {
+    if (busy) return
+    setError('')
+    setInfo('')
+    if (!email.trim() || !password) {
+      setError('Please enter your email and password.')
+      return
+    }
+    setBusy(true)
+    try {
+      await signInWithEmail({ email: email.trim(), password })
+      navigate('/home')
+    } catch (err) {
+      setError(friendlyAuthError(err))
+      setBusy(false)
+    }
+  }
+
+  async function handleGoogle() {
+    if (busy) return
+    setError('')
+    setInfo('')
+    setBusy(true)
+    try {
+      await signInWithGoogle()
+      navigate('/home')
+    } catch (err) {
+      setError(friendlyAuthError(err))
+      setBusy(false)
+    }
+  }
+
+  async function handleForgot(e) {
+    e.preventDefault()
+    setError('')
+    setInfo('')
+    if (!email.trim()) {
+      setError('Enter your email above first, then tap Forgot Password?')
+      return
+    }
+    try {
+      await sendResetEmail(email.trim())
+      setInfo('Password reset email sent. Check your inbox.')
+    } catch (err) {
+      setError(friendlyAuthError(err))
+    }
+  }
 
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
@@ -96,7 +148,9 @@ export default function Login() {
         <input
           type="email"
           placeholder="Email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
           className="flex-1 min-w-0 bg-transparent font-poppins font-medium outline-none placeholder:text-[#D2D2D2] placeholder:font-poppins placeholder:font-medium"
           style={{ fontSize: 13.79, lineHeight: 1.4, color: '#1F1F1F' }}
         />
@@ -117,16 +171,22 @@ export default function Login() {
         <input
           type="password"
           placeholder="Password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
+          onKeyDown={(e) => { if (e.key === 'Enter') handleLogin() }}
           className="flex-1 min-w-0 bg-transparent font-poppins font-medium outline-none placeholder:text-[#D2D2D2] placeholder:font-poppins placeholder:font-medium"
           style={{ fontSize: 13.79, lineHeight: 1.4, color: '#1F1F1F' }}
         />
       </div>
 
-      {/* Forgot Password? — Figma 829:368 (centered at left=184, top=457, Poppins Medium 13.794px #d2d2d2) */}
-      <Link
-        to="/forgot-password"
-        className="absolute -translate-x-1/2 font-poppins font-medium text-center hover:text-[#F16522] transition-colors"
+      {/* Forgot Password? — Figma 829:368 (centered at left=184, top=457, Poppins Medium 13.794px #d2d2d2)
+          Now sends a real password-reset email via Firebase when the email
+          input above is filled. */}
+      <button
+        type="button"
+        onClick={handleForgot}
+        className="absolute -translate-x-1/2 font-poppins font-medium text-center hover:text-[#F16522] transition-colors cursor-pointer"
         style={{
           left: 184,
           top: 457,
@@ -136,23 +196,41 @@ export default function Login() {
         }}
       >
         Forgot Password?
-      </Link>
+      </button>
 
       {/* Login button — Figma 829:370 (left=20 top=503 335×61, rounded-[16px] bg-#f7ae2b)
           (centered: left-1/2 -translate-x-1/2 in 375 frame → left=20) */}
       <button
         type="button"
-        onClick={() => navigate('/home')}
-        className="absolute flex items-center justify-center rounded-[16px] overflow-hidden"
+        onClick={handleLogin}
+        disabled={busy}
+        className="absolute flex items-center justify-center rounded-[16px] overflow-hidden disabled:opacity-60"
         style={{ top: 503, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
       >
         <span
           className="font-nunito font-light text-center whitespace-nowrap"
           style={{ color: '#F3F3F3', fontSize: 22, lineHeight: '31px' }}
         >
-          Login
+          {busy ? 'Signing in…' : 'Login'}
         </span>
       </button>
+
+      {/* Inline auth status — error or success-info message. */}
+      {(error || info) && (
+        <p
+          className="absolute text-center font-poppins"
+          style={{
+            top: 565,
+            left: 20,
+            width: 335,
+            fontSize: 12,
+            lineHeight: '14px',
+            color: error ? '#DC2626' : '#16A34A',
+          }}
+        >
+          {error || info}
+        </p>
+      )}
 
       {/* OR divider — Figma 829:379 (left=26 top=577 325×26) */}
       <div className="absolute" style={{ top: 577, left: 26, width: 325, height: 26 }}>
@@ -187,21 +265,24 @@ export default function Login() {
       </div>
 
       {/* Login with Google — Figma 829:371 (group at left=35 top=617 318×39) */}
-      <div className="absolute" style={{ top: 617, left: 35, width: 318, height: 39 }}>
-        {/* Form bg pill at abs left=57 → local left=22 */}
+      <button
+        type="button"
+        onClick={handleGoogle}
+        disabled={busy}
+        className="absolute disabled:opacity-60"
+        style={{ top: 617, left: 35, width: 318, height: 39 }}
+      >
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
-        {/* Google logo at abs left=75 top=626 21×20 → local left=40 top=9 */}
         <div className="absolute" style={{ left: 40, top: 9, width: 21, height: 20 }}>
           <GoogleIcon />
         </div>
-        {/* Text centered at abs left=194 (group center) → local left=159, top=10 */}
         <p
           className="absolute -translate-x-1/2 font-poppins font-medium text-center whitespace-nowrap"
           style={{ left: 159, top: 10, color: '#D2D2D2', fontSize: 13.794, lineHeight: 1.4 }}
         >
           LOGIN WITH GOOGLE
         </p>
-      </div>
+      </button>
 
       {/* Login with Apple — Figma 829:375 (group at left=35 top=668 318×39) */}
       <div className="absolute" style={{ top: 668, left: 35, width: 318, height: 39 }}>

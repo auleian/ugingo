@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import mascotHead from '../../assets/mascot-default.png'
+import { useUser } from '../../lib/firebase'
 
 // Splash sits on the mascot-in-circle for HOLD ms, then the circle (with the
 // mascot inside it) spins and shrinks away before we navigate to the branded
@@ -12,18 +13,25 @@ const SPIN_MS = 900
 export default function Welcome() {
   const navigate = useNavigate()
   const [spin, setSpin] = useState(false)
+  const { user, loading } = useUser()
+
+  // Splash sends signed-in users straight to /home, signed-out users to
+  // /sign-in. Wait for Firebase's initial check (`loading`) before deciding.
+  const target = user ? '/home' : '/sign-in'
 
   useEffect(() => {
+    if (loading) return
     const spinId = setTimeout(() => setSpin(true), HOLD_MS)
-    const navId = setTimeout(() => navigate('/sign-in'), HOLD_MS + SPIN_MS)
+    const navId = setTimeout(() => navigate(target), HOLD_MS + SPIN_MS)
     return () => {
       clearTimeout(spinId)
       clearTimeout(navId)
     }
-  }, [navigate])
+  }, [navigate, loading, target])
 
   function skip() {
-    navigate('/sign-in')
+    if (loading) return
+    navigate(target)
   }
 
   return (

@@ -17,6 +17,7 @@ import {
   setVolume,
   playTap,
 } from '../lib/sound'
+import { signOut, useUserDisplay } from '../lib/firebase'
 
 // Speaker-with-waves icon — same stroke style as settings-volume.svg (the
 // muted variant), used when master audio is ON.
@@ -147,7 +148,10 @@ function SettingsCard({ top, height, gradient, iconBg, iconSrc, iconBoxSize, tit
   )
 }
 
-export default function Settings({ avatarLetter = 'A' }) {
+export default function Settings({ avatarLetter: letterOverride }) {
+  // Top-right circle uses the same dynamic initial as the AppHeader chip.
+  const { initial } = useUserDisplay()
+  const avatarLetter = letterOverride ?? initial
   const navigate = useNavigate()
   // Music & sounds are wired to the global audio store in lib/sound.js so the
   // toggle on this screen actually pauses/starts background music and gates
@@ -311,7 +315,12 @@ export default function Settings({ avatarLetter = 'A' }) {
       {/* Log Out button — Figma 861:563 (gradient pink, 336×104 at top=663) */}
       <button
         type="button"
-        onClick={() => navigate('/sign-in')}
+        onClick={async () => {
+          try {
+            await signOut()
+          } catch {}
+          navigate('/sign-in')
+        }}
         className="absolute flex items-center justify-between rounded-[16px] cursor-pointer transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0"
         style={{
           top: 663,
