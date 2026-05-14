@@ -78,6 +78,11 @@ import Places7 from './screens/places/Places7'
 import PlacesTryAgain from './screens/places/PlacesTryAgain'
 import Profile from './screens/Profile'
 import Settings from './screens/Settings'
+import MyAccount from './screens/MyAccount'
+import EditProfile from './screens/EditProfile'
+import AvatarPicker from './screens/AvatarPicker'
+import Progress from './screens/Progress'
+import Badges from './screens/Badges'
 import Shop from './screens/Shop'
 import Cart from './screens/Cart'
 
@@ -202,6 +207,11 @@ export default function App() {
         <Route path="/places/try-again" element={<PlacesTryAgain />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/my-account" element={<MyAccount />} />
+        <Route path="/account/profile" element={<EditProfile />} />
+        <Route path="/account/avatar" element={<AvatarPicker />} />
+        <Route path="/account/progress" element={<Progress />} />
+        <Route path="/account/badges" element={<Badges />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/culture-plan" element={<CulturePlan />} />

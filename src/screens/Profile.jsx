@@ -4,14 +4,12 @@ import mascotSprite from '../assets/profile-mascot-head.png'
 import gearStarIcon from '../assets/profile-gear.svg'
 import cardGearIcon from '../assets/profile-card-gear.svg'
 import cardUserIcon from '../assets/profile-card-user.svg'
-import lionEmoji from '../assets/profile-emoji-lion.png'
+import { useAvatar } from '../lib/avatar'
 
 // Design placeholders — overridden by props (and later, by user context fed
-// from email-derived name / Google profile + Settings avatar picker).
-// Avatar is a static image so it renders identically across OS/browser
-// (default uses Twemoji-style lion to match Figma).
+// from email-derived name / Google profile). Avatar comes from the picker
+// store (lib/avatar.js) so changing it on /account/avatar updates here.
 const DEFAULT_NAME = 'Ameritah'
-const DEFAULT_AVATAR = lionEmoji
 
 function HeaderShape() {
   // Figma 659:279 — rounded pill 412×124 at (-19, -29), bleeds off top/sides
@@ -58,7 +56,9 @@ function TrophyIcon() {
   )
 }
 
-export default function Profile({ name = DEFAULT_NAME, avatarSrc = DEFAULT_AVATAR }) {
+export default function Profile({ name = DEFAULT_NAME, avatarSrc }) {
+  const avatar = useAvatar()
+  const finalAvatar = avatarSrc ?? avatar.src
   return (
     <div className="flex-1 relative overflow-hidden bg-[#0a2745]">
 
@@ -118,7 +118,7 @@ export default function Profile({ name = DEFAULT_NAME, avatarSrc = DEFAULT_AVATA
         }}
       >
         <img
-          src={avatarSrc}
+          src={finalAvatar}
           alt={`${name}'s avatar`}
           draggable={false}
           className="select-none pointer-events-none"

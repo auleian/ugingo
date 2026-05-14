@@ -1,12 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import defaultAvatar from '../../assets/avatar-3d-7.png'
+import { useAvatar } from '../../lib/avatar'
 
 // Design placeholders — overridden by `name`/`avatarSrc` props (or, later, by a
-// user context fed from email-derived/Google profile + Settings avatar picker).
+// user context fed from email-derived/Google profile). Avatar falls through to
+// the picker store (lib/avatar.js) so /account/avatar changes show up here.
 const DEFAULT_NAME = 'Ameritah'
 
-export default function WelcomeUser({ name = DEFAULT_NAME, avatarSrc = defaultAvatar }) {
+export default function WelcomeUser({ name = DEFAULT_NAME, avatarSrc }) {
   const navigate = useNavigate()
+  const avatar = useAvatar()
+  // Explicit prop wins; otherwise show the user's picked avatar; otherwise the
+  // Figma 3D-avatar placeholder used in this screen's original design.
+  const finalAvatar = avatarSrc ?? avatar.src ?? defaultAvatar
 
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
@@ -17,7 +23,7 @@ export default function WelcomeUser({ name = DEFAULT_NAME, avatarSrc = defaultAv
         style={{ top: 197, left: 136, width: 105, height: 105 }}
       >
         <img
-          src={avatarSrc}
+          src={finalAvatar}
           alt={`${name}'s avatar`}
           className="absolute max-w-none object-cover select-none pointer-events-none"
           style={{ top: 7, left: 5, width: 95, height: 91 }}
