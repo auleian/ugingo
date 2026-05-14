@@ -138,7 +138,7 @@ export default function Animals8() {
         className="absolute bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"
         style={{ top: 701, left: 150, width: 72, height: 26 }}
       >
-        <span className="font-poppins font-black text-[#f8c83c] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           Next
         </span>
       </Link>

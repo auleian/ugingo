@@ -15,7 +15,7 @@ export default function Welcome() {
 
   useEffect(() => {
     const spinId = setTimeout(() => setSpin(true), HOLD_MS)
-    const navId = setTimeout(() => navigate('/welcome'), HOLD_MS + SPIN_MS)
+    const navId = setTimeout(() => navigate('/sign-in'), HOLD_MS + SPIN_MS)
     return () => {
       clearTimeout(spinId)
       clearTimeout(navId)
@@ -23,7 +23,7 @@ export default function Welcome() {
   }, [navigate])
 
   function skip() {
-    navigate('/welcome')
+    navigate('/sign-in')
   }
 
   return (

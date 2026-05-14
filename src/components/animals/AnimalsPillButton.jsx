@@ -17,7 +17,7 @@ export default function AnimalsPillButton({
   style,
 }) {
   const s = SIZES[size]
-  const cls = `cta-pulse inline-flex items-center justify-center bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] font-poppins font-black text-[#f8c83c] select-none ${className}`
+  const cls = `cta-pulse inline-flex items-center justify-center bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] font-poppins font-black text-white select-none ${className}`
   const allStyle = { width: s.w, height: s.h, fontSize: s.text, lineHeight: 1, ...style }
 
   if (to) {

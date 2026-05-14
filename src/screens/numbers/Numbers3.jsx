@@ -92,7 +92,7 @@ export default function Numbers3() {
         className="absolute bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20"
         style={{ top: 711, left: 35, width: 115, height: 33.75 }}
       >
-        <span className="font-poppins font-black text-[#f8c83c] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           Previous
         </span>
       </Link>
@@ -102,7 +102,7 @@ export default function Numbers3() {
         className="absolute bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20"
         style={{ top: 711, left: 209, width: 115, height: 33.75 }}
       >
-        <span className="font-poppins font-black text-[#f8c83c] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           Next
         </span>
       </Link>

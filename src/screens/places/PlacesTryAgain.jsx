@@ -49,7 +49,7 @@ export default function PlacesTryAgain() {
         to={back}
         className="absolute top-[672px] left-1/2 -translate-x-1/2 w-[100px] h-[34px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center z-30"
       >
-        <span className="font-poppins font-black text-[#f8c83c] text-[12px] leading-none">
+        <span className="font-poppins font-black text-white text-[12px] leading-none">
           Back
         </span>
       </Link>

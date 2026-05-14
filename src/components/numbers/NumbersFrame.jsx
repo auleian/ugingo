@@ -29,8 +29,8 @@ export default function NumbersFrame({ children, showBg = true, bgColor = '#f9ef
 
       <AppHeader />
 
-      <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">
-        <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">
+      <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#F16522] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           Ennamba
         </span>
       </div>

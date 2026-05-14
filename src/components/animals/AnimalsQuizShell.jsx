@@ -20,6 +20,8 @@ export default function AnimalsQuizShell({
   nextPath,
   failPath,
   questionStyle,
+  pillBg,
+  pillTextColor,
 }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -39,7 +41,7 @@ export default function AnimalsQuizShell({
   }
 
   return (
-    <AnimalsFrame playMusic={false}>
+    <AnimalsFrame playMusic={false} pillBg={pillBg} pillTextColor={pillTextColor}>
       <AnimalsHero antelopeCrop={QUIZ_ANTELOPE_CROP}>
         <div
           className="absolute z-30 text-center"

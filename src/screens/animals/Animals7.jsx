@@ -8,6 +8,7 @@ export default function Animals7() {
       correctIndex={2}
       nextPath="/animals/8"
       failPath="/animals/try-again"
+      pillTextColor="#F16522"
     />
   )
 }

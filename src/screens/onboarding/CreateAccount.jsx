@@ -357,7 +357,7 @@ export default function CreateAccount() {
       {/* Sign Up button — Figma 829:429 (this is a create-account form, so CTA = Sign Up) */}
       <button
         type="button"
-        onClick={() => navigate('/home')}
+        onClick={() => navigate('/welcome-user')}
         className="absolute flex items-center justify-center rounded-[16px] overflow-hidden"
         style={{ top: 499, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
       >

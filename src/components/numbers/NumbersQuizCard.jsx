@@ -18,7 +18,7 @@ export default function NumbersQuizCard() {
       </p>
 
       <p
-        className="absolute z-10 font-opensans font-semibold text-[#f16522] text-[14px] text-center leading-none"
+        className="absolute z-10 font-opensans font-semibold text-[#F8C83C] text-[14px] text-center leading-none"
         style={{ top: 219, left: 39, width: 113, height: 28 }}
       >
         Gezesa byoyize

@@ -64,7 +64,7 @@ export default function WelcomeUser({ name = DEFAULT_NAME, avatarSrc }) {
       {/* Continue button — Figma 829:316 (212×46 at left=83 top=638, centered +1.5px, rounded-[7px] bg #f7ae2b) */}
       <button
         type="button"
-        onClick={() => navigate('/home')}
+        onClick={() => navigate('/welcome')}
         className="absolute -translate-x-1/2 flex items-center justify-center rounded-[7px] overflow-hidden"
         style={{
           left: 187.5 + 1.5,

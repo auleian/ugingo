@@ -3,18 +3,20 @@ import AppHeader from '../components/AppHeader'
 import Mascot from '../components/Mascot'
 import bgHome from '../assets/bg-home.png'
 
-function PlanPill({ to, title, subtitle, titleColor, x, y, w, h, glowDelay = '0s' }) {
+function PlanPill({ to, title, subtitle, bg, titleColor, x, y, w, h, glowDelay = '0s' }) {
   return (
     <Link
       to={to}
-      className="home-pill-glow absolute bg-[#2E4858] flex flex-col items-center justify-center text-center active:scale-[0.98] transition"
+      className="home-pill-glow absolute flex flex-col items-center justify-center text-center active:scale-[0.98] transition"
       style={{
         top: y,
         left: x,
         width: w,
         height: h,
         borderRadius: 52.5,
+        background: bg,
         color: titleColor,
+        boxShadow: '0 4px 4px rgba(0,0,0,0.25)',
         animationDelay: glowDelay,
       }}
     >
@@ -42,7 +44,8 @@ export default function Home() {
         to="/language-plan"
         title="OLULIMI"
         subtitle="Language"
-        titleColor="#F16522"
+        bg="#2E4858"
+        titleColor="#F8C83C"
         x={78}
         y={300}
         w={218}
@@ -53,7 +56,8 @@ export default function Home() {
         to="/culture-plan"
         title="EBYOBUWANGWA"
         subtitle="Culture"
-        titleColor="#F7AE2B"
+        bg="#F8C83C"
+        titleColor="#2E4858"
         x={46}
         y={422}
         w={283}

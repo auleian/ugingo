@@ -9,7 +9,8 @@ export default function PeopleFrame({
   showPill = true,
   showHandsBg = true,
   pillLabel = 'Abantu',
-  pillTextColor = '#f16522',
+  pillBg = '#F8C83C',
+  pillTextColor = '#000000',
   roundedHeader = false,
   playMusic = true,
 }) {
@@ -21,7 +22,10 @@ export default function PeopleFrame({
       <AppHeader roundedBottom={roundedHeader} />
 
       {showPill && (
-        <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-30">
+        <div
+          className="absolute top-[103px] left-[7px] w-[110px] h-[24px] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-30"
+          style={{ backgroundColor: pillBg }}
+        >
           <span
             className="font-poppins font-black text-[11px] leading-none"
             style={{ color: pillTextColor }}

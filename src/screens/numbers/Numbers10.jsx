@@ -55,7 +55,7 @@ export default function Numbers10() {
         className="absolute bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center z-10"
         style={{ top: 672, left: 151, width: 72, height: 26 }}
       >
-        <span className="font-poppins font-black text-[#f8c83c] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           Back
         </span>
       </Link>
