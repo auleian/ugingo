@@ -109,10 +109,10 @@ export default function LessonMap() {
       <AppHeader roundedBottom />
 
       <div
-        className="absolute z-20 bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"
+        className="absolute z-20 bg-[#F16522] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"
         style={{ top: 103, left: 7, width: 110, height: 24 }}
       >
-        <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           OLULIMI
         </span>
       </div>

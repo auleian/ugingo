@@ -25,7 +25,7 @@ export default function AppHeader({ level = 'A', roundedBottom = false }) {
         to="/profile"
         onClick={() => playTap()}
         aria-label="Profile"
-        className="absolute rounded-full border-[3px] border-[#F7AE2B] flex items-center justify-center font-poppins font-black text-[#f16522] text-[13px] leading-none bg-[#2E4858] transition-transform duration-150 hover:scale-110 active:scale-95"
+        className="absolute rounded-full border-[3px] border-[#F7AE2B] flex items-center justify-center font-poppins font-black text-white text-[13px] leading-none bg-[#2E4858] transition-transform duration-150 hover:scale-110 active:scale-95"
         style={{ left: 326, top: 47, width: 34.909, height: 35.265 }}
       >
         {level}

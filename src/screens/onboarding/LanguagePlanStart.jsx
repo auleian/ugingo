@@ -22,7 +22,7 @@ export default function LanguagePlanStart() {
       <AppHeader />
 
       <div className="absolute top-[103px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
-        <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">
+        <span className="font-poppins font-black text-white text-[11px] leading-none">
           OLULIMI
         </span>
       </div>
@@ -42,12 +42,12 @@ export default function LanguagePlanStart() {
 
       <Link
         to="/lessons"
-        className="absolute top-[684px] left-[109px] w-[158px] h-[43px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(46,72,88,0.42)] flex flex-col items-center justify-center leading-none"
+        className="absolute top-[684px] left-[109px] w-[158px] h-[43px] bg-[#F8C83C] rounded-[52.5px] shadow-[0_4px_4px_rgba(46,72,88,0.42)] flex flex-col items-center justify-center leading-none"
       >
-        <span className="font-poppins font-black text-[#f16522] text-[16px]">
+        <span className="font-poppins font-black text-white text-[16px]">
           Tutandike
         </span>
-        <span className="font-poppins font-black text-[#f7ae2b] text-[12px] mt-[2px]">
+        <span className="font-poppins font-black text-[#2E4858] text-[12px] mt-[2px]">
           We start
         </span>
       </Link>
