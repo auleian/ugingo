@@ -28,16 +28,6 @@ function AppleIcon() {
   )
 }
 
-function HeartIcon() {
-  return (
-    <svg width="16" height="15" viewBox="0 0 24 22" fill="none" aria-hidden>
-      <path
-        d="M12 20.35l-1.45-1.32C5.4 14.36 2 11.28 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C13.09 2.81 14.76 2 16.5 2 19.58 2 22 4.42 22 7.5c0 3.78-3.4 6.86-8.55 11.54L12 20.35z"
-        fill="#202020"
-      />
-    </svg>
-  )
-}
 
 export default function Login() {
   const navigate = useNavigate()
@@ -102,36 +92,18 @@ export default function Login() {
       <h1
         className="absolute font-raleway font-bold whitespace-nowrap"
         style={{
-          left: 28,
-          top: 53,
+          left: 85,
+          top: 100,
           color: '#202020',
-          fontSize: 52,
+          fontSize: 45,
           lineHeight: 'normal',
           letterSpacing: '-0.52px',
         }}
       >
-        Login
+        Welcome
       </h1>
 
-      {/* Subtitle "Good to see you back!" — Figma 829:364
-          left=28 (7.47%), top=calc(50%-158)=248, Nunito Sans Light 19px lh=35 #202020 */}
-      <p
-        className="absolute font-nunito font-light whitespace-nowrap"
-        style={{
-          left: 28,
-          top: 118,
-          color: '#202020',
-          fontSize: 19,
-          lineHeight: '35px',
-        }}
-      >
-        Good to see you back!
-      </p>
 
-      {/* Heart icon — Figma 829:365 (16×15 at left=217 top=257) */}
-      <div className="absolute" style={{ left: 217, top: 127, width: 16, height: 15 }}>
-        <HeartIcon />
-      </div>
 
       {/* Email — Figma 829:369 (left=19 top=328 w=334 h=52.218, rounded-[60px] bg-#f8f8f8) */}
       <div

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PlacesFrame from './PlacesFrame'
 import PlacesAntelope from './PlacesAntelope'
@@ -6,20 +6,27 @@ import cloudCard from '../../assets/bg-success-cloud.png'
 import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [446, 515.66, 585.32]
+const PICK_FLASH_MS = 600
+const PICK_CORRECT_BG = 'green'
+const PICK_WRONG_BG = 'red'
 
 export default function PlacesQuizShell({ question, questionStyle, options, correctIndex, nextPath }) {
   const navigate = useNavigate()
   const location = useLocation()
   const busy = useRef(false)
+  const [picked, setPicked] = useState(null)
 
   async function handlePick(i) {
     if (busy.current) return
     busy.current = true
-    if (i === correctIndex) {
-      await playCorrectClip()
+    const correct = i === correctIndex
+    setPicked({ index: i, correct })
+    if (correct) {
+      await Promise.all([playCorrectClip(), new Promise((r) => setTimeout(r, PICK_FLASH_MS))])
       navigate(nextPath)
     } else {
       playWrong()
+      await new Promise((r) => setTimeout(r, PICK_FLASH_MS))
       navigate('/places/try-again', { state: { back: location.pathname } })
     }
   }
@@ -90,6 +97,9 @@ export default function PlacesQuizShell({ question, questionStyle, options, corr
             left: i === 0 ? 14 : 15.08,
             width: 349.92,
             height: 44.681,
+            ...(picked?.index === i && {
+              backgroundColor: picked.correct ? PICK_CORRECT_BG : PICK_WRONG_BG,
+            }),
           }}
         >
           <span className="ml-[29px] font-poppins font-black text-white text-[24px] leading-none">

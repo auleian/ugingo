@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AnimalsFrame from './AnimalsFrame'
 import AnimalsHero, { QUIZ_ANTELOPE_CROP } from './AnimalsHero'
@@ -6,6 +6,9 @@ import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [390, 489, 588]
 const OPTION_LEFTS = [45, 42, 39]
+const PICK_FLASH_MS = 600
+const PICK_CORRECT_BG = 'green'
+const PICK_WRONG_BG = 'red'
 
 // Animals quiz screens (4–7). The hero ribbon shows the "Ekigezo / Test"
 // header; a cyan banner (h:83 at top:267) carries the question; three yellow
@@ -26,16 +29,21 @@ export default function AnimalsQuizShell({
   const navigate = useNavigate()
   const location = useLocation()
   const busy = useRef(false)
+  const [picked, setPicked] = useState(null)
 
   async function handlePick(i) {
     if (busy.current) return
-    if (i === correctIndex) {
+    const correct = i === correctIndex
+    if (correct) {
       busy.current = true
-      await playCorrectClip()
+      setPicked({ index: i, correct: true })
+      await Promise.all([playCorrectClip(), new Promise((r) => setTimeout(r, PICK_FLASH_MS))])
       navigate(nextPath)
     } else if (failPath) {
       busy.current = true
+      setPicked({ index: i, correct: false })
       playWrong()
+      await new Promise((r) => setTimeout(r, PICK_FLASH_MS))
       navigate(failPath, { state: { back: location.pathname } })
     }
   }
@@ -85,7 +93,15 @@ export default function AnimalsQuizShell({
           type="button"
           onClick={() => handlePick(i)}
           className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-20 flex items-center active:opacity-90"
-          style={{ top: OPTION_TOPS[i], left: OPTION_LEFTS[i], width: 292.947, height: 67 }}
+          style={{
+            top: OPTION_TOPS[i],
+            left: OPTION_LEFTS[i],
+            width: 292.947,
+            height: 67,
+            ...(picked?.index === i && {
+              backgroundColor: picked.correct ? PICK_CORRECT_BG : PICK_WRONG_BG,
+            }),
+          }}
         >
           <span
             className="font-poppins font-black text-[#2e4858]"
