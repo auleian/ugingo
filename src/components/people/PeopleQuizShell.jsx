@@ -4,7 +4,7 @@ import PeopleFrame from './PeopleFrame'
 import PeopleHero from './PeopleHero'
 import { playCorrectClip, playWrong } from '../../lib/sound'
 
-const OPTION_TOPS = [481, 548, 615]
+const OPTION_TOPS = [416, 483, 550]
 
 const TEST_ANTELOPE_CROP = { top: -82.56, left: -353.39, width: 781.69, height: 503.22 }
 
@@ -30,7 +30,7 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
       <PeopleHero antelopeCrop={TEST_ANTELOPE_CROP}>
         <div
           className="absolute text-center font-poppins font-black text-white"
-          style={{ top: 171, left: 30, width: 171 }}
+          style={{ top: 129, left: 30, width: 171 }}
         >
           <p className="text-[#2e4858] text-[40px] leading-none">Ekigezo</p>
           <p className="mt-[6px] text-[20px] leading-none">Test</p>
@@ -39,7 +39,7 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
 
       <p
         className="absolute font-poppins font-black text-[#2e4858] text-[20px] leading-snug"
-        style={{ top: 360, left: 23, width: 338 }}
+        style={{ top: 328, left: 23, width: 338 }}
       >
         {question}
       </p>

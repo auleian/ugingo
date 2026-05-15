@@ -18,7 +18,7 @@ export default function People1() {
       <PeopleHero antelopeCrop={ANTELOPE_CROP}>
         <p
           className="absolute text-center font-poppins font-black text-white text-[20px] leading-tight"
-          style={{ top: 185, left: 19, width: 215 }}
+          style={{ top: 142, left: 19, width: 215 }}
         >
           These are the basic human terms
         </p>

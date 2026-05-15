@@ -46,7 +46,7 @@ export default function Cart() {
 
       <div
         className="absolute bg-[#2e4858] flex items-center justify-between"
-        style={{ top: 45, left: 0, width: 374, height: 78, paddingLeft: 20, paddingRight: 20 }}
+        style={{ top: 45, left: 0, width: 375, height: 78, paddingLeft: 20, paddingRight: 20 }}
       >
         <div className="relative shrink-0" style={{ width: 114.35, height: 28 }}>
           <img
@@ -77,7 +77,7 @@ export default function Cart() {
 
       <div
         className="absolute overflow-hidden"
-        style={{ top: 165, left: 0, width: 374, height: 356, paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}
+        style={{ top: 165, left: 0, width: 375, height: 356, paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}
       >
         {isEmpty ? (
           <div
@@ -185,7 +185,7 @@ export default function Cart() {
         style={{
           top: 667,
           left: 1,
-          width: 374,
+          width: 375,
           height: 144.788,
           paddingTop: 20.8,
           paddingLeft: 20,

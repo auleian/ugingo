@@ -4,11 +4,11 @@ import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
 
 const ROWS = [
-  { top: 363, left: 9, emoji: '🦁', word: 'Empologoma', translation: 'Lion', wordSize: 14, textTop: 17 },
-  { top: 363, left: 200, emoji: '🐘', word: 'Enjovu', translation: 'Elephant' },
-  { top: 470, left: 6, emoji: '🐆', word: 'Engo', translation: 'Leopard' },
-  { top: 470, left: 197, emoji: '🐒', word: 'Enkima', translation: 'Monkey' },
-  { top: 577, left: 103, emoji: '🦒', word: 'Entugga', translation: 'Giraffe' },
+  { top: 321, left: 9, emoji: '🦁', word: 'Empologoma', translation: 'Lion', wordSize: 14, textTop: 17 },
+  { top: 321, left: 200, emoji: '🐘', word: 'Enjovu', translation: 'Elephant' },
+  { top: 428, left: 6, emoji: '🐆', word: 'Engo', translation: 'Leopard' },
+  { top: 428, left: 197, emoji: '🐒', word: 'Enkima', translation: 'Monkey' },
+  { top: 535, left: 103, emoji: '🦒', word: 'Entugga', translation: 'Giraffe' },
 ]
 
 export default function Animals2() {
@@ -17,7 +17,7 @@ export default function Animals2() {
       <AnimalsHero>
         <div
           className="absolute z-30 text-center font-poppins font-black"
-          style={{ top: 154, left: 25, width: 177 }}
+          style={{ top: 122, left: 25, width: 177 }}
         >
           <p className="text-white" style={{ fontSize: 20, lineHeight: 1.15 }}>
             Eby&rsquo;omu nsiko
@@ -31,7 +31,7 @@ export default function Animals2() {
 
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top: 270, left: -24, width: 423, height: 18 }}
+        style={{ top: 228, left: -24, width: 423, height: 18 }}
       />
 
       {ROWS.map((row, i) => (
@@ -42,7 +42,7 @@ export default function Animals2() {
         to="/animals/3"
         size="md"
         className="absolute z-30"
-        style={{ top: 717, left: 132 }}
+        style={{ top: 675, left: 132 }}
       >
         Next
       </AnimalsPillButton>

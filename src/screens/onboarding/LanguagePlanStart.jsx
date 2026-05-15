@@ -21,7 +21,7 @@ export default function LanguagePlanStart() {
 
       <AppHeader />
 
-      <div className="absolute top-[103px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
+      <div className="absolute top-[83px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
         <span className="font-poppins font-black text-white text-[11px] leading-none">
           OLULIMI
         </span>
@@ -31,10 +31,10 @@ export default function LanguagePlanStart() {
         variant="kingoFront"
         size={191}
         withCircle={false}
-        className="absolute top-[195px] left-[92px] z-10 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        className="absolute top-[175px] left-[92px] z-10 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
       />
 
-      <div className="absolute top-[444px] left-[26px] w-[323px] h-[211px] bg-[#69cad3] rounded-[52.5px] shadow-[2px_5px_17.5px_rgba(46,72,88,0.7)]" />
+      <div className="absolute top-[424px] left-[26px] w-[323px] h-[211px] bg-[#69cad3] rounded-[52.5px] shadow-[2px_5px_17.5px_rgba(46,72,88,0.7)]" />
 
       <p className="absolute top-[493px] left-[61px] w-[253px] text-center font-poppins font-black text-[26px] text-white leading-tight">
         Am going to take you through Luganda

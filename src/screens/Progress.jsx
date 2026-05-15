@@ -182,8 +182,8 @@ export default function Progress({ stats = DEFAULT_STATS }) {
         style={{ top: 287, left: 0, right: 0, height: 525, backgroundColor: '#DEFCFF' }}
       />
 
-      {/* 374-wide centered content frame */}
-      <div className="relative w-[374px] max-w-full h-full mx-auto">
+      {/* 375-wide centered content frame */}
+      <div className="relative w-[375px] max-w-full h-full mx-auto">
 
       {/* Header section — Figma 879:524 (278.8×116 at left=47 top=160) */}
       <div className="absolute" style={{ top: 160, left: 47, width: 278.8 }}>

@@ -78,8 +78,8 @@ export default function EditProfile({ avatarSrc }) {
 
       <AccountBackHeader to="/my-account" label="Edit Profile" ariaLabel="Back to My Account" />
 
-      {/* 374-wide centered content frame */}
-      <div className="relative w-[374px] max-w-full h-full mx-auto">
+      {/* 375-wide centered content frame */}
+      <div className="relative w-[375px] max-w-full h-full mx-auto">
 
       {/* Avatar circle — Figma 869:519 (128×128 cyan #69CAD3 at left=112 top=209) */}
       <div

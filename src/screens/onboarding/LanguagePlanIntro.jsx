@@ -21,15 +21,15 @@ export default function LanguagePlanIntro() {
 
       <AppHeader />
 
-      <div className="absolute top-[103px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
+      <div className="absolute top-[83px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
         <span className="font-poppins font-black text-white text-[11px] leading-none">
           OLULIMI
         </span>
       </div>
 
-      <div className="absolute top-[370px] left-[87px] w-[271px] h-[145px] bg-[#69cad3] rounded-[52.5px] shadow-[-5px_5px_4px_rgba(46,72,88,0.39)]" />
+      <div className="absolute top-[311px] left-[87px] w-[271px] h-[145px] bg-[#69cad3] rounded-[52.5px] shadow-[-5px_5px_4px_rgba(46,72,88,0.39)]" />
 
-      <p className="absolute top-[404px] left-[152px] w-[207px] text-center font-poppins font-black text-[20px] text-white leading-snug">
+      <p className="absolute top-[345px] left-[152px] w-[207px] text-center font-poppins font-black text-[20px] text-white leading-snug">
         Gyebaale,i&apos;m Kingo, Gingo&apos;s friend.
       </p>
 
@@ -37,12 +37,12 @@ export default function LanguagePlanIntro() {
         variant="kingoWaving"
         size={235}
         withCircle={false}
-        className="absolute top-[249px] left-[-30px] z-20 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        className="absolute top-[190px] left-[-30px] z-20 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
       />
 
       <Link
         to="/language-plan/start"
-        className="absolute top-[602px] left-[187px] w-[100px] h-[29px] bg-[#F8C83C] rounded-[52.5px] shadow-[0_4px_4px_rgba(46,72,88,0.4)] flex items-center justify-center"
+        className="absolute top-[543px] left-[187px] w-[100px] h-[29px] bg-[#F8C83C] rounded-[52.5px] shadow-[0_4px_4px_rgba(46,72,88,0.4)] flex items-center justify-center"
       >
         <span className="font-poppins font-black text-white text-[16px] leading-none">
           Continue

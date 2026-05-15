@@ -75,7 +75,7 @@ export default function Numbers3() {
           10 + 1 = 11
         </p>
         <p className="mt-2 font-poppins font-black text-white text-[20px] text-center leading-tight">
-          Kkumi gatako emu = kkumi-ne-mu
+          Kkumi gatako emu = <br />kkumi-ne-mu
         </p>
       </div>
 

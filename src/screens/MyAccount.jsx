@@ -93,8 +93,8 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
         }}
       />
 
-      {/* 374-wide centered content frame — all positioned content sits inside */}
-      <div className="relative w-[374px] max-w-full h-full mx-auto">
+      {/* 375-wide centered content frame — all positioned content sits inside */}
+      <div className="relative w-[375px] max-w-full h-full mx-auto">
 
       {/* Avatar — Figma 881:169 (72×72 cyan at top=215, centered at x=57.5 by translate-x-1/2 + left=calc(50%-130px)) */}
       <div

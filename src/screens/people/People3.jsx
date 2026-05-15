@@ -16,7 +16,7 @@ export default function People3() {
       <PeopleHero>
         <div
           className="absolute text-center font-poppins font-black text-white"
-          style={{ top: 174, left: 12, width: 212 }}
+          style={{ top: 132, left: 12, width: 212 }}
         >
           <p className="text-[20px] leading-tight">Amaka (Family)</p>
           <p className="mt-1 text-[#2e4858] text-[13px] leading-tight">

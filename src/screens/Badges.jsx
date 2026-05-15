@@ -202,8 +202,8 @@ export default function Badges() {
 
       <AccountBackHeader to="/my-account" label="Back" ariaLabel="Back to My Account" />
 
-      {/* 374-wide centered content frame */}
-      <div className="relative w-[374px] max-w-full h-full mx-auto">
+      {/* 375-wide centered content frame */}
+      <div className="relative w-[375px] max-w-full h-full mx-auto">
 
       {/* Header section — Figma 881:265 (🏆 + "Your Badges!" + count pill) */}
       <div className="absolute" style={{ top: 188, left: 39, width: 294 }}>

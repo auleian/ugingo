@@ -8,7 +8,7 @@ export default function Animals4() {
       correctIndex={1}
       nextPath="/animals/5"
       failPath="/animals/try-again"
-      questionStyle={{ top: 291, left: 45, width: 284, fontSize: 24 }}
+      questionStyle={{ top: 255, left: 45, width: 284, fontSize: 24 }}
     />
   )
 }

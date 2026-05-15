@@ -180,10 +180,10 @@ export default function Settings({ avatarLetter: letterOverride }) {
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
 
-      {/* Cream tint overlay below header — Figma 863:167 (374×717 at top=95, bg #FFECCB 20%) */}
+      {/* Cream tint overlay below header — Figma 863:167 (375×717 at top=95, bg #FFECCB 20%) */}
       <div
         className="absolute pointer-events-none"
-        style={{ top: 53, left: 0, width: 374, height: 759, backgroundColor: 'rgba(255,236,203,0.2)' }}
+        style={{ top: 53, left: 0, width: 375, height: 759, backgroundColor: 'rgba(255,236,203,0.2)' }}
       />
 
       {/* White header pill */}

@@ -13,7 +13,7 @@ export default {
         showcard: ['"Alfa Slab One"', '"Showcard Gothic"', 'serif'],
       },
       maxWidth: {
-        mobile: '374px',
+        mobile: '375px',
       },
       colors: {
         brand: {

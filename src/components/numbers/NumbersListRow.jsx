@@ -28,7 +28,7 @@ export default function NumbersListRow({ index, word, pronounce, icon, top }) {
   return (
     <div
       className="absolute z-10 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
-      style={{ top, left: 0, width: 374, height: ROW_HEIGHT }}
+      style={{ top, left: 0, width: 375, height: ROW_HEIGHT }}
     >
       <div
         className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

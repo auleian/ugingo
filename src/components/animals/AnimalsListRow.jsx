@@ -15,7 +15,7 @@ export default function AnimalsListRow({
   return (
     <div
       className="absolute z-20 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
-      style={{ top, left, width: 174.798, height: 67 }}
+      style={{ top, left, width: 167, height: 67 }}
     >
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

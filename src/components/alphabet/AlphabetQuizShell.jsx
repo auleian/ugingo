@@ -84,7 +84,7 @@ export default function AlphabetQuizShell({ question, options, correctIndex, nex
             height: 43.88,
           }}
         >
-          <span className="ml-[12px] font-opensans font-extrabold text-[#f16522] text-[24px] leading-none">
+          <span className="ml-[12px] font-opensans font-extrabold text-[#F8C83C] text-[24px] leading-none">
             {label}
           </span>
         </button>

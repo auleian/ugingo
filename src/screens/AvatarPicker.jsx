@@ -74,8 +74,8 @@ export default function AvatarPicker() {
         }}
       />
 
-      {/* 374-wide centered content frame */}
-      <div className="relative w-[374px] max-w-full h-full mx-auto">
+      {/* 375-wide centered content frame */}
+      <div className="relative w-[375px] max-w-full h-full mx-auto">
 
         {/* Title — Inter Black 28 #1E2939 leading-60, centered */}
         <p

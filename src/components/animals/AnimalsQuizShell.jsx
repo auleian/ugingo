@@ -4,7 +4,7 @@ import AnimalsFrame from './AnimalsFrame'
 import AnimalsHero, { QUIZ_ANTELOPE_CROP } from './AnimalsHero'
 import { playCorrectClip, playWrong } from '../../lib/sound'
 
-const OPTION_TOPS = [448, 547, 646]
+const OPTION_TOPS = [390, 489, 588]
 const OPTION_LEFTS = [45, 42, 39]
 
 // Animals quiz screens (4–7). The hero ribbon shows the "Ekigezo / Test"
@@ -45,7 +45,7 @@ export default function AnimalsQuizShell({
       <AnimalsHero antelopeCrop={QUIZ_ANTELOPE_CROP}>
         <div
           className="absolute z-30 text-center"
-          style={{ top: 151, left: 15, width: 199, height: 96 }}
+          style={{ top: 109, left: 15, width: 199, height: 96 }}
         >
           <p className="font-poppins font-black text-white" style={{ fontSize: 48, lineHeight: 1 }}>
             Ekigezo
@@ -61,13 +61,13 @@ export default function AnimalsQuizShell({
 
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top: 267, left: -24, width: 423, height: 83 }}
+        style={{ top: 228, left: -24, width: 423, height: 83 }}
       />
 
       <p
         className="absolute z-20 font-poppins font-black text-white"
         style={{
-          top: 292,
+          top: 255,
           left: 21,
           width: 339,
           fontSize: 22,

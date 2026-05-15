@@ -17,7 +17,7 @@ export default function People4() {
       <PeopleHero antelopeCrop={ANTELOPE_CROP}>
         <div
           className="absolute text-center font-poppins font-black text-white"
-          style={{ top: 185, left: 26, width: 174 }}
+          style={{ top: 143, left: 26, width: 174 }}
         >
           <p className="text-[20px] leading-tight">Ebigambo bilala</p>
           <p className="mt-1 font-opensans font-semibold text-[#f16522] text-[12px] leading-tight">

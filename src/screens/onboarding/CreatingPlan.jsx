@@ -62,7 +62,7 @@ export default function CreatingPlan() {
         <Link
           to="/ready"
           className="absolute flex items-center justify-center text-center text-[#2e4858] font-opensans font-bold text-[16px] tracking-wide"
-          style={{ top: 663, left: 105, width: 161, height: 28 }}
+          style={{ top: 633, left: 105, width: 161, height: 28 }}
         >
           Tap to continue
         </Link>

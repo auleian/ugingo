@@ -28,7 +28,7 @@ export default function Shop() {
         style={{
           top: 45,
           left: 0,
-          width: 374,
+          width: 375,
           height: 100,
           boxShadow: '0px 4px 3px rgba(0,0,0,0.1), 0px 2px 2px rgba(0,0,0,0.1)',
         }}
@@ -79,9 +79,9 @@ export default function Shop() {
 
       <div
         className="absolute overflow-y-auto overflow-x-clip scrollbar-hover"
-        style={{ top: 143, left: 0, width: 374, height: 669 }}
+        style={{ top: 143, left: 0, width: 375, height: 669 }}
       >
-        <div className="relative" style={{ width: 374, height: 1880 }}>
+        <div className="relative" style={{ width: 375, height: 1880 }}>
           <div
             className="absolute bg-white overflow-hidden flex flex-col"
             style={{

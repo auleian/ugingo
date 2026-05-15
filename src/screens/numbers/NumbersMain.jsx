@@ -29,7 +29,7 @@ export default function NumbersMain() {
         <p className="font-poppins font-black text-[#2e4858] text-[64px] leading-none">
           Yiga Okubala
         </p>
-        <p className="mt-3 font-poppins font-black text-[#f8c83c] text-[24px] leading-none">
+        <p className="mt-3 font-poppins font-black text-[#fff] text-[24px] leading-none">
           Learn how to count
         </p>
       </div>
