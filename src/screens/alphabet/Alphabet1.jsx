@@ -18,7 +18,7 @@ export default function Alphabet1() {
 
       <div
         className="absolute overflow-hidden"
-        style={{ top: 86, left: -63, width: 553, height: 133 }}
+        style={{ top: 42, left: -63, width: 553, height: 133 }}
       >
         <div className="absolute inset-0" style={{ transform: 'rotate(180deg)' }}>
           <img
@@ -27,7 +27,7 @@ export default function Alphabet1() {
             aria-hidden
             draggable={false}
             className="absolute select-none pointer-events-none"
-            style={{ top: '-177.08%', height: '277.08%', width: '100%' }}
+            style={{ top: '-177.08%', height: '277.08%', width: '100%', opacity: '60%' }}
           />
         </div>
       </div>

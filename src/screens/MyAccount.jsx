@@ -100,7 +100,7 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
       <div
         className="absolute -translate-x-1/2 flex items-center justify-center rounded-full bg-[#69CAD3]"
         style={{
-          top: 162,
+          top: 142,
           left: 187.5 - 130,
           width: 72,
           height: 72,
@@ -118,7 +118,7 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
       </div>
 
       {/* Name + email — Figma 878:251 (left=103 top=230) */}
-      <div className="absolute" style={{ left: 103, top: 177 }}>
+      <div className="absolute" style={{ left: 103, top: 157 }}>
         <p
           className="font-inter font-black whitespace-nowrap"
           style={{ fontSize: 32, lineHeight: '36px', color: '#F16522' }}

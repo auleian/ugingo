@@ -7,7 +7,7 @@ export default function IntroLayout({ message, ctaTo, ctaLabel = "Let's go!" }) 
   return (
     <div className="flex-1 flex flex-col bg-white relative"> 
       <AppHeader />
-      <div className="absolute top-[170px] left-[74px] w-[228px] h-[84px] flex items-start justify-center bg-[rgba(85,137,244,0.05)] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] px-6 pt-3">
+      <div className="absolute top-[170px] left-[74px] w-[228px] h-[84px] flex items-center justify-center bg-[rgba(85,137,244,0.05)] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] px-6">
         <p className="text-center text-[18px] font-bold leading-snug font-baloo">{message}</p>
       </div>
       <Mascot

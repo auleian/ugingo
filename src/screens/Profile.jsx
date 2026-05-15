@@ -11,7 +11,7 @@ function HeaderShape() {
   return (
     <div
       className="absolute bg-white pointer-events-none"
-      style={{ top: 0, left: 0, right: 0, height: 53, borderRadius: 5 }}
+      style={{ top: 0, left: 0, right: 0, height: 53, borderRadius: '0 0 25px 25px' }}
       aria-hidden
     />
   )
