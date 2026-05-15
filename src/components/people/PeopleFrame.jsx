@@ -38,7 +38,7 @@ export default function PeopleFrame({
       {showHandsBg && (
         <div
           className="absolute pointer-events-none overflow-hidden z-0"
-          style={{ top: 572, left: -6, width: 467, height: 240 }}
+          style={{ top: 530, left: -6, width: 467, height: 240 }}
         >
           <img
             src={handsBg}

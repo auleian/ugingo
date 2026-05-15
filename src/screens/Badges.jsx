@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom'
-import arrowIcon from '../assets/account-arrow.svg'
+import AccountBackHeader from '../components/AccountBackHeader'
 import starCornerIcon from '../assets/badge-star.svg'
 import lockIcon from '../assets/badge-lock.svg'
 import trophyEmoji from '../assets/emojis/trophy.png'
@@ -196,51 +195,15 @@ function BadgeCard({ badge, style }) {
 }
 
 export default function Badges() {
-  const navigate = useNavigate()
   const unlockedCount = BADGES.filter((b) => b.state === 'unlocked').length
 
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
 
-      {/* Top header tint band — Figma 881:173 (376×77 at left=-2 top=62) */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: 62,
-          left: -2,
-          width: 376,
-          height: 77,
-          backgroundColor: 'rgba(249,180,56,0.2)',
-        }}
-      />
+      <AccountBackHeader to="/my-account" label="Back" ariaLabel="Back to My Account" />
 
-      {/* Back nav row — Figma 881:200 (327×36 at left=34 top=83, gap=12) */}
-      <div
-        className="absolute flex items-center"
-        style={{ top: 83, left: 34, width: 327, height: 36, gap: 12 }}
-      >
-        <button
-          type="button"
-          onClick={() => navigate('/my-account')}
-          className="rounded-full flex items-center justify-center shrink-0 transition-transform duration-150 ease-out hover:scale-105 active:scale-95 cursor-pointer"
-          style={{ width: 36, height: 36, backgroundColor: '#F7AE2B' }}
-          aria-label="Back to My Account"
-        >
-          <img
-            src={arrowIcon}
-            alt=""
-            aria-hidden
-            draggable={false}
-            style={{ width: 20, height: 20, transform: 'rotate(180deg)' }}
-          />
-        </button>
-        <p
-          className="font-inter font-bold whitespace-nowrap"
-          style={{ fontSize: 20, lineHeight: '28px', color: '#2E4858' }}
-        >
-          Back
-        </p>
-      </div>
+      {/* 374-wide centered content frame */}
+      <div className="relative w-[374px] max-w-full h-full mx-auto">
 
       {/* Header section — Figma 881:265 (🏆 + "Your Badges!" + count pill) */}
       <div className="absolute" style={{ top: 188, left: 39, width: 294 }}>
@@ -295,6 +258,8 @@ export default function Badges() {
         <BadgeCard badge={BADGES[3]} style={{ left: 153, top: 129.02 }} />
         <BadgeCard badge={BADGES[4]} style={{ left: 0, top: 263.97 }} />
         <BadgeCard badge={BADGES[5]} style={{ left: 153, top: 263.97 }} />
+      </div>
+
       </div>
     </div>
   )

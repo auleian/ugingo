@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
-import arrowIcon from '../assets/account-arrow.svg'
+import { Link } from 'react-router-dom'
+import AccountBackHeader from '../components/AccountBackHeader'
 import userIcon from '../assets/account-user.svg'
 import paletteIcon from '../assets/account-palette.svg'
 import badgeIcon from '../assets/account-badge.svg'
@@ -70,7 +70,6 @@ function MenuCard({ left, top, gradient, iconSrc, title, subtitle, to }) {
 }
 
 export default function MyAccount({ name: nameOverride, email: emailOverride, avatarSrc }) {
-  const navigate = useNavigate()
   const avatar = useAvatar()
   const { name: authName, email: authEmail } = useUserDisplay()
   const name = nameOverride ?? authName ?? 'Friend'
@@ -80,64 +79,28 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
 
-      {/* Top header tint band — Figma 879:439 (376×77 at left=-2 top=62, #F9B438 20%) */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: 62,
-          left: -2,
-          width: 376,
-          height: 77,
-          backgroundColor: 'rgba(249,180,56,0.2)',
-        }}
-      />
+      <AccountBackHeader to="/profile" label="Back" ariaLabel="Back to profile" />
 
-      {/* Lower tinted area — Figma 881:171 (374×468 at left=0 top=344, #F7AE2B 16%) */}
+      {/* Lower tinted area — stretches full viewport */}
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 344,
+          top: 291,
           left: 0,
-          width: 374,
-          height: 468,
+          right: 0,
+          height: 521,
           backgroundColor: 'rgba(247,174,43,0.16)',
         }}
       />
 
-      {/* Back nav row — Figma 879:466 (327×36 at left=34 top=83, gap=12) */}
-      <div
-        className="absolute flex items-center"
-        style={{ top: 83, left: 34, width: 327, height: 36, gap: 12 }}
-      >
-        <button
-          type="button"
-          onClick={() => navigate('/profile')}
-          className="rounded-full flex items-center justify-center shrink-0 transition-transform duration-150 ease-out hover:scale-105 active:scale-95 cursor-pointer"
-          style={{ width: 36, height: 36, backgroundColor: '#F7AE2B' }}
-          aria-label="Back to profile"
-        >
-          {/* Arrow rotated 180° so it points left */}
-          <img
-            src={arrowIcon}
-            alt=""
-            aria-hidden
-            draggable={false}
-            style={{ width: 20, height: 20, transform: 'rotate(180deg)' }}
-          />
-        </button>
-        <p
-          className="font-inter font-bold whitespace-nowrap"
-          style={{ fontSize: 20, lineHeight: '28px', color: '#2E4858' }}
-        >
-          Back
-        </p>
-      </div>
+      {/* 374-wide centered content frame — all positioned content sits inside */}
+      <div className="relative w-[374px] max-w-full h-full mx-auto">
 
       {/* Avatar — Figma 881:169 (72×72 cyan at top=215, centered at x=57.5 by translate-x-1/2 + left=calc(50%-130px)) */}
       <div
         className="absolute -translate-x-1/2 flex items-center justify-center rounded-full bg-[#69CAD3]"
         style={{
-          top: 215,
+          top: 162,
           left: 187.5 - 130,
           width: 72,
           height: 72,
@@ -155,7 +118,7 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
       </div>
 
       {/* Name + email — Figma 878:251 (left=103 top=230) */}
-      <div className="absolute" style={{ left: 103, top: 230 }}>
+      <div className="absolute" style={{ left: 103, top: 177 }}>
         <p
           className="font-inter font-black whitespace-nowrap"
           style={{ fontSize: 32, lineHeight: '36px', color: '#F16522' }}
@@ -171,7 +134,7 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
       </div>
 
       {/* MainMenu grid — Figma 878:261 (328×365 at left=23 top=392, 2×2 with 12px gap) */}
-      <div className="absolute" style={{ top: 392, left: 23, width: 328, height: 365 }}>
+      <div className="absolute" style={{ top: 339, left: 23, width: 328, height: 365 }}>
         {/* Top-left: Profile (purple → magenta) — Figma 878:262 */}
         <MenuCard
           left={0}
@@ -212,6 +175,8 @@ export default function MyAccount({ name: nameOverride, email: emailOverride, av
           subtitle="Trophies"
           to="/account/badges"
         />
+      </div>
+
       </div>
     </div>
   )

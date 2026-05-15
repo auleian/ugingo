@@ -46,7 +46,7 @@ export default function Cart() {
 
       <div
         className="absolute bg-[#2e4858] flex items-center justify-between"
-        style={{ top: 87, left: 0, width: 374, height: 78, paddingLeft: 20, paddingRight: 20 }}
+        style={{ top: 45, left: 0, width: 374, height: 78, paddingLeft: 20, paddingRight: 20 }}
       >
         <div className="relative shrink-0" style={{ width: 114.35, height: 28 }}>
           <img

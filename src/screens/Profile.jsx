@@ -8,21 +8,12 @@ import { useAvatar } from '../lib/avatar'
 import { useUserDisplay } from '../lib/firebase'
 
 function HeaderShape() {
-  // Figma 659:279 — rounded pill 412×124 at (-19, -29), bleeds off top/sides
   return (
-    <svg
-      viewBox="0 0 412 124"
-      fill="none"
-      preserveAspectRatio="none"
-      className="absolute pointer-events-none"
-      style={{ top: -29, left: -19, width: 412, height: 124 }}
+    <div
+      className="absolute bg-white pointer-events-none"
+      style={{ top: 0, left: 0, right: 0, height: 53, borderRadius: 5 }}
       aria-hidden
-    >
-      <path
-        d="M0 47C0 21.0426 21.0426 0 47 0H365C390.957 0 412 21.0426 412 47V77C412 102.957 390.957 124 365 124H47C21.0426 124 0 102.957 0 77V47Z"
-        fill="white"
-      />
-    </svg>
+    />
   )
 }
 
@@ -81,7 +72,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
         to="/lessons"
         aria-label="Back to lessons"
         className="absolute overflow-hidden"
-        style={{ top: 55, left: 13, width: 27, height: 34 }}
+        style={{ top: 13, left: 13, width: 27, height: 34 }}
       >
         <img
           src={mascotSprite}
@@ -98,7 +89,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
         to="/settings"
         aria-label="Settings"
         className="absolute"
-        style={{ top: 47, left: 317, width: 51, height: 51 }}
+        style={{ top: 5, right: 13, width: 51, height: 51 }}
       >
         <img src={gearStarIcon} alt="" aria-hidden draggable={false} className="block w-full h-full" />
       </Link>
@@ -107,7 +98,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
       <div
         className="absolute -translate-x-1/2 flex items-center justify-center rounded-full bg-[#69CAD3]"
         style={{
-          top: 127,
+          top: 85,
           left: 187.5 + 1,
           width: 202,
           height: 202,
@@ -127,7 +118,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
       {/* Name — Figma 868:259 (Inter Bold 24px #f8c83c lh 36, centered x=188 top=329-1.6) */}
       <p
         className="absolute -translate-x-1/2 font-inter font-bold text-center whitespace-nowrap"
-        style={{ left: 188, top: 327.4, color: '#F8C83C', fontSize: 24, lineHeight: '36px' }}
+        style={{ left: 188, top: 285.4, color: '#F8C83C', fontSize: 24, lineHeight: '36px' }}
       >
         {name}
       </p>
@@ -137,7 +128,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
         to="/settings"
         className="absolute block rounded-[24px] overflow-hidden shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] transition-transform duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[0_28px_35px_-5px_rgba(0,0,0,0.18),0_12px_15px_-6px_rgba(0,0,0,0.12)] active:translate-y-0"
         style={{
-          top: 385,
+          top: 343,
           left: 27 - 2.48,
           width: 326,
           height: 152,
@@ -192,7 +183,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
         to="/my-account"
         className="absolute block rounded-[24px] overflow-hidden shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] transition-transform duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[0_28px_35px_-5px_rgba(0,0,0,0.18),0_12px_15px_-6px_rgba(0,0,0,0.12)] active:translate-y-0"
         style={{
-          top: 561,
+          top: 519,
           left: 27 - 2,
           width: 326,
           height: 164,
@@ -248,7 +239,7 @@ export default function Profile({ name: nameOverride, avatarSrc }) {
       <Link
         to="/shop"
         className="absolute -translate-x-1/2 flex items-center justify-center rounded-[12px]"
-        style={{ top: 745, left: 187.5, width: 140, height: 39, backgroundColor: '#95989A' }}
+        style={{ top: 703, left: 187.5, width: 140, height: 39, backgroundColor: '#95989A' }}
       >
         <span
           className="font-opensans font-extrabold"

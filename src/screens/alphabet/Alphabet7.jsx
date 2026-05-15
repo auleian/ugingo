@@ -38,7 +38,7 @@ function SpecialCard({ top, letter, say, hint, emoji, word, translation }) {
 
         <p
           className="absolute font-opensans font-semibold text-[#f16522] text-[11px] text-center leading-snug"
-          style={{ top: 87, left: 80, width: 164 }}
+          style={{ top: 45, left: 80, width: 164 }}
         >
           {hint}
         </p>

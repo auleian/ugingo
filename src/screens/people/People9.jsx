@@ -6,7 +6,6 @@ import skyBg from '../../assets/bg-success-sky.png'
 import confettiBg from '../../assets/bg-success-mountains.png'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import antelopeHead from '../../assets/people-antelope-head.png'
-import trophy from '../../assets/trophy.png'
 import starEarned from '../../assets/star-earned.svg'
 import { playMilestone } from '../../lib/sound'
 
@@ -72,13 +71,6 @@ export default function People9() {
         Challenge completed
       </p>
 
-      <img
-        src={trophy}
-        alt=""
-        draggable={false}
-        className="absolute select-none pointer-events-none object-contain z-10"
-        style={{ top: 147, left: 86, width: 200, height: 200 }}
-      />
 
       <div className="absolute z-10" style={{ top: 307, left: 37 }}>
         <img

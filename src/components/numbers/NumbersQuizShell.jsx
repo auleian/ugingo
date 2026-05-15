@@ -40,7 +40,7 @@ export default function NumbersQuizShell({ question, options, correctIndex, next
           key={i}
           type="button"
           onClick={() => handlePick(i)}
-          className="absolute rounded-[52.5px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10 flex items-center justify-center bg-[#2e4858] active:opacity-90"
+          className="absolute rounded-[52.5px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10 flex items-center justify-center bg-[#69CAD3] active:opacity-90"
           style={{ top: OPTION_TOPS[i], left: OPTION_LEFTS[i], width: 288, height: 59 }}
         >
           <span className="font-opensans font-semibold text-white text-[24px] leading-none">

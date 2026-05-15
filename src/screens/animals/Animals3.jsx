@@ -18,7 +18,7 @@ export default function Animals3() {
     <AnimalsFrame>
       <div
         className="absolute bg-[#f16522] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top: 87, left: -36, width: 423, height: 201 }}
+        style={{ top: 45, left: -36, width: 423, height: 201 }}
       />
 
       <div

@@ -9,13 +9,13 @@ export default function LanguagePlanStart() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 81,
+          top: 45,
           left: -144,
           width: 713,
-          height: 731,
+          height: 767,
           backgroundImage: `url(${bgLanguage})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top center',
         }}
       />
 

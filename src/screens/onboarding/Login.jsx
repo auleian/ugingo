@@ -103,7 +103,7 @@ export default function Login() {
         className="absolute font-raleway font-bold whitespace-nowrap"
         style={{
           left: 28,
-          top: 183,
+          top: 53,
           color: '#202020',
           fontSize: 52,
           lineHeight: 'normal',
@@ -119,7 +119,7 @@ export default function Login() {
         className="absolute font-nunito font-light whitespace-nowrap"
         style={{
           left: 28,
-          top: 248,
+          top: 118,
           color: '#202020',
           fontSize: 19,
           lineHeight: '35px',
@@ -129,7 +129,7 @@ export default function Login() {
       </p>
 
       {/* Heart icon — Figma 829:365 (16×15 at left=217 top=257) */}
-      <div className="absolute" style={{ left: 217, top: 257, width: 16, height: 15 }}>
+      <div className="absolute" style={{ left: 217, top: 127, width: 16, height: 15 }}>
         <HeartIcon />
       </div>
 
@@ -137,7 +137,7 @@ export default function Login() {
       <div
         className="absolute bg-[#F8F8F8] flex items-center rounded-[60px]"
         style={{
-          top: 328,
+          top: 198,
           left: 19,
           width: 334,
           height: 52.218,
@@ -160,7 +160,7 @@ export default function Login() {
       <div
         className="absolute bg-[#F8F8F8] flex items-center rounded-[60px]"
         style={{
-          top: 396.08,
+          top: 266.08,
           left: 19,
           width: 334,
           height: 52.218,
@@ -189,7 +189,7 @@ export default function Login() {
         className="absolute -translate-x-1/2 font-poppins font-medium text-center hover:text-[#F16522] transition-colors cursor-pointer"
         style={{
           left: 184,
-          top: 457,
+          top: 327,
           color: '#D2D2D2',
           fontSize: 13.794,
           lineHeight: 1.4,
@@ -205,7 +205,7 @@ export default function Login() {
         onClick={handleLogin}
         disabled={busy}
         className="absolute flex items-center justify-center rounded-[16px] overflow-hidden disabled:opacity-60"
-        style={{ top: 503, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
+        style={{ top: 373, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
       >
         <span
           className="font-nunito font-light text-center whitespace-nowrap"
@@ -220,7 +220,7 @@ export default function Login() {
         <p
           className="absolute text-center font-poppins"
           style={{
-            top: 565,
+            top: 435,
             left: 20,
             width: 335,
             fontSize: 12,
@@ -233,7 +233,7 @@ export default function Login() {
       )}
 
       {/* OR divider — Figma 829:379 (left=26 top=577 325×26) */}
-      <div className="absolute" style={{ top: 577, left: 26, width: 325, height: 26 }}>
+      <div className="absolute" style={{ top: 447, left: 26, width: 325, height: 26 }}>
         <div
           className="absolute"
           style={{
@@ -270,7 +270,7 @@ export default function Login() {
         onClick={handleGoogle}
         disabled={busy}
         className="absolute disabled:opacity-60"
-        style={{ top: 617, left: 35, width: 318, height: 39 }}
+        style={{ top: 487, left: 35, width: 318, height: 39 }}
       >
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
         <div className="absolute" style={{ left: 40, top: 9, width: 21, height: 20 }}>
@@ -285,7 +285,7 @@ export default function Login() {
       </button>
 
       {/* Login with Apple — Figma 829:375 (group at left=35 top=668 318×39) */}
-      <div className="absolute" style={{ top: 668, left: 35, width: 318, height: 39 }}>
+      <div className="absolute" style={{ top: 538, left: 35, width: 318, height: 39 }}>
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
         <div className="absolute" style={{ left: 40, top: 9, width: 22, height: 21 }}>
           <AppleIcon />
@@ -301,7 +301,7 @@ export default function Login() {
       {/* Don't have an account? Sign up — improvised reverse link to /create-account */}
       <p
         className="absolute left-0 right-0 text-center font-poppins font-medium whitespace-nowrap"
-        style={{ top: 728, fontSize: 13, lineHeight: '20px', color: '#9CA3AF' }}
+        style={{ top: 598, fontSize: 13, lineHeight: '20px', color: '#9CA3AF' }}
       >
         Don&apos;t have an account?{' '}
         <Link to="/create-account" className="font-poppins font-semibold text-[#F16522] hover:underline">

@@ -12,12 +12,12 @@ export default function PeopleHero({ children, antelopeCrop = DEFAULT_CROP }) {
     <>
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        style={{ top: 87, left: -32, width: 423, height: 201 }}
+        style={{ top: 45, left: -32, width: 423, height: 201 }}
       />
 
       <div
         className="absolute overflow-hidden pointer-events-none"
-        style={{ top: 99, left: 212, width: 139, height: 171 }}
+        style={{ top: 57, left: 212, width: 139, height: 171 }}
       >
         <img
           src={antelopeHead}
@@ -38,7 +38,7 @@ export default function PeopleHero({ children, antelopeCrop = DEFAULT_CROP }) {
 
       <div
         className="absolute bg-[#2e4858] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        style={{ top: 270, left: -32, width: 423, height: 18 }}
+        style={{ top: 228, left: -32, width: 423, height: 18 }}
       />
     </>
   )

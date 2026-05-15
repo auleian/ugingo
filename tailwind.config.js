@@ -10,6 +10,7 @@ export default {
         poppins: ['"Poppins"', 'system-ui', 'sans-serif'],
         raleway: ['"Raleway"', 'system-ui', 'sans-serif'],
         nunito: ['"Nunito Sans"', 'system-ui', 'sans-serif'],
+        showcard: ['"Alfa Slab One"', '"Showcard Gothic"', 'serif'],
       },
       maxWidth: {
         mobile: '374px',

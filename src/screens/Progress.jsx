@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom'
-import arrowIcon from '../assets/account-arrow.svg'
+import AccountBackHeader from '../components/AccountBackHeader'
 import chartImg from '../assets/emojis/chart.png'
 import booksImg from '../assets/emojis/books.png'
 import checkImg from '../assets/emojis/check.png'
@@ -162,7 +161,6 @@ function StreakCard({ top, left, value, weekDays, completedDays }) {
 }
 
 export default function Progress({ stats = DEFAULT_STATS }) {
-  const navigate = useNavigate()
   const {
     wordsLearned,
     wordsGoal,
@@ -176,51 +174,16 @@ export default function Progress({ stats = DEFAULT_STATS }) {
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
 
-      {/* Top header tint band — Figma 881:338 (376×77 at left=-2 top=62) */}
+      <AccountBackHeader to="/my-account" label="Back" ariaLabel="Back to My Account" />
+
+      {/* Light cyan tint below the header — stretches full viewport */}
       <div
         className="absolute pointer-events-none"
-        style={{
-          top: 62,
-          left: -2,
-          width: 376,
-          height: 77,
-          backgroundColor: 'rgba(249,180,56,0.2)',
-        }}
+        style={{ top: 287, left: 0, right: 0, height: 525, backgroundColor: '#DEFCFF' }}
       />
 
-      {/* Light cyan tint below the header — Figma 881:230 (374×525 at top=287) */}
-      <div
-        className="absolute pointer-events-none"
-        style={{ top: 287, left: 0, width: 374, height: 525, backgroundColor: '#DEFCFF' }}
-      />
-
-      {/* Back nav row — Figma 879:621 (327×36 at left=34 top=83, gap=12) */}
-      <div
-        className="absolute flex items-center"
-        style={{ top: 83, left: 34, width: 327, height: 36, gap: 12 }}
-      >
-        <button
-          type="button"
-          onClick={() => navigate('/my-account')}
-          className="rounded-full flex items-center justify-center shrink-0 transition-transform duration-150 ease-out hover:scale-105 active:scale-95 cursor-pointer"
-          style={{ width: 36, height: 36, backgroundColor: '#F7AE2B' }}
-          aria-label="Back to My Account"
-        >
-          <img
-            src={arrowIcon}
-            alt=""
-            aria-hidden
-            draggable={false}
-            style={{ width: 20, height: 20, transform: 'rotate(180deg)' }}
-          />
-        </button>
-        <p
-          className="font-inter font-bold whitespace-nowrap"
-          style={{ fontSize: 20, lineHeight: '28px', color: '#2E4858' }}
-        >
-          Back
-        </p>
-      </div>
+      {/* 374-wide centered content frame */}
+      <div className="relative w-[374px] max-w-full h-full mx-auto">
 
       {/* Header section — Figma 879:524 (278.8×116 at left=47 top=160) */}
       <div className="absolute" style={{ top: 160, left: 47, width: 278.8 }}>
@@ -321,6 +284,8 @@ export default function Progress({ stats = DEFAULT_STATS }) {
         >
           Keep learning Ugandan languages!
         </p>
+      </div>
+
       </div>
     </div>
   )

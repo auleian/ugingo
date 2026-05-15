@@ -12,7 +12,7 @@ export default function NumbersFrame({ children, showBg = true, bgColor = '#f9ef
       {showBg && (
         <div
           className="absolute pointer-events-none"
-          style={{ top: 87, left: -426, width: 1472, height: 725, transform: 'rotate(180deg)' }}
+          style={{ top: 45, left: -426, width: 1472, height: 725, transform: 'rotate(180deg)' }}
         >
           <div className="absolute inset-0 overflow-hidden">
             <img

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { AVATARS, getAvatarKey, setAvatarKey } from '../lib/avatar'
 
 // One avatar tile in the 4×3 grid — Figma 882:540 / 882:464 / etc.
+// Emoji is rendered as text (system emoji) per Figma — 36px Inter Medium.
 function AvatarTile({ avatar, selected, onClick, style }) {
-  // Selected tile gets a ring matching its gradient's start colour for clarity.
   const ringColor = avatar.gradient.match(/#[0-9A-F]{6}/i)?.[0] ?? '#F7AE2B'
   return (
     <button
@@ -23,20 +23,22 @@ function AvatarTile({ avatar, selected, onClick, style }) {
       aria-pressed={selected}
       aria-label={avatar.label}
     >
-      {/* Emoji image — 40×40 visible, centered horizontally at top=16 */}
-      <div
-        className="absolute flex items-center justify-center"
-        style={{ left: 16, top: 16, width: 58, height: 40 }}
-      >
-        <img
-          src={avatar.src}
-          alt=""
-          aria-hidden
-          draggable={false}
-          style={{ width: 40, height: 40 }}
-        />
+      {/* Emoji glyph — 36px Inter Medium, centered horizontally, top=-2 inside 40-tall container */}
+      <div className="absolute" style={{ left: 16, top: 16, width: 58, height: 40 }}>
+        <p
+          className="absolute -translate-x-1/2 text-center font-inter font-medium whitespace-nowrap"
+          style={{
+            left: 29.27,
+            top: -2,
+            color: '#0a0a0a',
+            fontSize: 36,
+            lineHeight: '40px',
+          }}
+        >
+          {avatar.emoji}
+        </p>
       </div>
-      {/* Label — Inter Bold 12 white, centered, at top=64 */}
+      {/* Label — Inter Bold 12 white, centered */}
       <p
         className="absolute text-center font-inter font-bold text-white whitespace-nowrap"
         style={{ left: 16, top: 64, width: 58, fontSize: 12, lineHeight: '16px' }}
@@ -60,88 +62,93 @@ export default function AvatarPicker() {
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
 
-      {/* Top tint band — Figma 873:842 (376×77 at left=-2 top=64) */}
+      {/* Top tint band — stretches full viewport */}
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 64,
-          left: -2,
-          width: 376,
+          top: 22,
+          left: 0,
+          right: 0,
           height: 77,
           backgroundColor: 'rgba(249,180,56,0.2)',
         }}
       />
 
-      {/* Title — Figma 874:1239 (Inter Black 28 #1E2939 lh:60 centered top=62) */}
-      <p
-        className="absolute -translate-x-1/2 font-inter font-black text-center whitespace-nowrap"
-        style={{
-          left: 187.5 + 0.5,
-          top: 62,
-          color: '#1E2939',
-          fontSize: 28,
-          lineHeight: '60px',
-        }}
-      >
-        Choose Your Avatar!
-      </p>
+      {/* 374-wide centered content frame */}
+      <div className="relative w-[374px] max-w-full h-full mx-auto">
 
-      {/* Subtitle — Figma 882:453 (294×20 at top=114, Inter Regular 14 #4A5565 centered) */}
-      <p
-        className="absolute -translate-x-1/2 font-inter text-center whitespace-nowrap"
-        style={{
-          left: 187.5,
-          top: 114,
-          color: '#4A5565',
-          fontSize: 14,
-          lineHeight: '20px',
-        }}
-      >
-        Pick your favorite
-      </p>
-
-      {/* Grid container — Figma 882:455 (294×420 at left=40 top=227, 4 rows × 3 cols, step 102×107.99) */}
-      <div
-        className="absolute"
-        style={{ top: 196 + 30.99, left: 40, width: 294, height: 419.95 }}
-      >
-        {AVATARS.map((avatar, idx) => {
-          const col = idx % 3
-          const row = Math.floor(idx / 3)
-          return (
-            <AvatarTile
-              key={avatar.key}
-              avatar={avatar}
-              selected={draftKey === avatar.key}
-              onClick={() => setDraftKey(avatar.key)}
-              style={{ left: col * 102, top: row * 107.99 }}
-            />
-          )
-        })}
-      </div>
-
-      {/* "That's Me! ✨" button — Figma 882:519 (294×60 cyan at left=41 top=717) */}
-      <button
-        type="button"
-        onClick={handleConfirm}
-        className="absolute flex items-center justify-center rounded-[16px] transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-        style={{
-          top: 717,
-          left: 41,
-          width: 294,
-          height: 60,
-          backgroundColor: '#69CAD3',
-          filter:
-            'drop-shadow(0 10px 7.5px rgba(0,0,0,0.1)) drop-shadow(0 4px 3px rgba(0,0,0,0.1))',
-        }}
-      >
-        <span
-          className="font-inter font-black text-white text-center whitespace-nowrap"
-          style={{ fontSize: 18, lineHeight: '28px' }}
+        {/* Title — Inter Black 28 #1E2939 leading-60, centered */}
+        <p
+          className="absolute -translate-x-1/2 font-inter font-black text-center whitespace-nowrap"
+          style={{
+            left: 187.5 + 0.5,
+            top: 20,
+            color: '#1E2939',
+            fontSize: 28,
+            lineHeight: '60px',
+          }}
         >
-          That&apos;s Me! ✨
-        </span>
-      </button>
+          Choose Your Avatar!
+        </p>
+
+        {/* Subtitle — Inter Regular 14 #4A5565 leading-20, centered */}
+        <p
+          className="absolute -translate-x-1/2 font-inter font-normal text-center whitespace-nowrap"
+          style={{
+            left: 187.5,
+            top: 72,
+            color: '#4A5565',
+            fontSize: 14,
+            lineHeight: '20px',
+          }}
+        >
+          Pick your favorite
+        </p>
+
+        {/* Grid container — 294×420 at left=40 top=154.99 (4 rows × 3 cols, step 102×107.99) */}
+        <div
+          className="absolute"
+          style={{ top: 184.99, left: 40, width: 294, height: 419.95 }}
+        >
+          {AVATARS.map((avatar, idx) => {
+            const col = idx % 3
+            const row = Math.floor(idx / 3)
+            return (
+              <AvatarTile
+                key={avatar.key}
+                avatar={avatar}
+                selected={draftKey === avatar.key}
+                onClick={() => setDraftKey(avatar.key)}
+                style={{ left: col * 102, top: row * 107.99 }}
+              />
+            )
+          })}
+        </div>
+
+        {/* "That's Me! ✨" button — Inter Black 18 white, bg #69CAD3 */}
+        <button
+          type="button"
+          onClick={handleConfirm}
+          className="absolute flex items-center justify-center rounded-[16px] transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          style={{
+            top: 675,
+            left: 41,
+            width: 294,
+            height: 60,
+            backgroundColor: '#69CAD3',
+            filter:
+              'drop-shadow(0 10px 7.5px rgba(0,0,0,0.1)) drop-shadow(0 4px 3px rgba(0,0,0,0.1))',
+          }}
+        >
+          <span
+            className="font-inter font-black text-white text-center whitespace-nowrap"
+            style={{ fontSize: 18, lineHeight: '28px' }}
+          >
+            That&apos;s Me! ✨
+          </span>
+        </button>
+
+      </div>
     </div>
   )
 }

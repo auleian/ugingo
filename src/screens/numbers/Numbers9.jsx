@@ -6,7 +6,6 @@ import Confetti from '../../components/Confetti'
 import skyBg from '../../assets/bg-success-sky.png'
 import confettiBg from '../../assets/bg-success-mountains.png'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import trophy from '../../assets/trophy.png'
 import starEarned from '../../assets/star-earned.svg'
 import { playMilestone } from '../../lib/sound'
 
@@ -56,21 +55,13 @@ export default function Numbers9() {
         Challenge completed
       </p>
 
-      <img
-        src={trophy}
-        alt=""
-        aria-hidden
-        draggable={false}
-        className="absolute pointer-events-none select-none object-contain"
-        style={{ top: 147, left: 86, width: 200, height: 200 }}
-      />
 
       <Mascot
         variant="antelopeFront"
         size={163}
         withCircle={false}
         className="absolute"
-        style={{ top: 242, left: 104 }}
+        style={{ top: 226, left: 182 }}
       />
 
       <img
@@ -79,12 +70,12 @@ export default function Numbers9() {
         aria-hidden
         draggable={false}
         className="absolute pointer-events-none select-none"
-        style={{ top: 307, left: 37, width: 46, height: 46 }}
+        style={{ top: 316, left: 83, width: 46, height: 46 }}
       />
 
       <div
         className="absolute font-opensans font-extrabold text-[#2e4858] text-[12px] text-center leading-tight"
-        style={{ top: 356, left: 18, width: 73 }}
+        style={{ top: 371, left: 69, width: 73 }}
       >
         <p>You earned</p>
         <p>a star</p>
@@ -136,7 +127,7 @@ export default function Numbers9() {
       <Link
         to="/lessons"
         className="absolute bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"
-        style={{ top: 701, left: 150, width: 72, height: 26 }}
+        style={{ top: 701, left: 150, width: 81, height: 28 }}
       >
         <span className="font-poppins font-black text-white text-[11px] leading-none">
           Next

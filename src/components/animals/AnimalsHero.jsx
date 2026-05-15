@@ -17,12 +17,12 @@ export default function AnimalsHero({ children, antelopeCrop = LIST_ANTELOPE_CRO
     <>
       <div
         className="absolute bg-[#f16522] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-10"
-        style={{ top: 87, left: -36, width: 423, height: 201 }}
+        style={{ top: 45, left: -36, width: 423, height: 201 }}
       />
 
       <div
         className="absolute overflow-hidden pointer-events-none z-20"
-        style={{ top: 99, left: 208, width: 139, height: 171 }}
+        style={{ top: 57, left: 208, width: 139, height: 171 }}
       >
         <img
           src={antelopeHead}

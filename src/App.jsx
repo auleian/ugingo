@@ -76,6 +76,7 @@ import Places4 from './screens/places/Places4'
 import Places5 from './screens/places/Places5'
 import Places6 from './screens/places/Places6'
 import Places7 from './screens/places/Places7'
+import Places8 from './screens/places/Places8'
 import PlacesTryAgain from './screens/places/PlacesTryAgain'
 import Profile from './screens/Profile'
 import Settings from './screens/Settings'
@@ -231,6 +232,7 @@ export default function App() {
         <Route path="/places/5" element={<Places5 />} />
         <Route path="/places/6" element={<Places6 />} />
         <Route path="/places/7" element={<Places7 />} />
+        <Route path="/places/8" element={<Places8 />} />
         <Route path="/places/try-again" element={<PlacesTryAgain />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />

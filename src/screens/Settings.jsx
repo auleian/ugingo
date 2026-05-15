@@ -57,7 +57,7 @@ function HeaderShape() {
       fill="none"
       preserveAspectRatio="none"
       className="absolute pointer-events-none"
-      style={{ top: -29, left: -19, width: 412, height: 124 }}
+      style={{ top: -71, left: -19, width: 412, height: 124 }}
       aria-hidden
     >
       <path
@@ -183,7 +183,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
       {/* Cream tint overlay below header — Figma 863:167 (374×717 at top=95, bg #FFECCB 20%) */}
       <div
         className="absolute pointer-events-none"
-        style={{ top: 95, left: 0, width: 374, height: 717, backgroundColor: 'rgba(255,236,203,0.2)' }}
+        style={{ top: 53, left: 0, width: 374, height: 759, backgroundColor: 'rgba(255,236,203,0.2)' }}
       />
 
       {/* White header pill */}
@@ -194,7 +194,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
         to="/lessons"
         aria-label="Back to lessons"
         className="absolute overflow-hidden"
-        style={{ top: 55, left: 13, width: 27, height: 34 }}
+        style={{ top: 13, left: 13, width: 27, height: 34 }}
       >
         <img
           src={mascotSprite}
@@ -211,7 +211,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
         to="/profile"
         aria-label="Profile"
         className="absolute"
-        style={{ top: 55, left: 327, width: 34.909, height: 35.265 }}
+        style={{ top: 13, left: 327, width: 34.909, height: 35.265 }}
       >
         <img src={avatarRing} alt="" aria-hidden draggable={false} className="block w-full h-full" />
         <span
@@ -232,7 +232,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
       {/* Volume heading row — Figma 861:475 (left=35 top=141, 214×64, gap-16) */}
       <div
         className="absolute flex items-center"
-        style={{ top: 141, left: 35, width: 214, height: 64, gap: 16 }}
+        style={{ top: 99, left: 35, width: 214, height: 64, gap: 16 }}
       >
         {/* Master volume toggle — cascades to BOTH music and sounds at once.
             Icon reflects the combined state: ON if either toggle is on; OFF
@@ -323,7 +323,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
         }}
         className="absolute flex items-center justify-between rounded-[16px] cursor-pointer transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0"
         style={{
-          top: 663,
+          top: 621,
           left: 17,
           width: 336,
           height: 104,

@@ -16,7 +16,7 @@ const CONFETTI = [
   { left: 127, top: 367, size: 20, rotate: 18 },
 ]
 
-export default function Animals8() {
+export default function Places8() {
   useEffect(() => {
     playMilestone()
   }, [])

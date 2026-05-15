@@ -12,7 +12,7 @@ export default function PlacesFrame({ children, showCityBg = true, showPill = tr
       {showCityBg && (
         <div
           className="absolute pointer-events-none"
-          style={{ top: 54, left: -537, width: 1377, height: 758, opacity: 0.42 }}
+          style={{ top: 12, left: -537, width: 1377, height: 800, opacity: 0.42 }}
         >
           <img
             src={cityBg}

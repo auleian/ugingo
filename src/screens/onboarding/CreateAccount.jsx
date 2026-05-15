@@ -250,7 +250,7 @@ export default function CreateAccount() {
         className="absolute font-raleway font-bold whitespace-nowrap"
         style={{
           left: 33,
-          top: 172,
+          top: 42,
           color: '#202020',
           fontSize: 50,
           lineHeight: '54px',
@@ -265,7 +265,7 @@ export default function CreateAccount() {
       <div
         className="absolute bg-[#F8F8F8] flex items-center rounded-[60px]"
         style={{
-          top: 309,
+          top: 179,
           left: 20,
           width: 335,
           height: 52.375,
@@ -288,7 +288,7 @@ export default function CreateAccount() {
       <div
         className="absolute bg-[#F8F8F8] flex items-center rounded-[60px]"
         style={{
-          top: 309 + 52.375 + 7.906,
+          top: 179 + 52.375 + 7.906,
           left: 20,
           width: 335,
           height: 52.375,
@@ -322,7 +322,7 @@ export default function CreateAccount() {
       <div
         className="absolute bg-[#F8F8F8] flex items-center rounded-[60px]"
         style={{
-          top: 309 + (52.375 + 7.906) * 2,
+          top: 179 + (52.375 + 7.906) * 2,
           left: 20,
           width: 335,
           height: 55.339,
@@ -403,7 +403,7 @@ export default function CreateAccount() {
         onClick={handleSignUp}
         disabled={busy}
         className="absolute flex items-center justify-center rounded-[16px] overflow-hidden disabled:opacity-60"
-        style={{ top: 499, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
+        style={{ top: 369, left: 20, width: 335, height: 61, backgroundColor: '#F7AE2B' }}
       >
         <span
           className="font-nunito font-light text-center whitespace-nowrap"
@@ -418,14 +418,14 @@ export default function CreateAccount() {
       {error && (
         <p
           className="absolute text-center font-poppins"
-          style={{ top: 562, left: 20, width: 335, fontSize: 12, lineHeight: '14px', color: '#DC2626' }}
+          style={{ top: 432, left: 20, width: 335, fontSize: 12, lineHeight: '14px', color: '#DC2626' }}
         >
           {error}
         </p>
       )}
 
       {/* OR divider — Figma 829:446 */}
-      <div className="absolute" style={{ top: 576, left: 24, width: 325, height: 26 }}>
+      <div className="absolute" style={{ top: 446, left: 24, width: 325, height: 26 }}>
         <div
           className="absolute"
           style={{
@@ -462,7 +462,7 @@ export default function CreateAccount() {
         onClick={handleGoogle}
         disabled={busy}
         className="absolute disabled:opacity-60"
-        style={{ top: 616, left: 33, width: 318, height: 39 }}
+        style={{ top: 486, left: 33, width: 318, height: 39 }}
       >
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
         <div className="absolute" style={{ left: 40, top: 9, width: 21, height: 20 }}>
@@ -477,7 +477,7 @@ export default function CreateAccount() {
       </button>
 
       {/* Continue with Apple — Figma 829:442 */}
-      <div className="absolute" style={{ top: 667, left: 33, width: 318, height: 39 }}>
+      <div className="absolute" style={{ top: 537, left: 33, width: 318, height: 39 }}>
         <div className="absolute bg-[#F8F8F8] rounded-[60px]" style={{ left: 22, top: 0, width: 250, height: 39 }} />
         <div className="absolute" style={{ left: 40, top: 9, width: 22, height: 21 }}>
           <AppleIcon />
@@ -493,7 +493,7 @@ export default function CreateAccount() {
       {/* Have an account? Sign in — improvised: links to /sign-in (to be built) */}
       <p
         className="absolute left-0 right-0 text-center font-poppins font-medium whitespace-nowrap"
-        style={{ top: 728, fontSize: 13, lineHeight: '20px', color: '#9CA3AF' }}
+        style={{ top: 598, fontSize: 13, lineHeight: '20px', color: '#9CA3AF' }}
       >
         Have an account?{' '}
         <Link to="/sign-in" className="font-poppins font-semibold text-[#F16522] hover:underline">
