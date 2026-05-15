@@ -3,43 +3,47 @@ import { useEffect, useState } from 'react'
 // Design canvas every screen is laid out against (iPhone-ish portrait).
 // Screens use absolute positioning with hard-coded coords in this space, so
 // instead of refactoring every screen to be fluid we scale the whole canvas
-// uniformly to fit the viewport. Letterboxing fills with the page background.
+// uniformly to the viewport width. Width-fit (not aspect-preserving fit)
+// keeps the frame edge-to-edge horizontally on every device. If scaled
+// height exceeds the viewport we allow normal body scroll.
 const DESIGN_W = 375
 const DESIGN_H = 812
 
+function computeScale() {
+  if (typeof window === 'undefined') return 1
+  return window.innerWidth / DESIGN_W
+}
+
 export default function MobileFrame({ children }) {
-  const [scale, setScale] = useState(1)
+  // Initialize eagerly so first paint already has the right scale.
+  const [scale, setScale] = useState(computeScale)
 
   useEffect(() => {
-    const compute = () => {
-      const s = Math.min(
-        window.innerWidth / DESIGN_W,
-        window.innerHeight / DESIGN_H,
-      )
-      setScale(s)
-    }
-    compute()
-    window.addEventListener('resize', compute)
-    window.addEventListener('orientationchange', compute)
+    const update = () => setScale(computeScale())
+    window.addEventListener('resize', update)
+    window.addEventListener('orientationchange', update)
     return () => {
-      window.removeEventListener('resize', compute)
-      window.removeEventListener('orientationchange', compute)
+      window.removeEventListener('resize', update)
+      window.removeEventListener('orientationchange', update)
     }
   }, [])
 
+  // Outer wrapper reserves the scaled height so document flow / body
+  // scrolling work correctly when scaled content is taller than the
+  // viewport. min-height keeps the background filling the screen on
+  // short scaled content (narrow phones where vw < DESIGN_W).
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center overflow-hidden bg-white sm:bg-zinc-100"
-      style={{ height: '100dvh' }}
+      className="relative w-full bg-white"
+      style={{ height: DESIGN_H * scale, minHeight: '100dvh' }}
     >
       <div
-        className="relative flex flex-col bg-white overflow-hidden sm:rounded-[40px] sm:shadow-2xl sm:ring-1 sm:ring-black/5"
+        className="absolute top-0 left-0 flex flex-col bg-white overflow-hidden"
         style={{
           width: DESIGN_W,
           height: DESIGN_H,
           transform: `scale(${scale})`,
-          transformOrigin: 'center center',
-          flexShrink: 0,
+          transformOrigin: 'top left',
         }}
       >
         {children}
