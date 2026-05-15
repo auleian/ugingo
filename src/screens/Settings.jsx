@@ -323,7 +323,7 @@ export default function Settings({ avatarLetter: letterOverride }) {
         }}
         className="absolute flex items-center justify-between rounded-[16px] cursor-pointer transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0"
         style={{
-          top: 621,
+          top: 663,
           left: 17,
           width: 336,
           height: 104,

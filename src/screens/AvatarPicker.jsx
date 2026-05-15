@@ -66,7 +66,7 @@ export default function AvatarPicker() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 22,
+          top: 0,
           left: 0,
           right: 0,
           height: 77,
@@ -82,7 +82,7 @@ export default function AvatarPicker() {
           className="absolute -translate-x-1/2 font-inter font-black text-center whitespace-nowrap"
           style={{
             left: 187.5 + 0.5,
-            top: 20,
+            top: 0,
             color: '#1E2939',
             fontSize: 28,
             lineHeight: '60px',
@@ -96,7 +96,7 @@ export default function AvatarPicker() {
           className="absolute -translate-x-1/2 font-inter font-normal text-center whitespace-nowrap"
           style={{
             left: 187.5,
-            top: 72,
+            top: 42,
             color: '#4A5565',
             fontSize: 14,
             lineHeight: '20px',
@@ -108,7 +108,7 @@ export default function AvatarPicker() {
         {/* Grid container — 294×420 at left=40 top=154.99 (4 rows × 3 cols, step 102×107.99) */}
         <div
           className="absolute"
-          style={{ top: 184.99, left: 40, width: 294, height: 419.95 }}
+          style={{ top: 144.99, left: 40, width: 294, height: 419.95 }}
         >
           {AVATARS.map((avatar, idx) => {
             const col = idx % 3
@@ -131,7 +131,7 @@ export default function AvatarPicker() {
           onClick={handleConfirm}
           className="absolute flex items-center justify-center rounded-[16px] transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           style={{
-            top: 675,
+            top: 655,
             left: 41,
             width: 294,
             height: 60,

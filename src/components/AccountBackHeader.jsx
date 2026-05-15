@@ -5,7 +5,7 @@ import arrowIcon from '../assets/account-arrow.svg'
 // circular back-arrow + bold label. MyAccount, EditProfile, Progress, Badges
 // all share the same coordinates here — change positions in ONE place.
 
-const TINT_TOP = 9
+const TINT_TOP = 0
 const TINT_HEIGHT = 77
 const TINT_COLOR = 'rgba(249,180,56,0.2)'
 const ROW_TOP = 30
@@ -27,12 +27,12 @@ export default function AccountBackHeader({ to = '/my-account', label = 'Back', 
         }}
       />
       <div
-        className="absolute flex items-center"
+        className="absolute flex items-center z-10"
         style={{
           top: ROW_TOP,
           left: 'calc(50% - 153px)',
           width: 327,
-          height: 36,
+          height: 15,
           gap: 12,
         }}
       >

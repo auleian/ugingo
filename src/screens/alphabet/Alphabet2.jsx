@@ -17,7 +17,7 @@ function StripBand({ top, left, width = 553, height = 133, rotate = false }) {
           aria-hidden
           draggable={false}
           className="absolute select-none"
-          style={{ top: '-177.08%', height: '277.08%', width: '100%' }}
+          style={{ top: '-177.08%', height: '277.08%', width: '100%', opacity: '60%' }}
         />
       </div>
     </div>
@@ -27,7 +27,7 @@ function StripBand({ top, left, width = 553, height = 133, rotate = false }) {
 export default function Alphabet2() {
   return (
     <AlphabetFrame background="plain">
-      <StripBand top={82} left={-178} rotate />
+      <StripBand top={40} left={-178} rotate />
       <StripBand top={666} left={-65} width={669} height={161} />
 
       <Mascot
@@ -40,7 +40,7 @@ export default function Alphabet2() {
 
       <div
         className="absolute drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] overflow-hidden pointer-events-none"
-        style={{ top: 293, left: -90, width: 551, height: 345 }}
+        style={{ top: 287, left: -90, width: 551, height: 345 }}
       >
         <img
           src={cloudCard}
@@ -52,7 +52,7 @@ export default function Alphabet2() {
         />
       </div>
 
-      <div className="absolute text-center" style={{ top: 245, left: 105, width: 225 }}>
+      <div className="absolute " style={{ top: 245, left: 105, width: 225 }}>
         <p className="font-poppins font-black text-[#2e4858] text-[24px] leading-none">
           Amateeka ga Walifu
         </p>

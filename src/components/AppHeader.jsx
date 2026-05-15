@@ -10,7 +10,7 @@ export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
   const { initial } = useUserDisplay()
   return (
     <header
-      className="relative w-full shadow-[0_2px_8px_rgba(0,0,0,0.04)] z-30"
+      className="relative w-full shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-30"
       style={{
         height: 45,
         backgroundColor: bg || '#ffffff',
