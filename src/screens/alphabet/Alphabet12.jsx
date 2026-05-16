@@ -9,12 +9,6 @@ import cloudCard from '../../assets/bg-success-cloud.png'
 import starEarned from '../../assets/star-earned.svg'
 import { playMilestone } from '../../lib/sound'
 
-const CONFETTI = [
-  { left: 312, top: 303, size: 40, rotate: 178, w: 88, h: 52 },
-  { left: 62, top: 211, size: 15, rotate: 96, w: 24, h: 31 },
-  { left: 312, top: 194, size: 20, rotate: -123, w: 33, h: 35 },
-  { left: 127, top: 367, size: 20, rotate: 18, w: 34, h: 28 },
-]
 
 export default function Alphabet12() {
   useEffect(() => {
@@ -35,7 +29,7 @@ export default function Alphabet12() {
 
       <div
         className="absolute pointer-events-none"
-        style={{ top: 69, left: -78, width: 566, height: 438, opacity: 0.9 }}
+        style={{ top: -34, left: -185, width: 680, height: 526, opacity: 0.9 }}
       >
         <img
           src={bgConfetti}
@@ -107,22 +101,7 @@ export default function Alphabet12() {
         </p>
       </div>
 
-      {CONFETTI.map((c, i) => (
-        <span
-          key={i}
-          className="absolute select-none pointer-events-none"
-          style={{
-            top: c.top,
-            left: c.left,
-            transform: `rotate(${c.rotate}deg)`,
-            fontSize: c.size,
-            lineHeight: 1,
-          }}
-          aria-hidden
-        >
-          🎉
-        </span>
-      ))}
+     
 
       <AlphabetPillButton size="sm" to="/lessons" className="absolute" style={{ top: 701, left: 150 }}>
         Next

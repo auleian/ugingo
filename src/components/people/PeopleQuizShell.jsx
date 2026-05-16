@@ -1,10 +1,13 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PeopleFrame from './PeopleFrame'
 import PeopleHero from './PeopleHero'
 import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [416, 483, 550]
+const PICK_FLASH_MS = 600
+const PICK_CORRECT_BG = 'green'
+const PICK_WRONG_BG = 'red'
 
 const TEST_ANTELOPE_CROP = { top: -82.56, left: -353.39, width: 781.69, height: 503.22 }
 
@@ -12,15 +15,19 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
   const navigate = useNavigate()
   const location = useLocation()
   const busy = useRef(false)
+  const [picked, setPicked] = useState(null)
 
   async function handlePick(i) {
     if (busy.current) return
     busy.current = true
-    if (i === correctIndex) {
-      await playCorrectClip()
+    const correct = i === correctIndex
+    setPicked({ index: i, correct })
+    if (correct) {
+      await Promise.all([playCorrectClip(), new Promise((r) => setTimeout(r, PICK_FLASH_MS))])
       navigate(nextPath)
     } else {
       playWrong()
+      await new Promise((r) => setTimeout(r, PICK_FLASH_MS))
       navigate('/people/try-again', { state: { back: location.pathname } })
     }
   }
@@ -50,7 +57,15 @@ export default function PeopleQuizShell({ question, options, correctIndex, nextP
           type="button"
           onClick={() => handlePick(i)}
           className="absolute bg-[#2e4858] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center active:opacity-90"
-          style={{ top: OPTION_TOPS[i], left: 24, width: 326, height: 47 }}
+          style={{
+            top: OPTION_TOPS[i],
+            left: 24,
+            width: 326,
+            height: 47,
+            ...(picked?.index === i && {
+              backgroundColor: picked.correct ? PICK_CORRECT_BG : PICK_WRONG_BG,
+            }),
+          }}
         >
           <span className="ml-[20px] font-opensans font-semibold text-white text-[24px] leading-none">
             {label}

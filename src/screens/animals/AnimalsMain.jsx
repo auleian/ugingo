@@ -14,7 +14,7 @@ export default function AnimalsMain() {
         aria-hidden
         draggable={false}
         className="absolute max-w-none pointer-events-none select-none object-cover"
-        style={{ top: 74, left: -74, width: 545, height: 738 }}
+        style={{ top: 40, left: -74, width: 545, height: 738 }}
       />
 
       <AppHeader roundedBottom />
@@ -41,7 +41,7 @@ export default function AnimalsMain() {
         to="/animals/1"
         size="md"
         className="absolute z-30"
-        style={{ top: 746, left: 242 }}
+        style={{ top: 716, left: 242 }}
       >
         Next
       </AnimalsPillButton>

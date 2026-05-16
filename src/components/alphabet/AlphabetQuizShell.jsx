@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AlphabetFrame from './AlphabetFrame'
 import Mascot from '../Mascot'
@@ -6,20 +6,27 @@ import cloudCard from '../../assets/bg-success-cloud.png'
 import { playCorrectClip, playWrong } from '../../lib/sound'
 
 const OPTION_TOPS = [542.37, 597.87, 653.36]
+const PICK_FLASH_MS = 600
+const PICK_CORRECT_BG = 'green'
+const PICK_WRONG_BG = 'red'
 
 export default function AlphabetQuizShell({ question, options, correctIndex, nextPath }) {
   const navigate = useNavigate()
   const location = useLocation()
   const busy = useRef(false)
+  const [picked, setPicked] = useState(null)
 
   async function handlePick(i) {
     if (busy.current) return
     busy.current = true
-    if (i === correctIndex) {
-      await playCorrectClip()
+    const correct = i === correctIndex
+    setPicked({ index: i, correct })
+    if (correct) {
+      await Promise.all([playCorrectClip(), new Promise((r) => setTimeout(r, PICK_FLASH_MS))])
       navigate(nextPath)
     } else {
       playWrong()
+      await new Promise((r) => setTimeout(r, PICK_FLASH_MS))
       navigate('/alphabet/try-again', { state: { back: location.pathname } })
     }
   }
@@ -82,6 +89,10 @@ export default function AlphabetQuizShell({ question, options, correctIndex, nex
             left: 65.76,
             width: 262,
             height: 43.88,
+            ...(picked?.index === i && {
+              backgroundColor: picked.correct ? PICK_CORRECT_BG : PICK_WRONG_BG,
+              
+            }),
           }}
         >
           <span className="ml-[12px] font-opensans font-extrabold text-[#F8C83C] text-[24px] leading-none">
