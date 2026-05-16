@@ -29,7 +29,7 @@ export default function Alphabet12() {
 
       <div
         className="absolute pointer-events-none"
-        style={{ top: 10, left: -128, width: 566, height: 438, opacity: 0.9 }}
+        style={{ top: -34, left: -185, width: 680, height: 526, opacity: 0.9 }}
       >
         <img
           src={bgConfetti}
