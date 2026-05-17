@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import NumbersFrame from '../../components/numbers/NumbersFrame'
 import NumbersListRow from '../../components/numbers/NumbersListRow'
 import Mascot from '../../components/Mascot'
-import { getTopicAudio } from '../../lib/topicAudio'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 1
 
@@ -17,6 +18,7 @@ const ROWS = [
 const TOPS = [270, 344.15, 418.3, 492, 566.15]
 
 export default function Numbers1() {
+  useIntroAudio(getTopicIntro('numbers', SCREEN))
   return (
     <NumbersFrame>
       <Mascot

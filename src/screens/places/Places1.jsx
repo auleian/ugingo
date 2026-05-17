@@ -3,7 +3,8 @@ import PlacesAntelope from '../../components/places/PlacesAntelope'
 import PlacesListRow from '../../components/places/PlacesListRow'
 import PlacesPillButton from '../../components/places/PlacesPillButton'
 import cloudCard from '../../assets/bg-success-cloud.png'
-import { getTopicAudio } from '../../lib/topicAudio'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 1
 
@@ -15,6 +16,7 @@ const ROWS = [
 ]
 
 export default function Places1() {
+  useIntroAudio(getTopicIntro('places', SCREEN))
   return (
     <PlacesFrame>
       {/* Subtitle cloud-card (behind antelope) */}

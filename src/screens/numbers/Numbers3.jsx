@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import NumbersFrame from '../../components/numbers/NumbersFrame'
 import Mascot from '../../components/Mascot'
-import { getTopicAudio } from '../../lib/topicAudio'
-import { playWordAudio } from '../../lib/sound'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { playWordAudio, useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 3
 
@@ -56,6 +56,7 @@ function ExampleRow({ index, word, icon, top, audioSrc }) {
 }
 
 export default function Numbers3() {
+  useIntroAudio(getTopicIntro('numbers', SCREEN))
   return (
     <NumbersFrame>
       <Mascot

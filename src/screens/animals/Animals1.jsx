@@ -2,7 +2,8 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
-import { getTopicAudio } from '../../lib/topicAudio'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 1
 
@@ -15,6 +16,7 @@ const ROWS = [
 ]
 
 export default function Animals1() {
+  useIntroAudio(getTopicIntro('animals', SCREEN))
   return (
     <AnimalsFrame>
       <AnimalsHero>

@@ -31,3 +31,7 @@ export function getAlphabetAudio(screen, idx) {
     wordSrc: URLS[`${key}-word`],
   }
 }
+
+export function getAlphabetIntro(screen) {
+  return URLS[`${pad2(screen)}-intro`]
+}

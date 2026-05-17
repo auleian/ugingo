@@ -48,3 +48,7 @@ export function getTopicAudio(topic, screen, idx) {
   const key = `${pad2(screen)}-${pad2(idx)}`
   return URLS[topic]?.[key]
 }
+
+export function getTopicIntro(topic, screen) {
+  return URLS[topic]?.[`${pad2(screen)}-intro`]
+}

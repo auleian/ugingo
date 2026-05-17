@@ -498,8 +498,29 @@ export function playAlphabetSequence({ phonicSrc, wordSrc, gapMs = 150 } = {}) {
 }
 
 // Non-alphabet topic cards (numbers, people, places, animals): single clip.
+// Also used for per-screen intro audio.
 export function playWordAudio(src) {
   return playClipSequence([src], 0)
+}
+
+// Aborts any in-flight card/intro sequence so it doesn't bleed into the next
+// screen after navigation. Bumps the seq id to make the awaiting async loop
+// short-circuit, stops the active Audio, and releases any held music duck.
+export function stopCardAudio() {
+  _cardSeqId += 1
+  stopCardCurrent()
+  releaseCardDuck()
+}
+
+// Plays a one-shot intro clip on screen mount. Idempotent across re-renders
+// because the effect captures the src once.
+export function useIntroAudio(src) {
+  useEffect(() => {
+    if (!src) return
+    playWordAudio(src)
+    // No cleanup here — stopCardAudio() is already triggered by the
+    // useLessonsMusic hook's unmount path on every lesson Frame.
+  }, [src])
 }
 
 export function playSuccess() {

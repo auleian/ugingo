@@ -2,7 +2,8 @@ import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetCard from '../../components/alphabet/AlphabetCard'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
-import { getAlphabetAudio } from '../../lib/alphabetAudio'
+import { getAlphabetAudio, getAlphabetIntro } from '../../lib/alphabetAudio'
+import { useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 6
 
@@ -16,6 +17,7 @@ const CARDS = [
 ]
 
 export default function Alphabet6() {
+  useIntroAudio(getAlphabetIntro(SCREEN))
   return (
     <AlphabetFrame>
       <Mascot

@@ -2,7 +2,8 @@ import PeopleFrame from '../../components/people/PeopleFrame'
 import PeopleHero from '../../components/people/PeopleHero'
 import PeopleCard from '../../components/people/PeopleCard'
 import PeoplePillButton from '../../components/people/PeoplePillButton'
-import { getTopicAudio } from '../../lib/topicAudio'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
 
 const SCREEN = 2
 
@@ -23,6 +24,7 @@ const CARDS = [
 ]
 
 export default function People2() {
+  useIntroAudio(getTopicIntro('people', SCREEN))
   return (
     <PeopleFrame>
       <PeopleHero>

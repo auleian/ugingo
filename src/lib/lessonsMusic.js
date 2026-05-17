@@ -17,7 +17,7 @@
 
 import { useEffect, useState } from 'react'
 import musicSrc from '../assets/lessons-music.mp3'
-import { isMuted, useMute, isMusicEnabled, useMusicEnabled, getVolume, subscribeVolume } from './sound'
+import { isMuted, useMute, isMusicEnabled, useMusicEnabled, getVolume, subscribeVolume, stopCardAudio } from './sound'
 
 const LOAD_TIMEOUT_MS = 12000 // graceful degrade — never block forever
 // Base gain — multiplied by the user's master volume (0..1) so the slider
@@ -166,6 +166,9 @@ export function useLessonsMusic(active = true) {
     return () => {
       cancelled = true
       wantsToPlay = false
+      // Kill any in-flight card / intro audio so it doesn't bleed into the
+      // next screen after navigation.
+      stopCardAudio()
       schedulePause()
     }
   }, [active])
