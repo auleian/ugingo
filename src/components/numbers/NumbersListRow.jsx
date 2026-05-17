@@ -1,3 +1,5 @@
+import { playWordAudio } from '../../lib/sound'
+
 function countGraphemes(s) {
   try {
     return [...new Intl.Segmenter().segment(s)].length
@@ -17,11 +19,12 @@ function pickFontSize(count) {
 
 const ROW_HEIGHT = 58.63
 
-export default function NumbersListRow({ index, word, pronounce, icon, top }) {
+export default function NumbersListRow({ index, word, pronounce, icon, top, audioSrc }) {
   const count = countGraphemes(icon)
   const isMulti = count > 1
   const fontSize = pickFontSize(count)
   const iconWidth = isMulti ? 30 : 'auto'
+  const speak = () => playWordAudio(audioSrc)
 
   // Children are positioned absolutely within this wrapper so the whole row
   // moves as a unit when hovered (raise effect).
@@ -29,6 +32,8 @@ export default function NumbersListRow({ index, word, pronounce, icon, top }) {
     <div
       className="absolute z-10 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left: 0, width: 375, height: ROW_HEIGHT }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div
         className="absolute bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

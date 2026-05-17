@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom'
 import NumbersFrame from '../../components/numbers/NumbersFrame'
 import NumbersListRow from '../../components/numbers/NumbersListRow'
 import Mascot from '../../components/Mascot'
+import { getTopicAudio } from '../../lib/topicAudio'
+
+const SCREEN = 1
 
 const ROWS = [
   { index: 1, word: 'Emu', pronounce: 'Eh-moo', icon: '☝️' },
@@ -33,7 +36,12 @@ export default function Numbers1() {
       </div>
 
       {ROWS.map((row, i) => (
-        <NumbersListRow key={row.index} {...row} top={TOPS[i]} />
+        <NumbersListRow
+          key={row.index}
+          {...row}
+          top={TOPS[i]}
+          audioSrc={getTopicAudio('numbers', SCREEN, i + 1)}
+        />
       ))}
 
       <Link

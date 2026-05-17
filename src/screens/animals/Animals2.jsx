@@ -2,6 +2,9 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
+import { getTopicAudio } from '../../lib/topicAudio'
+
+const SCREEN = 2
 
 const ROWS = [
   { top: 321, left: 9, emoji: '🦁', word: 'Empologoma', translation: 'Lion', wordSize: 14, textTop: 17 },
@@ -35,7 +38,7 @@ export default function Animals2() {
       />
 
       {ROWS.map((row, i) => (
-        <AnimalsListRow key={i} {...row} />
+        <AnimalsListRow key={i} {...row} audioSrc={getTopicAudio('animals', SCREEN, i + 1)} />
       ))}
 
       <AnimalsPillButton

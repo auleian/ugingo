@@ -2,6 +2,9 @@ import PeopleFrame from '../../components/people/PeopleFrame'
 import PeopleHero from '../../components/people/PeopleHero'
 import PeopleCard from '../../components/people/PeopleCard'
 import PeoplePillButton from '../../components/people/PeoplePillButton'
+import { getTopicAudio } from '../../lib/topicAudio'
+
+const SCREEN = 1
 
 const ANTELOPE_CROP = { top: -82.23, left: -556.96, width: 781.69, height: 503.22 }
 
@@ -25,7 +28,7 @@ export default function People1() {
       </PeopleHero>
 
       {CARDS.map((c, i) => (
-        <PeopleCard key={i} {...c} />
+        <PeopleCard key={i} {...c} audioSrc={getTopicAudio('people', SCREEN, i + 1)} />
       ))}
 
       <PeoplePillButton

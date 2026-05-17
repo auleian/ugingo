@@ -4,6 +4,9 @@ import PlacesListRow from '../../components/places/PlacesListRow'
 import PlacesPillButton from '../../components/places/PlacesPillButton'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import akataleImg from '../../assets/places-akatale.png'
+import { getTopicAudio } from '../../lib/topicAudio'
+
+const SCREEN = 2
 
 const akataleIcon = (
   <img
@@ -55,8 +58,8 @@ export default function Places2() {
 
       <PlacesAntelope mode="list" />
 
-      {ROWS.map((r) => (
-        <PlacesListRow key={r.luganda} {...r} />
+      {ROWS.map((r, i) => (
+        <PlacesListRow key={r.luganda} {...r} audioSrc={getTopicAudio('places', SCREEN, i + 1)} />
       ))}
 
       <PlacesPillButton to="/places/3" className="absolute" style={{ top: 750, left: 244 }}>

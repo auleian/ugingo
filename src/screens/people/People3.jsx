@@ -2,6 +2,9 @@ import PeopleFrame from '../../components/people/PeopleFrame'
 import PeopleHero from '../../components/people/PeopleHero'
 import PeopleCard from '../../components/people/PeopleCard'
 import PeoplePillButton from '../../components/people/PeoplePillButton'
+import { getTopicAudio } from '../../lib/topicAudio'
+
+const SCREEN = 3
 
 const CARDS = [
   { top: 351, left: -4, emoji: '👨🏾', word: 'Ssebo', translation: 'Sir/Gentleman' },
@@ -26,7 +29,7 @@ export default function People3() {
       </PeopleHero>
 
       {CARDS.map((c, i) => (
-        <PeopleCard key={i} {...c} />
+        <PeopleCard key={i} {...c} audioSrc={getTopicAudio('people', SCREEN, i + 1)} />
       ))}
 
       <PeoplePillButton

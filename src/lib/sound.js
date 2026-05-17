@@ -401,58 +401,59 @@ export function playCompleted(durationMs) {
   }
 }
 
-// --- alphabet card pronunciations ---------------------------------------
-// Plays the phonic clip, then the example-word clip, while the background
-// lesson music is ducked. Cancels any in-flight sequence so rapid card-to-card
-// hovers cleanly switch over without overlapping audio.
+// --- lesson card pronunciations -----------------------------------------
+// Plays one or more clips in order while the background lesson music is
+// ducked. Used by alphabet (phonic + word) and the other topics (word only).
+// Rapid card-to-card hovers cancel the in-flight sequence so audio never
+// overlaps.
 
-const _alphabetClips = new Map()
-let _alphabetSeqId = 0
-let _alphabetCurrent = null // active Audio element
-let _alphabetDucked = false
+const _cardClips = new Map()
+let _cardSeqId = 0
+let _cardCurrent = null // active Audio element
+let _cardDucked = false
 
-function getAlphabetClip(src) {
+function getCardClip(src) {
   if (!src || typeof window === 'undefined') return null
-  let a = _alphabetClips.get(src)
+  let a = _cardClips.get(src)
   if (!a) {
     a = new Audio(src)
     a.preload = 'auto'
-    _alphabetClips.set(src, a)
+    _cardClips.set(src, a)
   }
   return a
 }
 
-function stopAlphabetCurrent() {
-  if (_alphabetCurrent) {
+function stopCardCurrent() {
+  if (_cardCurrent) {
     try {
-      _alphabetCurrent.pause()
-      _alphabetCurrent.currentTime = 0
+      _cardCurrent.pause()
+      _cardCurrent.currentTime = 0
     } catch {}
-    _alphabetCurrent = null
+    _cardCurrent = null
   }
 }
 
-function releaseAlphabetDuck() {
-  if (!_alphabetDucked) return
-  _alphabetDucked = false
+function releaseCardDuck() {
+  if (!_cardDucked) return
+  _cardDucked = false
   // Lazy-imported to keep sound.js free of a hard dependency cycle.
   import('./lessonsMusic').then((m) => m.unduckMusic()).catch(() => {})
 }
 
 function playClipOnce(src, seqId) {
   return new Promise((resolve) => {
-    if (seqId !== _alphabetSeqId) return resolve()
-    const a = withVolume(getAlphabetClip(src))
+    if (seqId !== _cardSeqId) return resolve()
+    const a = withVolume(getCardClip(src))
     if (!a) return resolve()
     try {
       a.pause()
       a.currentTime = 0
     } catch {}
-    _alphabetCurrent = a
+    _cardCurrent = a
     const finish = () => {
       a.removeEventListener('ended', finish)
       a.removeEventListener('error', finish)
-      if (_alphabetCurrent === a) _alphabetCurrent = null
+      if (_cardCurrent === a) _cardCurrent = null
       resolve()
     }
     a.addEventListener('ended', finish, { once: true })
@@ -462,34 +463,43 @@ function playClipOnce(src, seqId) {
   })
 }
 
-export async function playAlphabetSequence({ phonicSrc, wordSrc, gapMs = 150 } = {}) {
+async function playClipSequence(clips, gapMs) {
   if (soundsBlocked()) return
-  if (!phonicSrc && !wordSrc) return
+  const real = clips.filter(Boolean)
+  if (real.length === 0) return
 
-  const seqId = ++_alphabetSeqId
-  stopAlphabetCurrent()
+  const seqId = ++_cardSeqId
+  stopCardCurrent()
 
-  if (!_alphabetDucked) {
-    _alphabetDucked = true
+  if (!_cardDucked) {
+    _cardDucked = true
     try {
       const m = await import('./lessonsMusic')
       m.duckMusic()
     } catch {}
   }
-  // Bail out if a newer hover superseded us while we were importing.
-  if (seqId !== _alphabetSeqId) return
+  if (seqId !== _cardSeqId) return
 
-  if (phonicSrc) await playClipOnce(phonicSrc, seqId)
-  if (seqId !== _alphabetSeqId) return
-
-  if (wordSrc) {
-    if (gapMs > 0) await new Promise((r) => setTimeout(r, gapMs))
-    if (seqId !== _alphabetSeqId) return
-    await playClipOnce(wordSrc, seqId)
+  for (let i = 0; i < real.length; i++) {
+    if (i > 0 && gapMs > 0) {
+      await new Promise((r) => setTimeout(r, gapMs))
+      if (seqId !== _cardSeqId) return
+    }
+    await playClipOnce(real[i], seqId)
+    if (seqId !== _cardSeqId) return
   }
-  if (seqId !== _alphabetSeqId) return
 
-  releaseAlphabetDuck()
+  releaseCardDuck()
+}
+
+// Alphabet cards: phonic clip → 150ms gap → example-word clip.
+export function playAlphabetSequence({ phonicSrc, wordSrc, gapMs = 150 } = {}) {
+  return playClipSequence([phonicSrc, wordSrc], gapMs)
+}
+
+// Non-alphabet topic cards (numbers, people, places, animals): single clip.
+export function playWordAudio(src) {
+  return playClipSequence([src], 0)
 }
 
 export function playSuccess() {
