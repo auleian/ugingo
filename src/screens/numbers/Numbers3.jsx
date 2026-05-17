@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 import NumbersFrame from '../../components/numbers/NumbersFrame'
 import Mascot from '../../components/Mascot'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { playWordAudio, useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 3
 
 const EXAMPLES = [
   { index: 12, word: 'Kkumi na bbiri', icon: '⚽'.repeat(12), top: 418.3 },
@@ -8,14 +12,17 @@ const EXAMPLES = [
   { index: 19, word: 'Kkumi na mwenda', icon: '⚽'.repeat(19), top: 566.15 },
 ]
 
-function ExampleRow({ index, word, icon, top }) {
+function ExampleRow({ index, word, icon, top, audioSrc }) {
   // Wrap the row pieces in one positioned div so the hover-raise applies to
   // the entire card as a unit. Child positions are now relative to this
   // wrapper (left=19, width=335).
+  const speak = () => playWordAudio(audioSrc)
   return (
     <div
       className="absolute z-10 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left: 19, width: 335, height: 58.63 }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div className="absolute inset-0 bg-[#f8c83c] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]" />
       <div
@@ -49,6 +56,7 @@ function ExampleRow({ index, word, icon, top }) {
 }
 
 export default function Numbers3() {
+  useIntroAudio(getTopicIntro('numbers', SCREEN))
   return (
     <NumbersFrame>
       <Mascot
@@ -86,8 +94,12 @@ export default function Numbers3() {
         Examples
       </p>
 
-      {EXAMPLES.map((ex) => (
-        <ExampleRow key={ex.index} {...ex} />
+      {EXAMPLES.map((ex, i) => (
+        <ExampleRow
+          key={ex.index}
+          {...ex}
+          audioSrc={getTopicAudio('numbers', SCREEN, i + 1)}
+        />
       ))}
 
       <Link

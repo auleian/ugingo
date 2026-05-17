@@ -2,6 +2,10 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 1
 
 const ROWS = [
   { top: 321, left: 9, emoji: '🐕', word: 'Embwa', translation: 'Dog' },
@@ -12,6 +16,7 @@ const ROWS = [
 ]
 
 export default function Animals1() {
+  useIntroAudio(getTopicIntro('animals', SCREEN))
   return (
     <AnimalsFrame>
       <AnimalsHero>
@@ -35,7 +40,7 @@ export default function Animals1() {
       />
 
       {ROWS.map((row, i) => (
-        <AnimalsListRow key={i} {...row} />
+        <AnimalsListRow key={i} {...row} audioSrc={getTopicAudio('animals', SCREEN, i + 1)} />
       ))}
 
       <AnimalsPillButton

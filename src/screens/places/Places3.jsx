@@ -4,6 +4,10 @@ import PlacesListRow from '../../components/places/PlacesListRow'
 import PlacesPillButton from '../../components/places/PlacesPillButton'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import ekyaaloImg from '../../assets/places-ekyaalo.png'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 3
 
 const ekyaaloIcon = (
   <img
@@ -23,6 +27,7 @@ const ROWS = [
 ]
 
 export default function Places3() {
+  useIntroAudio(getTopicIntro('places', SCREEN))
   return (
     <PlacesFrame>
       <div
@@ -55,8 +60,8 @@ export default function Places3() {
 
       <PlacesAntelope mode="list" />
 
-      {ROWS.map((r) => (
-        <PlacesListRow key={r.luganda} {...r} />
+      {ROWS.map((r, i) => (
+        <PlacesListRow key={r.luganda} {...r} audioSrc={getTopicAudio('places', SCREEN, i + 1)} />
       ))}
 
       <PlacesPillButton to="/places/4" className="absolute" style={{ top: 750, left: 244 }}>

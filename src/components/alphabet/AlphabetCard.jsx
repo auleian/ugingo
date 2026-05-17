@@ -1,5 +1,6 @@
 import cloudCard from '../../assets/bg-success-cloud.png'
 import creamPill from '../../assets/cream-pill.svg'
+import { playAlphabetSequence } from '../../lib/sound'
 
 export default function AlphabetCard({
   letter,
@@ -11,11 +12,16 @@ export default function AlphabetCard({
   left,
   width = 199,
   height = 124,
+  phonicSrc,
+  wordSrc,
 }) {
+  const speak = () => playAlphabetSequence({ phonicSrc, wordSrc })
   return (
     <div
       className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left, width, height }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

@@ -2,6 +2,10 @@ import AnimalsFrame from '../../components/animals/AnimalsFrame'
 import AnimalsHero from '../../components/animals/AnimalsHero'
 import AnimalsListRow from '../../components/animals/AnimalsListRow'
 import AnimalsPillButton from '../../components/animals/AnimalsPillButton'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 3
 
 // Animals 3 lays out a 2×2 grid of birds-and-others. The hero text is
 // centered (no antelope mascot in Figma 529:258), so we render the ribbon
@@ -14,6 +18,7 @@ const ROWS = [
 ]
 
 export default function Animals3() {
+  useIntroAudio(getTopicIntro('animals', SCREEN))
   return (
     <AnimalsFrame>
       <div
@@ -39,7 +44,7 @@ export default function Animals3() {
       />
 
       {ROWS.map((row, i) => (
-        <AnimalsListRow key={i} {...row} />
+        <AnimalsListRow key={i} {...row} audioSrc={getTopicAudio('animals', SCREEN, i + 1)} />
       ))}
 
       <AnimalsPillButton

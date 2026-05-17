@@ -2,17 +2,22 @@ import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetCard from '../../components/alphabet/AlphabetCard'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
+import { getAlphabetAudio, getAlphabetIntro } from '../../lib/alphabetAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 4
 
 const CARDS = [
-  { letter: 'BB', say: 'Say "BBA"', emoji: '🤕', word: 'Bbwa', translation: 'wound', top: 310, left: -3 },
+  { letter: 'BB', say: 'Say "BBA"', emoji: '🤕', word: 'Bantu', translation: 'people', top: 310, left: -3 },
   { letter: 'CC', say: 'Say "CCA"', emoji: '☕️', word: 'Chai', translation: 'Tea', top: 312, left: 174 },
-  { letter: 'DD', say: 'Say "DDA"', emoji: '🏬', word: 'Dduuka', translation: 'Shop', top: 441, left: -3 },
+  { letter: 'DD', say: 'Say "DDA"', emoji: '🏬', word: 'Ddinisa', translation: 'window', top: 441, left: -3 },
   { letter: 'FF', say: 'Say "FFA"', emoji: '🐈', word: 'Ffumbe', translation: 'Civet cat', top: 441, left: 174 },
-  { letter: 'GG', say: 'Say "GGA"', emoji: '🌌', word: 'Ggulu', translation: 'Sky', top: 569, left: -3 },
+  { letter: 'GG', say: 'Say "GGA"', emoji: '🌌', word: 'Ggenda', translation: 'Go', top: 569, left: -3 },
   { letter: 'JJ', say: 'Say "JJA"', emoji: '👴👵', word: 'Jjaja', translation: 'Grand Parents', top: 569, left: 177 },
 ]
 
 export default function Alphabet4() {
+  useIntroAudio(getAlphabetIntro(SCREEN))
   return (
     <AlphabetFrame>
       <Mascot
@@ -46,8 +51,8 @@ export default function Alphabet4() {
 
       <div className="absolute bg-[#69cad3]" style={{ top: 277, left: -17, width: 404, height: 17 }} />
 
-      {CARDS.map((c) => (
-        <AlphabetCard key={c.letter} {...c} />
+      {CARDS.map((c, i) => (
+        <AlphabetCard key={c.letter} {...c} {...getAlphabetAudio(SCREEN, i + 1)} />
       ))}
 
       <AlphabetPillButton size="sm" to="/alphabet/3" className="absolute" style={{ top: 749, left: 24 }}>

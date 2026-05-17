@@ -1,7 +1,8 @@
+import { playWordAudio } from '../../lib/sound'
+
 // One vocabulary card on Animals 1–3: a yellow square (51×67) holding an
 // emoji, butted against a cyan rounded rectangle (109.798×67) holding the
-// Luganda word + English translation. Hover-raise prepares the card for
-// per-card pronunciation audio (planned).
+// Luganda word + English translation. Hover/tap plays the spoken word.
 export default function AnimalsListRow({
   top,
   left,
@@ -11,11 +12,15 @@ export default function AnimalsListRow({
   wordSize = 20,
   textTop = 13,
   textLeftOffset = 14,
+  audioSrc,
 }) {
+  const speak = () => playWordAudio(audioSrc)
   return (
     <div
       className="absolute z-20 cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left, width: 167, height: 67 }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div
         className="absolute bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"

@@ -2,6 +2,10 @@ import PeopleFrame from '../../components/people/PeopleFrame'
 import PeopleHero from '../../components/people/PeopleHero'
 import PeopleCard from '../../components/people/PeopleCard'
 import PeoplePillButton from '../../components/people/PeoplePillButton'
+import { getTopicAudio, getTopicIntro } from '../../lib/topicAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 3
 
 const CARDS = [
   { top: 351, left: -4, emoji: '👨🏾', word: 'Ssebo', translation: 'Sir/Gentleman' },
@@ -11,6 +15,7 @@ const CARDS = [
 ]
 
 export default function People3() {
+  useIntroAudio(getTopicIntro('people', SCREEN))
   return (
     <PeopleFrame>
       <PeopleHero>
@@ -26,7 +31,7 @@ export default function People3() {
       </PeopleHero>
 
       {CARDS.map((c, i) => (
-        <PeopleCard key={i} {...c} />
+        <PeopleCard key={i} {...c} audioSrc={getTopicAudio('people', SCREEN, i + 1)} />
       ))}
 
       <PeoplePillButton

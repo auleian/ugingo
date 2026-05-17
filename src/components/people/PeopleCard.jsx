@@ -1,4 +1,5 @@
 import cloudCard from '../../assets/bg-success-cloud.png'
+import { playWordAudio } from '../../lib/sound'
 
 const CIRCLE_SIZE = 45
 const CIRCLE_HEIGHT = 43.511
@@ -19,11 +20,15 @@ export default function PeopleCard({
   emojiSize = 20,
   wordSize = 16,
   translationSize = 13,
+  audioSrc,
 }) {
+  const speak = () => playWordAudio(audioSrc)
   return (
     <div
       className="absolute drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left, width: 202, height: 127 }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

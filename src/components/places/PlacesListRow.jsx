@@ -1,13 +1,18 @@
-export default function PlacesListRow({ top, luganda, english, icon, iconSize = 50 }) {
+import { playWordAudio } from '../../lib/sound'
+
+export default function PlacesListRow({ top, luganda, english, icon, iconSize = 50, audioSrc }) {
   // Wrapper anchors to frame x = -19. Inner children use frame-coordinates
   // shifted by +19 so they line up with Figma's absolute values.
   const ROW_H = 61.474
   const FRAME_X_ICON = 80
   const FRAME_X_TEXT = 175
+  const speak = () => playWordAudio(audioSrc)
   return (
     <div
       className="absolute cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left: -19, width: 426, height: ROW_H }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div className="absolute inset-0 bg-[#69cad3] rounded-[12px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]" />
 

@@ -2,6 +2,10 @@ import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetCard from '../../components/alphabet/AlphabetCard'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
+import { getAlphabetAudio, getAlphabetIntro } from '../../lib/alphabetAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 6
 
 const CARDS = [
   { letter: 'RR', say: 'Say "RRA"', emoji: '🎨', word: 'Rangi', translation: 'paint', top: 310, left: -3 },
@@ -13,6 +17,7 @@ const CARDS = [
 ]
 
 export default function Alphabet6() {
+  useIntroAudio(getAlphabetIntro(SCREEN))
   return (
     <AlphabetFrame>
       <Mascot
@@ -46,8 +51,8 @@ export default function Alphabet6() {
 
       <div className="absolute bg-[#69cad3]" style={{ top: 277, left: -17, width: 404, height: 17 }} />
 
-      {CARDS.map((c) => (
-        <AlphabetCard key={c.letter} {...c} />
+      {CARDS.map((c, i) => (
+        <AlphabetCard key={c.letter} {...c} {...getAlphabetAudio(SCREEN, i + 1)} />
       ))}
 
       <AlphabetPillButton size="sm" to="/alphabet/5" className="absolute" style={{ top: 749, left: 24 }}>

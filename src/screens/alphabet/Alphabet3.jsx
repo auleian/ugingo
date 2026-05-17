@@ -2,6 +2,10 @@ import AlphabetFrame from '../../components/alphabet/AlphabetFrame'
 import AlphabetCard from '../../components/alphabet/AlphabetCard'
 import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
+import { getAlphabetAudio, getAlphabetIntro } from '../../lib/alphabetAudio'
+import { useIntroAudio } from '../../lib/sound'
+
+const SCREEN = 3
 
 const VOWELS = [
   { letter: 'A', say: 'Say "AH"', emoji: '👶🏾👶🏾', word: 'Abaana', translation: 'Children', top: 310, left: -3 },
@@ -12,6 +16,7 @@ const VOWELS = [
 ]
 
 export default function Alphabet3() {
+  useIntroAudio(getAlphabetIntro(SCREEN))
   return (
     <AlphabetFrame>
       <Mascot
@@ -38,8 +43,8 @@ export default function Alphabet3() {
 
       <div className="absolute bg-[#69cad3]" style={{ top: 277, left: -17, width: 404, height: 17 }} />
 
-      {VOWELS.map((v) => (
-        <AlphabetCard key={v.letter} {...v} />
+      {VOWELS.map((v, i) => (
+        <AlphabetCard key={v.letter} {...v} {...getAlphabetAudio(SCREEN, i + 1)} />
       ))}
 
       <AlphabetPillButton to="/alphabet/4" className="absolute" style={{ top: 749, left: 134 }}>

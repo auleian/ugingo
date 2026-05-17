@@ -401,6 +401,128 @@ export function playCompleted(durationMs) {
   }
 }
 
+// --- lesson card pronunciations -----------------------------------------
+// Plays one or more clips in order while the background lesson music is
+// ducked. Used by alphabet (phonic + word) and the other topics (word only).
+// Rapid card-to-card hovers cancel the in-flight sequence so audio never
+// overlaps.
+
+const _cardClips = new Map()
+let _cardSeqId = 0
+let _cardCurrent = null // active Audio element
+let _cardDucked = false
+
+function getCardClip(src) {
+  if (!src || typeof window === 'undefined') return null
+  let a = _cardClips.get(src)
+  if (!a) {
+    a = new Audio(src)
+    a.preload = 'auto'
+    _cardClips.set(src, a)
+  }
+  return a
+}
+
+function stopCardCurrent() {
+  if (_cardCurrent) {
+    try {
+      _cardCurrent.pause()
+      _cardCurrent.currentTime = 0
+    } catch {}
+    _cardCurrent = null
+  }
+}
+
+function releaseCardDuck() {
+  if (!_cardDucked) return
+  _cardDucked = false
+  // Lazy-imported to keep sound.js free of a hard dependency cycle.
+  import('./lessonsMusic').then((m) => m.unduckMusic()).catch(() => {})
+}
+
+function playClipOnce(src, seqId) {
+  return new Promise((resolve) => {
+    if (seqId !== _cardSeqId) return resolve()
+    const a = withVolume(getCardClip(src))
+    if (!a) return resolve()
+    try {
+      a.pause()
+      a.currentTime = 0
+    } catch {}
+    _cardCurrent = a
+    const finish = () => {
+      a.removeEventListener('ended', finish)
+      a.removeEventListener('error', finish)
+      if (_cardCurrent === a) _cardCurrent = null
+      resolve()
+    }
+    a.addEventListener('ended', finish, { once: true })
+    a.addEventListener('error', finish, { once: true })
+    const p = a.play()
+    if (p && typeof p.catch === 'function') p.catch(finish)
+  })
+}
+
+async function playClipSequence(clips, gapMs) {
+  if (soundsBlocked()) return
+  const real = clips.filter(Boolean)
+  if (real.length === 0) return
+
+  const seqId = ++_cardSeqId
+  stopCardCurrent()
+
+  if (!_cardDucked) {
+    _cardDucked = true
+    try {
+      const m = await import('./lessonsMusic')
+      m.duckMusic()
+    } catch {}
+  }
+  if (seqId !== _cardSeqId) return
+
+  for (let i = 0; i < real.length; i++) {
+    if (i > 0 && gapMs > 0) {
+      await new Promise((r) => setTimeout(r, gapMs))
+      if (seqId !== _cardSeqId) return
+    }
+    await playClipOnce(real[i], seqId)
+    if (seqId !== _cardSeqId) return
+  }
+
+  releaseCardDuck()
+}
+
+// Alphabet cards: phonic clip → 150ms gap → example-word clip.
+export function playAlphabetSequence({ phonicSrc, wordSrc, gapMs = 150 } = {}) {
+  return playClipSequence([phonicSrc, wordSrc], gapMs)
+}
+
+// Non-alphabet topic cards (numbers, people, places, animals): single clip.
+// Also used for per-screen intro audio.
+export function playWordAudio(src) {
+  return playClipSequence([src], 0)
+}
+
+// Aborts any in-flight card/intro sequence so it doesn't bleed into the next
+// screen after navigation. Bumps the seq id to make the awaiting async loop
+// short-circuit, stops the active Audio, and releases any held music duck.
+export function stopCardAudio() {
+  _cardSeqId += 1
+  stopCardCurrent()
+  releaseCardDuck()
+}
+
+// Plays a one-shot intro clip on screen mount. Idempotent across re-renders
+// because the effect captures the src once.
+export function useIntroAudio(src) {
+  useEffect(() => {
+    if (!src) return
+    playWordAudio(src)
+    // No cleanup here — stopCardAudio() is already triggered by the
+    // useLessonsMusic hook's unmount path on every lesson Frame.
+  }, [src])
+}
+
 export function playSuccess() {
   if (soundsBlocked()) return
   const c = ensureRunning()
