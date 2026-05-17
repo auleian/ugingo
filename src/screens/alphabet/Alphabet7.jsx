@@ -3,12 +3,17 @@ import AlphabetPillButton from '../../components/alphabet/AlphabetPillButton'
 import Mascot from '../../components/Mascot'
 import cloudCard from '../../assets/bg-success-cloud.png'
 import creamPillLg from '../../assets/cream-pill-lg.svg'
+import { playAlphabetSequence } from '../../lib/sound'
+import { getAlphabetAudio } from '../../lib/alphabetAudio'
 
-function SpecialCard({ top, letter, say, hint, emoji, word, translation }) {
+function SpecialCard({ top, letter, say, hint, emoji, word, translation, phonicSrc, wordSrc }) {
+  const speak = () => playAlphabetSequence({ phonicSrc, wordSrc })
   return (
     <div
       className="absolute drop-shadow-[0_4px_4px_rgba(241,101,34,0.34)] cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1.5"
       style={{ top, left: 22, width: 324, height: 203 }}
+      onPointerEnter={speak}
+      onClick={speak}
     >
       <div className="absolute inset-0 overflow-hidden">
         <img
@@ -94,6 +99,7 @@ export default function Alphabet7() {
         emoji="🆘️"
         word="Nyamba"
         translation="Help me"
+        {...getAlphabetAudio(7, 1)}
       />
 
       <SpecialCard
@@ -104,6 +110,7 @@ export default function Alphabet7() {
         emoji="🦤"
         word="Ŋŋaali"
         translation="Crane"
+        {...getAlphabetAudio(7, 2)}
       />
 
       <AlphabetPillButton size="sm" to="/alphabet/6" className="absolute" style={{ top: 750, left: 30 }}>

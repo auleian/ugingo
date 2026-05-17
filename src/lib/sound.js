@@ -401,6 +401,97 @@ export function playCompleted(durationMs) {
   }
 }
 
+// --- alphabet card pronunciations ---------------------------------------
+// Plays the phonic clip, then the example-word clip, while the background
+// lesson music is ducked. Cancels any in-flight sequence so rapid card-to-card
+// hovers cleanly switch over without overlapping audio.
+
+const _alphabetClips = new Map()
+let _alphabetSeqId = 0
+let _alphabetCurrent = null // active Audio element
+let _alphabetDucked = false
+
+function getAlphabetClip(src) {
+  if (!src || typeof window === 'undefined') return null
+  let a = _alphabetClips.get(src)
+  if (!a) {
+    a = new Audio(src)
+    a.preload = 'auto'
+    _alphabetClips.set(src, a)
+  }
+  return a
+}
+
+function stopAlphabetCurrent() {
+  if (_alphabetCurrent) {
+    try {
+      _alphabetCurrent.pause()
+      _alphabetCurrent.currentTime = 0
+    } catch {}
+    _alphabetCurrent = null
+  }
+}
+
+function releaseAlphabetDuck() {
+  if (!_alphabetDucked) return
+  _alphabetDucked = false
+  // Lazy-imported to keep sound.js free of a hard dependency cycle.
+  import('./lessonsMusic').then((m) => m.unduckMusic()).catch(() => {})
+}
+
+function playClipOnce(src, seqId) {
+  return new Promise((resolve) => {
+    if (seqId !== _alphabetSeqId) return resolve()
+    const a = withVolume(getAlphabetClip(src))
+    if (!a) return resolve()
+    try {
+      a.pause()
+      a.currentTime = 0
+    } catch {}
+    _alphabetCurrent = a
+    const finish = () => {
+      a.removeEventListener('ended', finish)
+      a.removeEventListener('error', finish)
+      if (_alphabetCurrent === a) _alphabetCurrent = null
+      resolve()
+    }
+    a.addEventListener('ended', finish, { once: true })
+    a.addEventListener('error', finish, { once: true })
+    const p = a.play()
+    if (p && typeof p.catch === 'function') p.catch(finish)
+  })
+}
+
+export async function playAlphabetSequence({ phonicSrc, wordSrc, gapMs = 150 } = {}) {
+  if (soundsBlocked()) return
+  if (!phonicSrc && !wordSrc) return
+
+  const seqId = ++_alphabetSeqId
+  stopAlphabetCurrent()
+
+  if (!_alphabetDucked) {
+    _alphabetDucked = true
+    try {
+      const m = await import('./lessonsMusic')
+      m.duckMusic()
+    } catch {}
+  }
+  // Bail out if a newer hover superseded us while we were importing.
+  if (seqId !== _alphabetSeqId) return
+
+  if (phonicSrc) await playClipOnce(phonicSrc, seqId)
+  if (seqId !== _alphabetSeqId) return
+
+  if (wordSrc) {
+    if (gapMs > 0) await new Promise((r) => setTimeout(r, gapMs))
+    if (seqId !== _alphabetSeqId) return
+    await playClipOnce(wordSrc, seqId)
+  }
+  if (seqId !== _alphabetSeqId) return
+
+  releaseAlphabetDuck()
+}
+
 export function playSuccess() {
   if (soundsBlocked()) return
   const c = ensureRunning()

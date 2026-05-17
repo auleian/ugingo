@@ -35,6 +35,8 @@ let gain = null
 let pausedAtCtxTime = 0 // ctx.currentTime when we last paused
 let bufferOffset = 0 // where in the buffer to resume from on next play()
 let pendingPauseTimer = null
+let wantsToPlay = false // mirrors active hook state — used by duck/unduck
+let duckDepth = 0 // ref-count so overlapping ducks don't resume early
 
 function applyGain() {
   if (gain) gain.gain.value = BASE_VOLUME * getVolume()
@@ -149,18 +151,21 @@ export function useLessonsMusic(active = true) {
 
   useEffect(() => {
     if (!active) {
+      wantsToPlay = false
       schedulePause()
       return
     }
+    wantsToPlay = true
     cancelPendingPause()
     let cancelled = false
     ensureReady().then(() => {
       if (cancelled) return
       setReady(true)
-      play()
+      if (duckDepth === 0) play()
     })
     return () => {
       cancelled = true
+      wantsToPlay = false
       schedulePause()
     }
   }, [active])
@@ -169,8 +174,23 @@ export function useLessonsMusic(active = true) {
   useEffect(() => {
     if (!active || !ready) return
     if (muted || !musicEnabled) pauseNow()
-    else play()
+    else if (duckDepth === 0) play()
   }, [muted, musicEnabled, active, ready])
 
   return ready
+}
+
+// Temporarily silence the lesson music so a foreground clip (e.g. an alphabet
+// card's pronunciation) can be heard. Ref-counted so overlapping ducks don't
+// resume the music before the last one releases.
+export function duckMusic() {
+  duckDepth += 1
+  cancelPendingPause()
+  pauseNow()
+}
+
+export function unduckMusic() {
+  if (duckDepth === 0) return
+  duckDepth -= 1
+  if (duckDepth === 0 && wantsToPlay) play()
 }
