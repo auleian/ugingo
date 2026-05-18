@@ -1,10 +1,11 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import AppHeader from '../components/AppHeader'
 import bgMap from '../assets/bg-lesson-map.png'
 import abcIsland from '../assets/lesson-map-abc.png'
 import island15 from '../assets/lesson-map-island-15.png'
 import smallIsland from '../assets/lesson-map-island-16.png'
-import animalsMarker from '../assets/mascot-antelope-side.png'
+import animalsMarker from '../assets/image-13.png'
 import island12 from '../assets/lesson-map-island-12.png'
 import starActive from '../assets/lesson-map-star.svg'
 import starLocked from '../assets/star-locked.svg'
@@ -91,7 +92,61 @@ function StarMarker({ left, top, flipped, to, index = 0 }) {
   )
 }
 
+function useDragScroll() {
+  const ref = useRef(null)
+  const state = useRef(null)
+
+  const onPointerDown = (e) => {
+    // Don't hijack drags that start on an interactive child (the star Links).
+    if (e.target.closest('a')) return
+    const el = ref.current
+    if (!el) return
+    state.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startLeft: el.scrollLeft,
+      startTop: el.scrollTop,
+      dragging: false,
+    }
+    try {
+      el.setPointerCapture(e.pointerId)
+    } catch {
+      // older browsers without pointer capture — drag still works
+    }
+  }
+
+  const onPointerMove = (e) => {
+    const s = state.current
+    const el = ref.current
+    if (!s || !el || s.pointerId !== e.pointerId) return
+    const dx = e.clientX - s.startX
+    const dy = e.clientY - s.startY
+    if (!s.dragging && Math.hypot(dx, dy) < 4) return // ignore tiny jitters
+    s.dragging = true
+    el.style.cursor = 'grabbing'
+    el.scrollLeft = s.startLeft - dx
+    el.scrollTop = s.startTop - dy
+  }
+
+  const endDrag = () => {
+    const s = state.current
+    const el = ref.current
+    if (!s || !el) return
+    try {
+      el.releasePointerCapture(s.pointerId)
+    } catch {
+      // ignore — capture may already have been released
+    }
+    el.style.cursor = ''
+    state.current = null
+  }
+
+  return { ref, onPointerDown, onPointerMove, onPointerUp: endDrag, onPointerCancel: endDrag }
+}
+
 export default function LessonMap() {
+  const { ref: scrollRef, onPointerDown, onPointerMove, onPointerUp, onPointerCancel } = useDragScroll()
   return (
     <div className="flex-1 relative overflow-hidden bg-white">
       <img
@@ -106,7 +161,7 @@ export default function LessonMap() {
         style={{ top: -2, left: -80, width: 516, height: 814 }}
       />
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       <div
         className="absolute z-20 bg-[#F16522] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center"
@@ -118,8 +173,13 @@ export default function LessonMap() {
       </div>
 
       <div
-        className="absolute z-10 overflow-y-auto overflow-x-hidden scrollbar-hover"
-        style={{ top: 143, left: 0, width: 375, height: 621 }}
+        ref={scrollRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
+        className="absolute z-10 overflow-auto scrollbar-hover cursor-grab select-none"
+        style={{ top: 143, left: 0, width: 375, height: 621, touchAction: 'pan-x pan-y' }}
       >
         <div className="relative" style={{ width: 650, height: 2135 }}>
           <div
@@ -130,8 +190,8 @@ export default function LessonMap() {
               src={abcIsland}
               alt="Alphabet"
               draggable={false}
-              className="block max-w-none select-none object-cover"
-              style={{ width: 172.225, height: 159.626, transform: 'rotate(6deg)' }}
+              className="block max-w-none select-none object-cover animate-[spin_18s_linear_infinite]"
+              style={{ width: 172.225, height: 159.626 }}
             />
           </div>
 
@@ -144,8 +204,8 @@ export default function LessonMap() {
               alt=""
               aria-hidden
               draggable={false}
-              className="block max-w-none select-none object-cover"
-              style={{ width: 163, height: 174, transform: 'rotate(10deg)' }}
+              className="block max-w-none select-none object-cover animate-[spin_22s_linear_infinite]"
+              style={{ width: 163, height: 174 }}
             />
           </div>
 
@@ -156,7 +216,7 @@ export default function LessonMap() {
             draggable={false}
             loading="lazy"
             decoding="async"
-            className="absolute max-w-none select-none pointer-events-none"
+            className="absolute max-w-none select-none pointer-events-none animate-[spin_16s_linear_infinite]"
             style={{ left: 61, top: 711, width: 158, height: 154 }}
           />
 
@@ -166,7 +226,7 @@ export default function LessonMap() {
             draggable={false}
             loading="lazy"
             decoding="async"
-            className="absolute max-w-none select-none pointer-events-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+            className="absolute max-w-none select-none pointer-events-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] animate-[spin_20s_linear_infinite]"
             style={{ left: 380, top: 1010, width: 180, height: 224 }}
           />
 
@@ -177,7 +237,7 @@ export default function LessonMap() {
             draggable={false}
             loading="lazy"
             decoding="async"
-            className="absolute max-w-none select-none pointer-events-none"
+            className="absolute max-w-none select-none pointer-events-none animate-[spin_24s_linear_infinite]"
             style={{ left: 73, top: 1389, width: 234, height: 252 }}
           />
 
@@ -186,9 +246,9 @@ export default function LessonMap() {
           ))}
 
           <Link
-            to="/profile"
-            aria-label="All lessons complete — view profile"
-            className="absolute"
+            to="#"
+            aria-label="Final reward"
+            className="absolute origin-center transition-transform duration-200 ease-out hover:scale-[1.3]"
             style={{ left: 53, top: 1849, width: 305, height: 286 }}
           >
             <img
@@ -196,8 +256,7 @@ export default function LessonMap() {
               alt=""
               aria-hidden
               draggable={false}
-              className="block w-full h-full select-none"
-              style={{ transform: 'scaleY(-1) rotate(180deg)' }}
+              className="block w-full h-full select-none animate-[spin_8s_linear_infinite]"
             />
           </Link>
         </div>
