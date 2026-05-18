@@ -24,7 +24,7 @@ export default function PlacesFrame({ children, showCityBg = true, showPill = tr
         </div>
       )}
 
-      <AppHeader roundedBottom/>
+      <AppHeader />
 
       {showPill && (
         <div className="absolute top-[83px] left-[7px] w-[110px] h-[24px] bg-[#F8C83C] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">

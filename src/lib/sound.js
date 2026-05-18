@@ -12,7 +12,11 @@ const STORAGE_KEY = 'ugingo.muted'
 const MUSIC_KEY = 'ugingo.musicEnabled'
 const SOUNDS_KEY = 'ugingo.soundsEnabled'
 const VOLUME_KEY = 'ugingo.volume'
-const DEFAULT_VOLUME = 0.7
+const DEFAULT_VOLUME = 0.2
+// Global loudness ceiling. Applied AFTER the user's slider so even slider-max
+// stays soft for kids/parents. The slider UI still spans 0..1 — this just
+// scales the actual audio output.
+const GLOBAL_TRIM = 0.6
 
 let _ctx = null
 function ctx() {
@@ -163,6 +167,12 @@ export function getVolume() {
   return volume
 }
 
+// Slider value scaled by the global trim — what audio output should actually
+// use. Keep getVolume() raw so the Settings slider still spans 0..1.
+export function getEffectiveVolume() {
+  return volume * GLOBAL_TRIM
+}
+
 export function setVolume(v) {
   const clamped = Math.max(0, Math.min(1, v))
   if (clamped === volume) return
@@ -195,16 +205,17 @@ export function subscribeVolume(listener) {
 
 // Audio-clip helper — applied to <audio> elements right before play.
 function withVolume(audio) {
-  if (audio) audio.volume = volume
+  if (audio) audio.volume = getEffectiveVolume()
   return audio
 }
 
 // Keep already-cached clips' .volume in sync with the slider in real time so
 // dragging the Settings slider during a clip changes its loudness live.
 volumeListeners.add(() => {
-  if (_correctClip) _correctClip.volume = volume
-  if (_milestoneClip) _milestoneClip.volume = volume
-  if (_completedClip) _completedClip.volume = volume
+  const v = getEffectiveVolume()
+  if (_correctClip) _correctClip.volume = v
+  if (_milestoneClip) _milestoneClip.volume = v
+  if (_completedClip) _completedClip.volume = v
 })
 
 // --- synth primitives ----------------------------------------------------
@@ -226,7 +237,7 @@ function tone(c, { freq, start, dur, peak = 0.18, attack = 0.005, type = 'sine' 
   const gain = c.createGain()
   osc.type = type
   osc.frequency.setValueAtTime(freq, start)
-  const target = peak * volume
+  const target = peak * getEffectiveVolume()
   gain.gain.setValueAtTime(0, start)
   gain.gain.linearRampToValueAtTime(target, start + attack)
   // exponentialRampTo can't ramp to 0; floor near-silence
