@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import MobileFrame from './layouts/MobileFrame'
+import RouteTransition from './components/RouteTransition'
 import { preloadAllImages } from './lib/preloadImages'
 import { startPreload as startMusicPreload } from './lib/lessonsMusic'
 import { useUser } from './lib/firebase'
@@ -162,6 +163,7 @@ export default function App() {
     <MobileFrame>
       <PreLessonsChime />
       <AuthGate>
+      <RouteTransition>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<WelcomeBranded />} />
@@ -246,6 +248,7 @@ export default function App() {
         <Route path="/culture-plan" element={<CulturePlan />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </RouteTransition>
       </AuthGate>
     </MobileFrame>
   )

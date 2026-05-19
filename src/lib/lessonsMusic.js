@@ -17,7 +17,7 @@
 
 import { useEffect, useState } from 'react'
 import musicSrc from '../assets/lessons-music.mp3'
-import { isMuted, useMute, isMusicEnabled, useMusicEnabled, getVolume, subscribeVolume, stopCardAudio } from './sound'
+import { isMuted, useMute, isMusicEnabled, useMusicEnabled, getEffectiveVolume, subscribeVolume, stopCardAudio } from './sound'
 
 const LOAD_TIMEOUT_MS = 12000 // graceful degrade — never block forever
 // Base gain — multiplied by the user's master volume (0..1) so the slider
@@ -39,7 +39,7 @@ let wantsToPlay = false // mirrors active hook state — used by duck/unduck
 let duckDepth = 0 // ref-count so overlapping ducks don't resume early
 
 function applyGain() {
-  if (gain) gain.gain.value = BASE_VOLUME * getVolume()
+  if (gain) gain.gain.value = BASE_VOLUME * getEffectiveVolume()
 }
 
 // Keep the music gain in sync with the slider permanently so changing volume

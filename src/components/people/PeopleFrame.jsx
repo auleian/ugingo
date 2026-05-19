@@ -11,7 +11,6 @@ export default function PeopleFrame({
   pillLabel = 'Abantu',
   pillBg = '#F8C83C',
   pillTextColor = '#000000',
-  roundedHeader = false,
   playMusic = true,
 }) {
   const ready = useLessonsMusic(playMusic)
@@ -19,7 +18,7 @@ export default function PeopleFrame({
 
   return (
     <div className="flex-1 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-      <AppHeader roundedBottom={roundedHeader} />
+      <AppHeader />
 
       {showPill && (
         <div

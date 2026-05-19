@@ -19,7 +19,7 @@ export default function LanguagePlanStart() {
         }}
       />
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       <div className="absolute top-[83px] left-[10px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-10">
         <span className="font-poppins font-black text-white text-[11px] leading-none">
