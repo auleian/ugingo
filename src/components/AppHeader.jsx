@@ -19,7 +19,7 @@ export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
       }}
     >
       <Link
-        to="/lessons"
+        to="/home"
         aria-label="Go to lessons"
         className="absolute block select-none transition-transform duration-150 hover:scale-110 active:scale-95"
         style={{ left: 12, top: 5 }}
