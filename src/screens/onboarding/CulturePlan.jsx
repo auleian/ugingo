@@ -4,13 +4,13 @@ import bgCulture from '../../assets/bg-culture.png'
 function CulturePlanCard({ y, title, subtitle }) {
   return (
     <div
-      className="absolute left-[37px] w-[304px] h-[167px] bg-[#c5c0b3] rounded-[41px] shadow-[0_4px_4px_rgba(46,72,88,0.3)] flex flex-col items-center justify-center"
+      className="absolute left-[37px] w-[304px] h-[167px] bg-[#333] rounded-[41px] shadow-[0_4px_4px_rgba(46,72,88,0.3)] flex flex-col items-center justify-center"
       style={{ top: y }}
     >
-      <p className="font-poppins font-black text-[32px] leading-tight text-[#665d5d]">
+      <p className="font-poppins font-black text-[32px] leading-tight text-[#8C8B87]">
         {title}
       </p>
-      <p className="font-poppins font-black text-[24px] leading-tight text-[#8c8b87] mt-1">
+      <p className="font-poppins font-black text-[24px] leading-tight text-[#95989A] mt-1">
         {subtitle}
       </p>
     </div>
@@ -32,15 +32,15 @@ export default function CulturePlan() {
 
       <AppHeader />
 
-      <div className="absolute top-[103px] left-[6px] w-[122px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center">
-        <span className="font-poppins font-black text-[#f16522] text-[11px] leading-none">
+      <div className="absolute top-[61px] left-[6px] w-[122px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center">
+        <span className="font-poppins font-black text-[white] text-[11px] leading-none">
           EBYOBUWANGWA
         </span>
       </div>
 
       <p
         className="absolute top-[143px] left-1/2 -translate-x-1/2 w-[259px] text-center font-poppins font-black text-[36px] text-[#f8c83c] leading-[1.4]"
-        style={{ textShadow: '0px 4px 4px rgba(255,255,255,0.23)' }}
+        style={{ textShadow: '0px 4px 4px rgba(0,0,0,0.4)' }}
       >
         Coming soon
       </p>

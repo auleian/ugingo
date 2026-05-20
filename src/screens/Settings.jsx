@@ -57,13 +57,16 @@ function HeaderShape() {
       fill="none"
       preserveAspectRatio="none"
       className="absolute pointer-events-none"
-      style={{ top: -71, left: -19, width: 412, height: 124 }}
+      style={{
+        top: -71,
+        left: -19,
+        width: 412,
+        height: 124,
+        filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.25))',
+      }}
       aria-hidden
     >
-      <path
-        d="M0 47C0 21.0426 21.0426 0 47 0H365C390.957 0 412 21.0426 412 47V77C412 102.957 390.957 124 365 124H47C21.0426 124 0 102.957 0 77V47Z"
-        fill="white"
-      />
+      <path d="M0 0H412V124H0Z" fill="white" />
     </svg>
   )
 }

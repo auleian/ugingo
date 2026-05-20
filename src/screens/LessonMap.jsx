@@ -11,6 +11,9 @@ import starActive from '../assets/lesson-map-star.svg'
 import starLocked from '../assets/star-locked.svg'
 import starBurst from '../assets/lesson-map-star-burst.svg'
 
+const FEEDBACK_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdxrwXNL0-pdRVyTY7-lUuZhtBlEZBPtc3Lqj9VwiB4adSOHg/viewform?usp=sharing&ouid=117473555109988128969'
+
 const STAR_W = 94.314
 const STAR_H = 90.451
 
@@ -245,11 +248,13 @@ export default function LessonMap() {
             <StarMarker key={i} {...s} index={i} />
           ))}
 
-          <Link
-            to="#"
-            aria-label="Final reward"
+          <a
+            href={FEEDBACK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Send feedback"
             className="absolute origin-center transition-transform duration-200 ease-out hover:scale-[1.3]"
-            style={{ left: 53, top: 1849, width: 305, height: 286 }}
+            style={{ left: 100, top: 1900, width: 141, height: 132.451 }}
           >
             <img
               src={starBurst}
@@ -258,7 +263,7 @@ export default function LessonMap() {
               draggable={false}
               className="block w-full h-full select-none animate-[spin_8s_linear_infinite]"
             />
-          </Link>
+          </a>
         </div>
       </div>
     </div>
