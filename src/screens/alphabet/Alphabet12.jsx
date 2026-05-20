@@ -40,7 +40,7 @@ export default function Alphabet12() {
         />
       </div>
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       <p
         className="absolute font-poppins font-black text-white text-[24px] leading-none"
