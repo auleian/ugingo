@@ -64,7 +64,7 @@ export default function Numbers9() {
           alt=""
           aria-hidden
           draggable={false}
-          className="absolute pointer-events-none select-none"
+          className="absolute pointer-events-none select-none star-reveal"
           style={{ top: 316, left: 83, width: 46, height: 46 }}
         />
   
