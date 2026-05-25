@@ -40,7 +40,7 @@ export default function Alphabet12() {
         />
       </div>
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       <p
         className="absolute font-poppins font-black text-white text-[24px] leading-none"
@@ -63,7 +63,7 @@ export default function Alphabet12() {
         alt=""
         aria-hidden
         draggable={false}
-        className="absolute pointer-events-none select-none"
+        className="absolute pointer-events-none select-none star-reveal"
         style={{ top: 316, left: 83, width: 46, height: 46 }}
       />
 
