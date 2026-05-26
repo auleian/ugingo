@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iOS safe-area insets exposed as CSS vars so JS (MobileFrame's scale calc)
+   can read numeric values via getComputedStyle. The top safe-area strip's
+   color is driven by React context, not a CSS var — see MobileFrame.jsx. */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
 html,
 body {
   margin: 0;

@@ -2,12 +2,20 @@ import { Link } from 'react-router-dom'
 import Mascot from './Mascot'
 import { playTap } from '../lib/sound'
 import { useUserDisplay } from '../lib/firebase'
+import { useTopBand } from '../layouts/MobileFrame'
 
 export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
   // `initial` falls back to '?' when not signed in (e.g., splash). The
   // AppHeader is only mounted on protected routes in practice so this is
   // mostly cosmetic.
   const { initial } = useUserDisplay()
+
+  // Bleed this header's bg color into MobileFrame's top safe-area strip so
+  // the notch / dynamic island sits on a band that matches the current
+  // screen's header. Reset on unmount; screens without a header fall back
+  // to the default white.
+  useTopBand(bg)
+
   return (
     <header
       className="relative w-full shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-30"
