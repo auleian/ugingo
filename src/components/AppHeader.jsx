@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Mascot from './Mascot'
 import { playTap } from '../lib/sound'
 import { useUserDisplay } from '../lib/firebase'
+import { useTopBand } from '../layouts/MobileFrame'
 
 export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
   // `initial` falls back to '?' when not signed in (e.g., splash). The
@@ -12,17 +12,9 @@ export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
 
   // Bleed this header's bg color into MobileFrame's top safe-area strip so
   // the notch / dynamic island sits on a band that matches the current
-  // screen's header. Restored on unmount so screens without a header fall
-  // back to the default in index.css.
-  useEffect(() => {
-    const root = document.documentElement
-    const prev = root.style.getPropertyValue('--mf-top-band')
-    root.style.setProperty('--mf-top-band', bg || '#ffffff')
-    return () => {
-      if (prev) root.style.setProperty('--mf-top-band', prev)
-      else root.style.removeProperty('--mf-top-band')
-    }
-  }, [bg])
+  // screen's header. Reset on unmount; screens without a header fall back
+  // to the default white.
+  useTopBand(bg)
 
   return (
     <header
