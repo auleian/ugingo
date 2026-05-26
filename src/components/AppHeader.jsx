@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Mascot from './Mascot'
 import { playTap } from '../lib/sound'
@@ -8,6 +9,21 @@ export default function AppHeader({ roundedBottom = false, bg, badgeBorder }) {
   // AppHeader is only mounted on protected routes in practice so this is
   // mostly cosmetic.
   const { initial } = useUserDisplay()
+
+  // Bleed this header's bg color into MobileFrame's top safe-area strip so
+  // the notch / dynamic island sits on a band that matches the current
+  // screen's header. Restored on unmount so screens without a header fall
+  // back to the default in index.css.
+  useEffect(() => {
+    const root = document.documentElement
+    const prev = root.style.getPropertyValue('--mf-top-band')
+    root.style.setProperty('--mf-top-band', bg || '#ffffff')
+    return () => {
+      if (prev) root.style.setProperty('--mf-top-band', prev)
+      else root.style.removeProperty('--mf-top-band')
+    }
+  }, [bg])
+
   return (
     <header
       className="relative w-full shadow-[0_4px_4px_rgba(0,0,0,0.25)] z-30"

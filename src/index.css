@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iOS safe-area insets exposed as CSS vars so JS (MobileFrame's scale calc)
+   can read numeric values via getComputedStyle. `--mf-top-band` is the color
+   painted into the top safe-area strip — AppHeader overrides it per screen so
+   the dynamic island sits on a band that matches the current header color. */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --mf-top-band: #ffffff;
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
 html,
 body {
   margin: 0;
