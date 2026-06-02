@@ -28,7 +28,7 @@ export default function AnimalsFrame({
           aria-hidden
           draggable={false}
           className="absolute max-w-none pointer-events-none select-none object-cover"
-          style={{ top: 48, left: -10, width: 448, height: 764 }}
+          style={{ top: 48, left: -10, width: 448, height: 800 }}
         />
       )}
 

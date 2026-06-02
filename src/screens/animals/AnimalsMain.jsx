@@ -14,10 +14,10 @@ export default function AnimalsMain() {
         aria-hidden
         draggable={false}
         className="absolute max-w-none pointer-events-none select-none object-cover"
-        style={{ top: 40, left: -74, width: 545, height: 738 }}
+        style={{ top: 40, left: -74, width: 545, height: 778 }}
       />
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#F8C83C] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-30">
         <span className="font-poppins font-black text-black text-[11px] leading-none">
@@ -41,7 +41,7 @@ export default function AnimalsMain() {
         to="/animals/1"
         size="md"
         className="absolute z-30"
-        style={{ top: 716, left: 242 }}
+        style={{ top: 756, left: 242 }}
       >
         Next
       </AnimalsPillButton>

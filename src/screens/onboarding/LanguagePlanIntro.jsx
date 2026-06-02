@@ -12,7 +12,7 @@ export default function LanguagePlanIntro() {
           top: 45,
           left: -168,
           width: 696,
-          height: 725,
+          height: 770,
           backgroundImage: `url(${bgLanguage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'top center',
