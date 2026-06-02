@@ -12,10 +12,10 @@ export default function PlacesMain() {
         aria-hidden
         draggable={false}
         className="absolute max-w-none object-cover pointer-events-none select-none"
-        style={{ top: 42, left: -352, width: 1127, height: 770 }}
+        style={{ top: 0, left: -352, width: 1127, height: 860 }}
       />
 
-      <AppHeader roundedBottom />
+      <AppHeader />
 
       {/* "Ebifo" pill */}
       <div className="absolute top-[103px] left-[7px] w-[110px] h-[24px] bg-[#2e4858] rounded-[52.5px] shadow-[0_4px_4px_rgba(255,255,255,0.25)] flex items-center justify-center z-20">

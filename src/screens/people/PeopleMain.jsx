@@ -12,7 +12,7 @@ export default function PeopleMain() {
         aria-hidden
         draggable={false}
         className="absolute max-w-none select-none pointer-events-none object-cover"
-        style={{ top: 81, left: -58, width: 487, height: 731 }}
+        style={{ top: 45, left: -58, width: 487, height: 772 }}
       />
 
       <div
